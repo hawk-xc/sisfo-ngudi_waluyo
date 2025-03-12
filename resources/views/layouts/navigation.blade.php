@@ -15,14 +15,14 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Halaman Utama') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('lansia')">
-                        {{ __('Data Lansia') }}
+                    <x-nav-link :href="route('posyandu.index')" :active="request()->routeIs('posyandu.index')">
+                        {{ __('Data Posyandu') }}
                     </x-nav-link>
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('gizi')">
-                        {{ __('Pusat Gizi') }}
+                        {{ __('Data Lansia') }}
                     </x-nav-link>
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('posyandu')">
-                        {{ __('Data Posyandu') }}
+                        {{ __('Pusat Gizi') }}
                     </x-nav-link>
                 </div>
             </div>
