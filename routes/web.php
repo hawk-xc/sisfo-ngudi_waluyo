@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\PosyanduController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -17,4 +18,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+Route::group([
+    'prefix' => 'posyandu',
+    'middleware' => ['auth']
+], function () {
+    Route::get('/', [PosyanduController::class, 'index'])->name('posyandu.index');
+});
+
+require __DIR__ . '/auth.php';
