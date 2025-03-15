@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\KegiatanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\PosyanduController;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +24,15 @@ Route::group([
     'middleware' => ['auth']
 ], function () {
     Route::get('/', [PosyanduController::class, 'index'])->name('posyandu.index');
+    Route::resource('/kegiatan', KegiatanController::class)->names([
+        'index' => 'kegiatan.index',
+        'create' => 'kegiatan.create',
+        'store' => 'kegiatan.store',
+        'show' => 'kegiatan.show',
+        'edit' => 'kegiatan.edit',
+        'update' => 'kegiatan.update',
+        'destroy' => 'kegiatan.destroy',
+    ]);
 });
 
 require __DIR__ . '/auth.php';
