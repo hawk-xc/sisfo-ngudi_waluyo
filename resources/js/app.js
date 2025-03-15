@@ -1,5 +1,6 @@
 import './bootstrap';
 import 'remixicon/fonts/remixicon.css';
+import './doughnut.js';
 
 import Alpine from 'alpinejs';
 
