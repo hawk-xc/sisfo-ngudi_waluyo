@@ -24,6 +24,9 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('posyandu')">
                         {{ __('Pusat Gizi') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('kegiatan.index')" :active="request()->routeIs('kegiatan.index')">
+                        {{ __('Kegiatan') }}
+                    </x-nav-link>
                 </div>
             </div>
 
