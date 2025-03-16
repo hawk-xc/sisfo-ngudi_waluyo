@@ -15,7 +15,9 @@ class KegiatanController extends Controller
      */
     public function index()
     {
-        return view('Admin.Kegiatan.index');
+        $kegiatan = Kegiatan::get();
+
+        return view('Admin.Kegiatan.index', compact('kegiatan'));
     }
 
     /**
@@ -31,39 +33,48 @@ class KegiatanController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
+        $messages = [
+            'nama_kegiatan.required' => 'Nama kegiatan wajib diisi.',
+            'nama_kegiatan.string' => 'Nama kegiatan harus berupa teks.',
+            'nama_kegiatan.max' => 'Nama kegiatan tidak boleh lebih dari :max karakter.',
+            'tanggal_kegiatan.required' => 'Tanggal kegiatan wajib diisi.',
+            'tanggal_kegiatan.date' => 'Tanggal kegiatan harus berupa tanggal yang valid.',
+            'keterangan.string' => 'Keterangan harus berupa teks.',
+            'gambar.image' => 'File yang diunggah harus berupa gambar.',
+            'gambar.mimes' => 'Format gambar yang diperbolehkan adalah .jpeg, .png, .jpg, .gif.',
+            'gambar.max' => 'Ukuran gambar tidak boleh lebih dari :max KB.'
+        ];
 
-        if ($request->hasFile('gambar')) {
-            $gambarPath = $request->file('gambar')->store('kegiatan', 'public');
-        } else {
-            $gambarPath = null;
-        }
+        $validatedData = $request->validate([
+            'nama_kegiatan' => 'required|string|max:255',
+            'tanggal_kegiatan' => 'required|date',
+            'keterangan' => 'nullable|string',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ], $messages);
 
-        $slug = Str::slug(strtolower($data['name']), '-');
+        $slug = Str::slug(strtolower($validatedData['nama_kegiatan']), '-');
 
-        $slugChecker = Str::slug($slug);
-        $checkSlug = Kegiatan::where('slug', $slugChecker)->first();
-
-        if ($checkSlug) {
+        if (Kegiatan::where('slug', $slug)->exists()) {
             return redirect()->back()->withErrors([
-                'name' => 'Nama Kegiatan sudah ada, silahkan ganti dengan nama lain'
-            ]);
+                'nama_kegiatan' => 'Nama Kegiatan sudah ada, silahkan gunakan nama lain.'
+            ])->withInput();
         }
 
-        // Konversi tanggal dari format "2025-03-03T17:40" ke format MySQL "Y-m-d H:i:s"
-        $tanggalKegiatan = Carbon::parse($data['tanggal_kegiatan'])->format('Y-m-d H:i:s');
+        $tanggalKegiatan = Carbon::parse($validatedData['tanggal_kegiatan'])->format('Y-m-d H:i:s');
 
-        $kegiatan = new Kegiatan();
-        $kegiatan->nama_kegiatan = $data['name'];
-        $kegiatan->slug = $slug;
-        $kegiatan->keterangan = $data['keterangan'];
-        $kegiatan->gambar = $gambarPath;
-        $kegiatan->tanggal_kegiatan = $tanggalKegiatan; // Simpan tanggal
-        $kegiatan->save();
+        $gambarPath = $request->hasFile('gambar')
+            ? $request->file('gambar')->store('kegiatan', 'public')
+            : null;
 
-        if ($kegiatan->wasRecentlyCreated) {
-            return redirect()->route('kegiatan.index')->with('message', 'Kegiatan berhasil dibuat');
-        }
+        $kegiatan = Kegiatan::create([
+            'nama_kegiatan' => $validatedData['nama_kegiatan'],
+            'slug' => $slug,
+            'keterangan' => $validatedData['keterangan'],
+            'gambar' => $gambarPath,
+            'tanggal_kegiatan' => $tanggalKegiatan
+        ]);
+
+        return redirect()->route('kegiatan.index')->with('message', 'Kegiatan berhasil dibuat');
     }
 
 
@@ -78,24 +89,58 @@ class KegiatanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Kegiatan $kegiatan)
     {
-        //
+        return view('Admin.Kegiatan.edit', compact('kegiatan'));
     }
-
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $slug)
     {
-        //
+        $validatedData = $request->validate([
+            'nama_kegiatan' => 'required|string|max:255',
+            'tanggal_kegiatan' => 'required|date',
+            'keterangan' => 'nullable|string',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
+
+        $kegiatan = Kegiatan::where('slug', $slug)->firstOrFail();
+
+        if ($kegiatan->nama_kegiatan !== $validatedData['nama_kegiatan']) {
+            $newSlug = Str::slug(strtolower($validatedData['nama_kegiatan']), '-');
+
+            if (Kegiatan::where('slug', $newSlug)->where('id', '!=', $kegiatan->id)->exists()) {
+                return redirect()->back()->withErrors([
+                    'nama_kegiatan' => 'Nama Kegiatan sudah ada, silahkan gunakan nama lain.'
+                ])->withInput();
+            }
+
+            $kegiatan->slug = $newSlug;
+        }
+
+        $kegiatan->nama_kegiatan = $validatedData['nama_kegiatan'];
+        $kegiatan->keterangan = $validatedData['keterangan'];
+        $kegiatan->tanggal_kegiatan = $validatedData['tanggal_kegiatan'];
+
+        if ($request->hasFile('gambar')) {
+            $gambarPath = $request->file('gambar')->store('kegiatan', 'public');
+            $kegiatan->gambar = $gambarPath;
+        }
+
+        $kegiatan->save();
+
+        return redirect()->route('kegiatan.index')->with('message', 'Kegiatan berhasil diperbarui');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $slug)
     {
-        //
+        $kegiatan = Kegiatan::where('slug', $slug)->firstOrFail();
+        $kegiatan->delete();
+
+        return redirect()->route('kegiatan.index')->with('message', 'Kegiatan berhasil dihapus');
     }
 }
