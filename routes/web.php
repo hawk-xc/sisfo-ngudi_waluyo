@@ -28,7 +28,6 @@ Route::group([
         'index' => 'kegiatan.index',
         'create' => 'kegiatan.create',
         'store' => 'kegiatan.store',
-        'show' => 'kegiatan.show',
         'edit' => 'kegiatan.edit',
         'update' => 'kegiatan.update',
         'destroy' => 'kegiatan.destroy',
