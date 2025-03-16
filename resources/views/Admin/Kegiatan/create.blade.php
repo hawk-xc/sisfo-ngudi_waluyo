@@ -18,6 +18,7 @@
                         </div>
                         <form action="{{ route('kegiatan.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
+                            @method('POST')
                             <div action="" class="flex flex-row w-full gap-2 p-5">
                                 <div id="gambar" class="flex-1">
                                     <div id="gambar-kegiatan" class="px-5 mb-3">
@@ -28,26 +29,46 @@
                                         Gambar Kegiatan
                                     </label>
                                     <fieldset class="fieldset">
-                                        <input type="file" id="gambar-input" class="file-input" name="gambar"
-                                            accept="image/*" />
-                                        <label class="fieldset-label">Format yang didukung .png, .jpg, .jpeg</label>
+                                        <input type="file" id="gambar-input"
+                                            class="file-input {{ $errors->has('gambar') ? 'file-input-error' : '' }}"
+                                            name="gambar" accept="image/*" />
+                                        <label
+                                            class="fieldset-label {{ $errors->has('gambar') ? 'text-error font-extrabold' : '' }}">Format
+                                            yang didukung .png, .jpg, .jpeg</label>
                                     </fieldset>
                                 </div>
                                 <div id="form" class="flex flex-col flex-1 gap-3">
                                     <div class="flex flex-col gap-2 p-2">
-                                        <label for="name">Nama Kegiatan</label>
-                                        <input type="text" name="name" id="name" placeholder="Nama Kegiatan"
-                                            class="w-full input">
+                                        <label for="nama_kegiatan">Nama Kegiatan</label>
+                                        <fieldset class="fieldset">
+                                            <input type="text" name="nama_kegiatan" id="nama_kegiatan"
+                                                placeholder="Nama Kegiatan"
+                                                class="w-full input {{ $errors->has('nama_kegiatan') ? 'input-error' : '' }}"
+                                                value="{{ old('nama_kegiatan') }}">
+                                            @if ($errors->first('nama_kegiatan'))
+                                                <p class="fieldset-label text-error">
+                                                    {{ $errors->first('nama_kegiatan') }}</p>
+                                            @endif
+                                        </fieldset>
                                     </div>
                                     <div class="flex flex-col gap-2 p-2">
                                         <label for="name">Tanggal Kegiatan</label>
-                                        <input type="datetime-local" name="tanggal_kegiatan" id="tanggal_kegiatan"
-                                            class="w-full input">
+                                        <fieldset class="fieldset">
+                                            <input type="datetime-local" name="tanggal_kegiatan"
+                                                value="{{ old('tanggal_kegiatan') }}" id="tanggal_kegiatan"
+                                                class="w-full input {{ $errors->has('tanggal_kegiatan') ? 'input-error' : '' }}">
+                                            @if ($errors->first('tanggal_kegiatan'))
+                                                <p class="fieldset-label text-error">
+                                                    {{ $errors->first('tanggal_kegiatan') }}</p>
+                                            @endif
+                                        </fieldset>
                                     </div>
                                     <div class="flex flex-col gap-2 p-2">
                                         <label for="keterangan">Keterangan</label>
-                                        <textarea name="keterangan" class="w-full textarea" id="keterangan" cols="30" rows="10"
-                                            placeholder="Deskripsi Kegiatan..."></textarea>
+                                        <fieldset class="fieldset">
+                                            <textarea name="keterangan" class="w-full textarea {{ $errors->has('keterangan') ? 'textarea-error' : '' }}"
+                                                id="keterangan" cols="30" rows="10" placeholder="Deskripsi Kegiatan...">{{ old('keterangan') }}</textarea>
+                                        </fieldset>
                                     </div>
                                 </div>
                             </div>
