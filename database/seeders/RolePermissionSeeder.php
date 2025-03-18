@@ -16,10 +16,10 @@ class RolePermissionSeeder extends Seeder
     public function run(): void
     {
         // permission data-kader
-        Permission::create(['name' => 'tambah-data-kader']);
-        Permission::create(['name' => 'edit-data-kader']);
-        Permission::create(['name' => 'hapus-data-kader']);
-        Permission::create(['name' => 'lihat-data-kader']);
+        Permission::create(['name' => 'tambah-data-pj']);
+        Permission::create(['name' => 'edit-data-pj']);
+        Permission::create(['name' => 'hapus-data-pj']);
+        Permission::create(['name' => 'lihat-data-pj']);
         // permission data-lansia
         Permission::create(['name' => 'tambah-data-lansia']);
         Permission::create(['name' => 'edit-data-lansia']);
@@ -39,15 +39,19 @@ class RolePermissionSeeder extends Seeder
 
         // role admin
         Role::create(['name' => 'admin']);
-        Role::create(['name' => 'nakes']);
         Role::create(['name' => 'kader']);
+        Role::create(['name' => 'pj']);
 
         // assign permissions to roles
         $roleAdmin = Role::findByName('admin');
-        $roleNakes = Role::findByName('nakes');
         $roleKader = Role::findByName('kader');
+        $rolePj = Role::findByName('pj');
         $roleAdmin->givePermissionTo(Permission::all());
-        $roleNakes->givePermissionTo([
+        $roleKader->givePermissionTo([
+            'tambah-data-pj',
+            'edit-data-pj',
+            'hapus-data-pj',
+            'lihat-data-pj',
             'tambah-data-lansia',
             'edit-data-lansia',
             'hapus-data-lansia',
@@ -60,17 +64,14 @@ class RolePermissionSeeder extends Seeder
             'edit-jadwal-kegiatan',
             'hapus-jadwal-kegiatan',
             'lihat-jadwal-kegiatan',
-
         ]);
-        $roleKader->givePermissionTo([
-            'edit-data-kader',
-            'lihat-data-kader',
+        $rolePj->givePermissionTo([
+            'edit-data-pj',
+            'lihat-data-pj',
             'lihat-data-lansia',
             'edit-data-lansia',
             'lihat-data-gizi',
-            'edit-data-gizi',
             'lihat-jadwal-kegiatan',
-            'edit-jadwal-kegiatan',
         ]);
     }
 }

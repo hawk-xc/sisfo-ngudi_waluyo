@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\PosyanduController;
+use App\Http\Controllers\LansiaController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -20,9 +21,17 @@ Route::middleware('auth')->group(function () {
 
 Route::group([
     'prefix' => 'posyandu',
-    'middleware' => ['auth']
+    'middleware' => ['auth', 'role:admin'],
 ], function () {
     Route::get('/', [PosyanduController::class, 'index'])->name('posyandu.index');
+});
+Route::group([
+    'prefix' => 'lansia',
+    'middleware' => ['auth']
+], function () {
+    Route::get('/', [LansiaController::class, 'index'])->name('lansia.index');
+    Route::get('/tambah-lansia', [LansiaController::class, 'create'])->name('lansia.create');
+    Route::post('/insert-lansia', [LansiaController::class, 'store'])->name('lansia.store');
 });
 
 require __DIR__ . '/auth.php';

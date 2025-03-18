@@ -18,7 +18,7 @@
                     <x-nav-link :href="route('posyandu.index')" :active="request()->routeIs('posyandu.index')">
                         {{ __('Data Posyandu') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('gizi')">
+                    <x-nav-link :href="route('lansia.index')" :active="request()->routeIs('lansia.index')">
                         {{ __('Data Lansia') }}
                     </x-nav-link>
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('posyandu')">

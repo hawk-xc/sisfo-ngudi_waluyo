@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'lansia_id'
     ];
 
     /**
@@ -45,5 +46,11 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    // relasi ke Lansia = 1 to M
+    public function lansias()
+    {
+        return $this->hasMany(Lansia::class);
     }
 }

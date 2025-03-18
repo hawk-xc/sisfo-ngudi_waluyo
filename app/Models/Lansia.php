@@ -9,6 +9,17 @@ class Lansia extends Model
 {
     /** @use HasFactory<\Database\Factories\LansiaFactory> */
     use HasFactory;
-    protected $table = 'lansia';
+    protected $table = 'lansias';
     protected $guarded = ['id'];
+    protected $fillable = ['nik', 'nama', 'alamat', 'umur', 'jenis_kelamin', 'pj_nama', 'pj_email', 'posyandu_id', 'user_id'];
+
+    // create relations
+    public function pemeriksaans()
+    {
+        return $this->hasMany(Pemeriksaan::class, 'lansia_id');
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

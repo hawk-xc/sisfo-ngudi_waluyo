@@ -1,6 +1,6 @@
+@import "remixicon/fonts/remixicon.css";
 @tailwind base;
 @tailwind components;
-@import "~remixicon/fonts/remixicon.css";
 @tailwind utilities;
 
 @layer utilities {
