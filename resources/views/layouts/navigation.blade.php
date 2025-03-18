@@ -21,10 +21,10 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('gizi')">
                         {{ __('Data Lansia') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('posyandu')">
+                    <x-nav-link :href="route('gizi.index')" :active="request()->routeIs('gizi.*')">
                         {{ __('Pusat Gizi') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('kegiatan.index')" :active="request()->routeIs('kegiatan.index')">
+                    <x-nav-link :href="route('kegiatan.index')" :active="request()->routeIs('kegiatan.*')">
                         {{ __('Kegiatan') }}
                     </x-nav-link>
                 </div>
