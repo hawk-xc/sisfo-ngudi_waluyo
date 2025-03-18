@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="text-xl font-semibold leading-tight text-gray-800">
-            {{ __('Dashboard') }}
+            {{ __('Dashboard Klinik Ngudi Waluyo') }}
         </h2>
     </x-slot>
 
@@ -37,7 +37,7 @@
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                                 <tr class="grid grid-cols-12">
                                     <th class="col-span-3 px-6 py-3">Banner Kegiatan</th>
-                                    <th class="col-span-5 px-6 py-3">Nama Kegiatan</th>
+                                    <th class="col-span-4 px-6 py-3">Nama Kegiatan</th>
                                     <th class="col-span-3 px-6 py-3">Tanggal Kegiatan</th>
                                     <th class="col-span-1 px-6 py-3">Aksi</th>
                                 </tr>
@@ -46,14 +46,14 @@
                                 @foreach ($kegiatan as $item)
                                     <tr class="grid grid-cols-12 bg-white border-b border-gray-200">
                                         <td class="col-span-3 p-5">
-                                            <img src="{{ asset('storage/' . $item->gambar) }}" class="rounded-md"
+                                            <img src="{{ asset('storage/' . $item->gambar) }}" class="rounded-md w-72"
                                                 alt="">
                                         </td>
-                                        <td class="col-span-5 px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                            {{ $item->nama_kegiatan }}
+                                        <td class="col-span-4 px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                            {{ $item->nama_kegiatan ?? '-' }}
                                         </td>
                                         <td class="col-span-3 px-6 py-4">
-                                            {{ $item->formatted_date }}
+                                            {{ $item->formatted_date ?? '-' }}
                                         </td>
                                         <td class="flex col-span-1 gap-2 px-2 py-4">
                                             <a href={{ route('kegiatan.edit', $item->slug) }}
