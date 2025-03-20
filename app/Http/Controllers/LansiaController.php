@@ -5,15 +5,41 @@ namespace App\Http\Controllers;
 use App\Models\Lansia;
 use App\Http\Requests\StoreLansiaRequest;
 use App\Http\Requests\UpdateLansiaRequest;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use RealRashid\SweetAlert\Facades\Alert;
+use Spatie\Permission\Models\Role;
 
 class LansiaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $sort = $request->query('sort', 'asc');
+        $field = 'nama';
+        $search = $request->query('search');
+
+        if (!in_array($sort, ['asc', 'desc'])) {
+            $sort = 'asc';
+        }
+        $query = Lansia::orderBy($field, $sort);
+
+        if ($search) {
+            $query->where('nama', 'like', "%$search%")->orWhere('alamat', 'like', "%$search%")->orWhere('pj_nama', 'like', "%$search");
+        }
+
+
+        // $lansias = Lansia::all();
+        $lansias = $query->paginate(10);
+        if ($request->ajax()) {
+            return view('Admin.Lansia.partials.lansia_table', compact('lansias'))->render();
+        }
+
+        // dd($lansias);
+        return view('Admin.Lansia.index', compact('lansias', 'sort'));
     }
 
     /**
@@ -21,46 +47,122 @@ class LansiaController extends Controller
      */
     public function create()
     {
-        //
+        $pjs = User::role('pj')->get();
+        return view('Admin.Lansia.create', compact('pjs'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreLansiaRequest $request)
+    public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nik' => 'required|unique:lansias,nik',
+            'nama' => 'required',
+            'alamat' => 'required',
+            'umur' => 'required|integer',
+            'jenis_kelamin' => 'required',
+            'pj_id' => 'nullable|exists:users,id',
+            'pj_nama' => 'nullable|required_without_all:pj_id,pj_email',
+            'pj_email' => 'nullable|required_without_all:pj_id,pj_nama|email|unique:users,email',
+        ], [
+            'pj_email.unique' => 'User PJ sudah terdaftar.',
+            'pj_nama.required_without_all' => 'Nama PJ wajib diisi jika tidak memilih akun yang sudah ada.',
+            'pj_email.required_without_all' => 'Email PJ wajib diisi jika tidak memilih akun yang sudah ada.',
+        ]);
+
+        // Cek apakah pengguna memilih PJ yg sudah ada
+        if ($request->pj_id) {
+            $pj = User::find($request->pj_id);
+        } else {
+            // Jika tidak, gawe user PJ baru
+            $pj = User::create([
+                'name' => $request->pj_nama,
+                'email' => $request->pj_email,
+                'password' => bcrypt('password123'),
+            ]);
+
+            if (method_exists($pj, 'assignRole')) {
+                $pj->assignRole('PJ');
+            }
+        }
+
+        // Simpan data lansia
+        $lansia = Lansia::create([
+            'nik' => $request->nik,
+            'nama' => $request->nama,
+            'alamat' => $request->alamat,
+            'umur' => $request->umur,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'pj_nama' => $pj->name,
+            'pj_email' => $pj->email,
+        ]);
+
+
+        $pj->update(['lansia_id' => $lansia->id]);
+        Alert::success('Sukses', 'Data lansia baru berhasil ditambahkan!');
+
+        return redirect()->route('lansia.index')->with('success', 'Data lansia dan akun PJ berhasil ditambahkan.');
     }
+
+
 
     /**
      * Display the specified resource.
      */
-    public function show(Lansia $lansia)
+    public function show($lansia)
     {
-        //
+        $lansia = Lansia::find($lansia);
+
+        return view('Admin.Lansia.show', compact('lansia'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Lansia $lansia)
+    public function edit($id)
     {
-        //
+        $lansia = Lansia::findOrFail($id);
+        return view('Admin.Lansia.edit', compact('lansia'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateLansiaRequest $request, Lansia $lansia)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'nik' => 'required|string|max:16',
+            'alamat' => 'required|string',
+            'umur' => 'required|integer',
+            'jenis_kelamin' => 'required|string',
+            'pj_nama' => 'required|string|max:255',
+            'pj_email' => 'required|email|max:255',
+        ]);
+
+        $lansia = Lansia::findOrFail($id);
+        $lansia->update([
+            'nama' => $request->nama,
+            'nik' => $request->nik,
+            'alamat' => $request->alamat,
+            'umur' => $request->umur,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'pj_nama' => $request->pj_nama,
+            'pj_email' => $request->pj_email,
+        ]);
+
+        return redirect()->route('lansia.index')->with('success', 'Data berhasil diperbarui.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Lansia $lansia)
+    public function destroy($id)
     {
-        //
+        $lansia = Lansia::findOrFail($id);
+        $lansia->delete();
+        Alert::success('Sukses', 'Data lansia berhasil dihapus!');
+        return redirect()->route('lansia.index')->with('success', 'Data lansia berhasil dihapus.');
     }
 }

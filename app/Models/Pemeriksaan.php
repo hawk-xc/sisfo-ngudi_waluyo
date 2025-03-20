@@ -11,4 +11,8 @@ class Pemeriksaan extends Model
     use HasFactory;
     protected $table = 'pemeriksaan';
     protected $guarded = ['id'];
+    public function lansia()
+    {
+        return $this->belongsTo(Lansia::class);
+    }
 }

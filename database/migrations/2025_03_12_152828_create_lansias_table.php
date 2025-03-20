@@ -18,9 +18,8 @@ return new class extends Migration
             $table->integer('umur');
             $table->string('jenis_kelamin');
             $table->string('alamat');
-            $table->decimal('berat_badan', 8, 2);
-            $table->decimal('tinggi_lansia', 8, 2);
-            $table->foreignId('posyandu_id')->constrained();
+            $table->string('pj_nama');
+            $table->string('pj_email');
             $table->timestamps();
         });
     }
