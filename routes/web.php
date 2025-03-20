@@ -32,6 +32,10 @@ Route::group([
     Route::get('/', [LansiaController::class, 'index'])->name('lansia.index');
     Route::get('/tambah-lansia', [LansiaController::class, 'create'])->name('lansia.create');
     Route::post('/insert-lansia', [LansiaController::class, 'store'])->name('lansia.store');
+    Route::get('/show-lansia/{lansia}', [LansiaController::class, 'show'])->name('lansia.show');
+    Route::get('/edit-lansia/{id}/edit', [LansiaController::class, 'edit'])->name('lansia.edit');
+    Route::put('/edit-lansia/{id}', [LansiaController::class, 'update'])->name('lansia.update');
+    Route::delete('/delete-lansia/{id}', [LansiaController::class, 'destroy'])->name('lansia.destroy');
 });
 
 require __DIR__ . '/auth.php';
