@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('posyandus', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama');
-            $table->string('ketua');
-            $table->integer('jumlah_kader');
-            $table->timestamps();
+        Schema::table('gizi', function (Blueprint $table) {
+            $table->string('gambar')->nullable()->after('jenis_gizi');
+            $table->string('keterangan')->nullable()->after('gambar');
         });
     }
 
@@ -25,6 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('posyandus');
+        Schema::table('gizi', function (Blueprint $table) {
+            $table->dropColumn(['gambar', 'keterangan']);
+        });
     }
 };

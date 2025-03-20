@@ -11,17 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('gizis', function (Blueprint $table) {
+        Schema::create('kegiatan', function (Blueprint $table) {
             $table->id();
-            $table->string('jenis_gizi');
-            $table->date('tanggal');
-            $table->string('menu');
-            $table->string('bahan_makanan');
-            $table->decimal('berat', 8, 2);
-            $table->string('urt');
-            $table->decimal('harga', 8, 2);
+            $table->string('nama_kegiatan')->nullable(false);
             $table->string('keterangan')->nullable();
-            $table->foreignId('posyandu_id')->constrained();
+            $table->string('slug')->unique()->nullable(false);
+            $table->dateTime('tanggal_kegiatan');
+            $table->string('gambar')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('gizis');
+        Schema::dropIfExists('kegiatan');
     }
 };
