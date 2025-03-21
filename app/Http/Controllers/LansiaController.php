@@ -65,6 +65,12 @@ class LansiaController extends Controller
             'pj_id' => 'nullable|exists:users,id',
             'pj_nama' => 'nullable|required_without_all:pj_id,pj_email',
             'pj_email' => 'nullable|required_without_all:pj_id,pj_nama|email|unique:users,email',
+            'status_perkawinan' => 'nullable|string|max:50',
+            'agama' => 'nullable|string|max:50',
+            'pendidikan_terakhir' => 'nullable|string|max:100',
+            'golongan_darah' => 'nullable|string|max:5',
+            'rhesus' => 'nullable|string',
+            'riwayat_kesehatan' => 'nullable|string',
         ], [
             'pj_email.unique' => 'User PJ sudah terdaftar.',
             'pj_nama.required_without_all' => 'Nama PJ wajib diisi jika tidak memilih akun yang sudah ada.',
@@ -96,6 +102,12 @@ class LansiaController extends Controller
             'jenis_kelamin' => $request->jenis_kelamin,
             'pj_nama' => $pj->name,
             'pj_email' => $pj->email,
+            'status_perkawinan' => $request->status_perkawinan,
+            'agama' => $request->agama,
+            'pendidikan_terakhir' => $request->pendidikan_terakhir,
+            'golongan_darah' => $request->golongan_darah,
+            'rhesus' => $request->rhesus,
+            'riwayat_kesehatan' => $request->riwayat_kesehatan,
         ]);
 
 
@@ -139,6 +151,12 @@ class LansiaController extends Controller
             'jenis_kelamin' => 'required|string',
             'pj_nama' => 'required|string|max:255',
             'pj_email' => 'required|email|max:255',
+            'status_perkawinan' => 'nullable|string|max:50',
+            'agama' => 'nullable|string|max:50',
+            'pendidikan_terakhir' => 'nullable|string|max:100',
+            'golongan_darah' => 'nullable|string|max:5',
+            'rhesus' => 'nullable|string',
+            'riwayat_kesehatan' => 'nullable|string',
         ]);
 
         $lansia = Lansia::findOrFail($id);
@@ -150,6 +168,12 @@ class LansiaController extends Controller
             'jenis_kelamin' => $request->jenis_kelamin,
             'pj_nama' => $request->pj_nama,
             'pj_email' => $request->pj_email,
+            'status_perkawinan' => $request->status_perkawinan,
+            'agama' => $request->agama,
+            'pendidikan_terakhir' => $request->pendidikan_terakhir,
+            'golongan_darah' => $request->golongan_darah,
+            'rhesus' => $request->rhesus,
+            'riwayat_kesehatan' => $request->riwayat_kesehatan,
         ]);
 
         return redirect()->route('lansia.index')->with('success', 'Data berhasil diperbarui.');
