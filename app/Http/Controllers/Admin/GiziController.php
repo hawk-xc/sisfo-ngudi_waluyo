@@ -11,11 +11,29 @@ class GiziController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $gizi = Gizi::get();
+        $sort = $request->query('sort', 'asc');
+        $field = 'jenis_gizi';
+        $search = $request->query('search');
 
-        return view('Admin.Gizi.index', compact('gizi'));
+        if (!in_array($sort, ['asc', 'desc'])) {
+            $sort = 'asc';
+        }
+
+        $query = Gizi::orderBy($field, $sort);
+
+        if ($search) {
+            $query->where('jenis_gizi', 'like', "%$search%")->orWhere('bahan_makanan', 'like', "%$search%")->orWhere('keterangan', 'like', "%$search%")->orWhere('urt', 'like', "%$search%");
+        }
+
+        $gizi = $query->paginate(10);
+
+        if ($request->ajax()) {
+            return view('Admin.Gizi.partials.gizi_table', compact('gizi'))->render();
+        }
+
+        return view('Admin.Gizi.index', compact('gizi', 'sort'));
     }
 
     /**
