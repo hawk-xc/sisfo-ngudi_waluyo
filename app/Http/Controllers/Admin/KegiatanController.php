@@ -13,11 +13,29 @@ class KegiatanController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $kegiatan = Kegiatan::get();
+        $sort = $request->query('sort', 'asc');
+        $field = 'nama_kegiatan';
+        $search = $request->query('search');
 
-        return view('Admin.Kegiatan.index', compact('kegiatan'));
+        if (!in_array($sort, ['asc', 'desc'])) {
+            $sort = 'asc';
+        }
+
+        $query = Kegiatan::orderBy($field, $sort);
+
+        if ($search) {
+            $query->where('nama_kegiatan', 'like', "%$search%");
+        }
+
+        $kegiatan = $query->paginate(10);
+
+        if ($request->ajax()) {
+            return view('Admin.Kegiatan.partials.kegiatan_table', compact('kegiatan'))->render();
+        }
+
+        return view('Admin.Kegiatan.index', compact('kegiatan', 'sort'));
     }
 
     /**
