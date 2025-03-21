@@ -24,7 +24,7 @@ Route::middleware('auth')->group(function () {
 
 Route::group([
     'prefix' => 'posyandu',
-    'middleware' => ['auth', 'role:admin'],
+    'middleware' => ['auth', 'role:admin', 'role:kader'],
 ], function () {
     Route::get('/', [PosyanduController::class, 'index'])->name('posyandu.index');
     Route::resource('/kegiatan', KegiatanController::class)->names([
