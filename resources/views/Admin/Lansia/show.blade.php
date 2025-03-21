@@ -33,6 +33,30 @@
                         <p class="text-gray-600 font-medium">Jenis Kelamin:</p>
                         <p class="text-lg font-semibold">{{ $lansia->jenis_kelamin }}</p>
                     </div>
+                    <div>
+                        <p class="text-gray-600 font-medium">Status Perkawinan:</p>
+                        <p class="text-lg font-semibold">{{ $lansia->status_perkawinan }}</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-600 font-medium">Agama:</p>
+                        <p class="text-lg font-semibold">{{ $lansia->agama }}</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-600 font-medium">Pendidikan Terakhir:</p>
+                        <p class="text-lg font-semibold">{{ $lansia->pendidikan_terakhir }}</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-600 font-medium">Riwayat Kesehatan:</p>
+                        <p class="text-lg font-semibold">{{ $lansia->riwayat_kesehatan }}</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-600 font-medium">Golongan Darah:</p>
+                        <p class="text-lg font-semibold">{{ $lansia->golongan_darah }}</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-600 font-medium">Rhesus:</p>
+                        <p class="text-lg font-semibold">{{ $lansia->rhesus }}</p>
+                    </div>
                 </div>
 
                 <hr class="my-6 border-gray-300">
