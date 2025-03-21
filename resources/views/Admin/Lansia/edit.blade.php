@@ -101,7 +101,6 @@
                                 <textarea name="riwayat_kesehatan" class="textarea textarea-bordered w-full">{{ $lansia->riwayat_kesehatan }}</textarea>
                                 @error('riwayat_kesehatan')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
                             </div>
-
                     </div>
 
                     <hr class="my-6 border-gray-300">
