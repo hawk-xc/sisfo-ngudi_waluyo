@@ -53,4 +53,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Lansia::class);
     }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
 }
