@@ -14,17 +14,14 @@ class GiziController extends Controller
     public function index(Request $request)
     {
         $sort = $request->query('sort', 'asc');
-        $field = 'jenis_gizi';
         $search = $request->query('search');
 
-        if (!in_array($sort, ['asc', 'desc'])) {
-            $sort = 'asc';
-        }
-
-        $query = Gizi::orderBy($field, $sort);
+        $query = Gizi::orderBy('jenis_gizi', $sort);
 
         if ($search) {
-            $query->where('jenis_gizi', 'like', "%$search%")->orWhere('bahan_makanan', 'like', "%$search%")->orWhere('keterangan', 'like', "%$search%")->orWhere('urt', 'like', "%$search%");
+            $query->where('jenis_gizi', 'like', "%$search%")
+                ->orWhere('bahan_makanan', 'like', "%$search%")
+                ->orWhere('menu', 'like', "%$search%");
         }
 
         $gizi = $query->paginate(10);
@@ -35,6 +32,7 @@ class GiziController extends Controller
 
         return view('Admin.Gizi.index', compact('gizi', 'sort'));
     }
+
 
     /**
      * Show the form for creating a new resource.
