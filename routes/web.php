@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::group([
+    'prefix' => 'posyandu',
     'middleware' => ['auth', 'role:kader|admin'],
 ], function () {
     Route::get('/', [PosyanduController::class, 'index'])->name('index');

@@ -15,9 +15,10 @@ class UserSeeder extends Seeder
     {
         // \App\Models\User::factory()
         $admin = User::create([
-            'name' => 'admin',
-            'email' => 'admin@gmail.com',
+            'name' => 'admin1',
+            'email' => 'admin1@gmail.com',
             'password' => bcrypt('password'),
+            'role_id' => 1,
 
         ]);
         $admin->assignRole('admin');
@@ -25,16 +26,19 @@ class UserSeeder extends Seeder
         $pj = User::create([
             'name' => 'PJ (Penanggung Jawab)',
             'email' => 'pj@gmail.com',
+            'role_id' => 3,
             'password' => bcrypt('password'),
         ]);
         $pj2 = User::create([
             'name' => 'warsinoSlank',
+            'role_id' => 3,
             'email' => 'warsinoSlank@gmail.com',
             'password' => bcrypt('password'),
         ]);
         $pj3 = User::create([
             'name' => 'beni',
             'email' => 'beni@gmail.com',
+            'role_id' => 3,
             'password' => bcrypt('password'),
         ]);
         $pj2->assignRole('pj');
@@ -44,6 +48,7 @@ class UserSeeder extends Seeder
         $kader = User::create([
             'name' => 'Kader',
             'email' => 'kader@gmail.com',
+            'role_id' => 2,
             'password' => bcrypt('password'),
         ]);
         $kader->assignRole('kader');
@@ -51,6 +56,7 @@ class UserSeeder extends Seeder
         $wahyu = User::create([
             'name' => 'wahyu',
             'email' => 'wahyu@gmail.com',
+            'role_id' => 2,
             'password' => bcrypt('password')
         ]);
 
