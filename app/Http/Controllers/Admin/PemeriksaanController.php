@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\Pemeriksaan;
-use App\Http\Requests\StorePemeriksaanRequest;
-use App\Http\Requests\UpdatePemeriksaanRequest;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class PemeriksaanController extends Controller
 {
@@ -13,7 +12,7 @@ class PemeriksaanController extends Controller
      */
     public function index()
     {
-        //
+        return view('Admin.Pemeriksaan.index');
     }
 
     /**
@@ -27,7 +26,7 @@ class PemeriksaanController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePemeriksaanRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -35,7 +34,7 @@ class PemeriksaanController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Pemeriksaan $pemeriksaan)
+    public function show(string $id)
     {
         //
     }
@@ -43,7 +42,7 @@ class PemeriksaanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Pemeriksaan $pemeriksaan)
+    public function edit(string $id)
     {
         //
     }
@@ -51,7 +50,7 @@ class PemeriksaanController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePemeriksaanRequest $request, Pemeriksaan $pemeriksaan)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -59,7 +58,7 @@ class PemeriksaanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Pemeriksaan $pemeriksaan)
+    public function destroy(string $id)
     {
         //
     }
