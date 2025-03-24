@@ -32,11 +32,14 @@ class KegiatanController extends Controller
         $kegiatan = $query->paginate(10);
 
         if ($request->ajax()) {
-            return view('Admin.Kegiatan.partials.kegiatan_table', compact('kegiatan'))->render();
+            return response()->json([
+                'html' => view('Admin.Kegiatan.partials.kegiatan_table', compact('kegiatan'))->render()
+            ]);
         }
 
         return view('Admin.Kegiatan.index', compact('kegiatan', 'sort'));
     }
+
 
     /**
      * Show the form for creating a new resource.

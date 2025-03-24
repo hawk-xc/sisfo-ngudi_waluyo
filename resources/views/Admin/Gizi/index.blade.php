@@ -134,5 +134,19 @@
                 row.style.display = name.includes(filter) ? '' : 'none';
             });
         });
+          document.getElementById('search').addEventListener('input', function() {
+        let query = this.value;
+
+        fetch("{{ route('gizi.index') }}?search=" + query, {
+            headers: {
+                "X-Requested-With": "XMLHttpRequest"
+            }
+        })
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('giziTable').innerHTML = html;
+        })
+        .catch(error => console.error('Error:', error));
+    });
     </script>
 </x-app-layout>

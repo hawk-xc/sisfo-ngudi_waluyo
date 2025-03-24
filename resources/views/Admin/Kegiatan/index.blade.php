@@ -130,5 +130,17 @@
                 row.style.display = name.includes(filter) ? '' : 'none';
             });
         });
+        document.getElementById('search').addEventListener('input', function() {
+        let query = this.value;
+
+        fetch(`{{ route('kegiatan.index') }}?search=${query}`, {
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('kegiatanTable').innerHTML = data.html;
+        })
+        .catch(error => console.error('Error:', error));
+    });
     </script>
 </x-app-layout>
