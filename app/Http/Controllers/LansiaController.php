@@ -189,4 +189,63 @@ class LansiaController extends Controller
         Alert::success('Sukses', 'Data lansia berhasil dihapus!');
         return redirect()->route('lansia.index')->with('success', 'Data lansia berhasil dihapus.');
     }
+
+    public function select2(Request $request)
+    {
+        $data = Lansia::query();
+
+        // Select kolom yang diperlukan
+        $data->select(['id', 'nama', 'nik', 'alamat', 'tanggal_lahir', 'pj_nama']);
+
+        // Hitung umur
+        $data->selectRaw('TIMESTAMPDIFF(YEAR, tanggal_lahir, CURDATE()) as umur');
+
+        // Jika ada pencarian berdasarkan ID (untuk old input)
+        if ($request->has('id')) {
+            $data->where('id', $request->id);
+            $results = $data->get();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Data Lansia Fetched',
+                'data' => $results,
+            ]);
+        }
+
+        // Jika ada pencarian biasa
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $data->where(function ($query) use ($search) {
+                $query->where('nama', 'like', '%' . $search . '%')
+                    ->orWhere('nik', 'like', '%' . $search . '%')
+                    ->orWhere('alamat', 'like', '%' . $search . '%');
+            });
+        }
+
+        $data->orderBy('nama', 'asc');
+
+        // Handle pagination
+        if ($request->has('page')) {
+            $perPage = 10;
+            $results = $data->paginate($perPage);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Data Lansia Fetched',
+                'data' => $results->items(),
+                'pagination' => [
+                    'more' => $results->hasMorePages()
+                ]
+            ]);
+        }
+
+        // Default: tampilkan 10 data pertama
+        $results = $data->limit(10)->get();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data Lansia Fetched',
+            'data' => $results,
+        ]);
+    }
 }
