@@ -23,12 +23,14 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::group([
-    'prefix' => 'posyandu',
+    'prefix' => 'dashboard',
     'middleware' => ['auth', 'role:kader|admin'],
 ], function () {
     Route::resource('/pemeriksaan', PemeriksaanController::class)->names([
         'index' => 'pemeriksaan.index',
+        'show' => 'pemeriksaan.show',
         'create' => 'pemeriksaan.create',
+        'store' => 'pemeriksaan.store',
         'edit' => 'pemeriksaan.edit'
     ]);
     Route::resource('/kegiatan', KegiatanController::class)->names([
@@ -57,7 +59,9 @@ Route::group([
         Route::get('/edit-lansia/{id}/edit', [LansiaController::class, 'edit'])->name('lansia.edit');
         Route::put('/edit-lansia/{id}', [LansiaController::class, 'update'])->name('lansia.update');
         Route::delete('/delete-lansia/{id}', [LansiaController::class, 'destroy'])->name('lansia.destroy');
+        Route::get('/select2', [LansiaController::class, 'select2'])->name('lansia.select2');
     });
 });
+
 
 require __DIR__ . '/auth.php';
