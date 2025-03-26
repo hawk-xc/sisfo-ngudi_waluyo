@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="text-xl font-semibold leading-tight text-gray-800">
-            {{ __('Dashboard Klinik Ngudi Waluyo') }}
+            {{ __('Tambah Data Gizi') }}
         </h2>
     </x-slot>
 
@@ -10,7 +10,6 @@
             <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <div class="relative overflow-x-auto">
-                        <h1 class="text-2xl font-extrabold">Tambah Data Gizi</h1>
                         <div class="flex justify-end w-full">
                             <a href="{{ route('gizi.index') }}" class="btn btn-outline btn-neutral btn-sm"><i
                                     class="ri-arrow-left-long-line"></i>
