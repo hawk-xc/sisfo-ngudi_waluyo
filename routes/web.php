@@ -26,7 +26,7 @@ Route::group([
     'prefix' => 'posyandu',
     'middleware' => ['auth', 'role:kader|admin'],
 ], function () {
-    Route::get('/', [PosyanduController::class, 'index'])->name('index');
+    Route::get('/posyandu', [PosyanduController::class, 'index'])->name('index');
     Route::resource('/kegiatan', KegiatanController::class)->names([
         'index' => 'kegiatan.index',
         'create' => 'kegiatan.create',
