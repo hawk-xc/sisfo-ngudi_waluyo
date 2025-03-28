@@ -19,7 +19,9 @@ class PemeriksaanController extends Controller
         $query = Pemeriksaan::with('lansia')->orderBy('created_at', $sort);
 
         if ($search) {
-            $query->where('lansia.name', 'like', "%$search%");
+            $query->whereHas('lansia', function ($q) use ($search) {
+                $q->where('name', 'like', "%$search%");
+            });
         }
 
         $pemeriksaan = $query->paginate(10);
@@ -47,7 +49,7 @@ class PemeriksaanController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $messages = [
             'imt.numeric' => 'IMT harus berupa angka.',
             'imt.max' => 'IMT tidak boleh lebih dari :max karakter.',
@@ -67,13 +69,13 @@ class PemeriksaanController extends Controller
             'tensi_diastolik.required' => 'Tensi Diastolik wajib diisi.',
             'tensi_diastolik.numeric' => 'Tensi Diastolik harus berupa angka.',
             'tensi_diastolik.max' => 'Tensi Diastolik tidak boleh lebih dari :max karakter.',
-            'analisa_imt.required' => 'Analisa IMT wajib diisi.',
-            'analisa_imt.in' => 'Analisa IMT harus berupa normal, kurus, gemuk, atau obesitas.',
-            'analisa_tensi.required' => 'Analisa tensi wajib diisi.',
-            'analisa_tensi.in' => 'Analisa tensi harus berupa normal, hipotensi, prehipertensi, hipertensi stage 1, hipertensi stage 2, atau krisis hipertensi.',
+            'analisis_imt.required' => 'Analisa IMT wajib diisi.',
+            'analisis_imt.in' => 'Analisa IMT harus berupa normal, kurus, gemuk, atau obesitas.',
+            'analisis_tensi.required' => 'Analisa tensi wajib diisi.',
+            'analisis_tensi.in' => 'Analisa tensi harus berupa normal, hipotensi, prehipertensi, hipertensi stage 1, hipertensi stage 2, atau krisis hipertensi.',
             'keterangan.string' => 'Keterangan harus berupa teks.',
         ];
-        
+
         $validatedData = $request->validate([
             'imt' => 'nullable|numeric|max:255',
             'lansia_id' => 'required|string',
@@ -82,17 +84,15 @@ class PemeriksaanController extends Controller
             'tanggal_pemeriksaan' => 'required|date',
             'tensi_sistolik' => 'required|numeric|max:255',
             'tensi_diastolik' => 'required|numeric|max:255',
-            'analisa_imt' => 'required|in:normal,kurus,gemuk,obesitas',
-            'analisa_tensi' => 'required|in:normal,hipotensi,prehipertensi,hipertensi_stage1,hipertensi_stage2,krisis_hipertensi',
+            'analisis_imt' => 'required|in:normal,kurus,gemuk,obesitas',
+            'analisis_tensi' => 'required|in:normal,hipotensi,prehipertensi,hipertensi_stage1,hipertensi_stage2,krisis_hipertensi',
             'keterangan' => 'nullable|string',
         ], $messages);
-        
+
         try {
-            $validatedData['id_pemeriksaan'] = \Illuminate\Support\Str::uuid();    
-            $validatedData['tanggal_cek'] = $validatedData['tanggal_pemeriksaan'];   
+            $validatedData['id_pemeriksaan'] = (string) \Illuminate\Support\Str::uuid();
             Pemeriksaan::create($validatedData);
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             dd($e->getMessage());
             return redirect()->back()->with('error', $e->getMessage());
         }
@@ -103,17 +103,16 @@ class PemeriksaanController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
+    public function show(string $id) {}
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-        //
+        $pemeriksaan = Pemeriksaan::findOrFail($id);
+
+        return view('Admin.Pemeriksaan.edit', compact('pemeriksaan'));
     }
 
     /**
@@ -129,6 +128,9 @@ class PemeriksaanController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $gizi = Pemeriksaan::findOrFail($id);
+        $gizi->delete();
+
+        return redirect()->route('pemeriksaan.index')->with('message', 'Data Pemeriksaan berhasil dihapus');
     }
 }
