@@ -16,15 +16,15 @@ return new class extends Migration
             $table->uuid('id_pemeriksaan')->unique();
             // $table->unsignedBigInteger('gizi_id')->nullable(false);
             $table->foreignId('lansia_id')->constrained('lansias')->onDelete('cascade');
-            $table->date('tanggal_cek');
+            $table->date('tanggal_pemeriksaan')->nullable();
             $table->decimal('berat_badan', 8, 2)->nullable();
+            $table->decimal('tinggi_badan', 8, 2)->nullable();
             $table->decimal('imt', 8, 2);
             $table->string('analisis_imt')->nullable();
             $table->integer('tensi_sistolik');
             $table->string('analisis_tensi')->nullable();
-            $table->decimal('tinggi_lansia', 8, 2)->nullable();
-            $table->date('tanggal_lahir')->nullable();
             $table->integer('tensi_diastolik');
+            $table->string('keterangan')->nullable();
             $table->timestamps();
 
             // Foreign key constraint untuk gizi_id

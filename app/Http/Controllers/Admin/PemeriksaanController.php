@@ -91,19 +91,25 @@ class PemeriksaanController extends Controller
 
         try {
             $validatedData['id_pemeriksaan'] = (string) \Illuminate\Support\Str::uuid();
-            Pemeriksaan::create($validatedData);
+            $pemeriksaan = Pemeriksaan::create($validatedData);
+
+            return redirect(route('pemeriksaan.index'))
+                ->with('success', 'Data Pemeriksaan berhasil ditambahkan!')
+                ->with('data', $pemeriksaan);
         } catch (\Exception $e) {
-            dd($e->getMessage());
             return redirect()->back()->with('error', $e->getMessage());
         }
-
-        return redirect(route('pemeriksaan.index'))->with('success', 'Data Pemeriksaan berhasil ditambahkan!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id) {}
+    public function show(string $id)
+    {
+        $pemeriksaan = Pemeriksaan::with('lansia')->findOrFail($id);
+
+        return view('Admin.Pemeriksaan.show', compact('pemeriksaan'));
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -131,6 +137,6 @@ class PemeriksaanController extends Controller
         $gizi = Pemeriksaan::findOrFail($id);
         $gizi->delete();
 
-        return redirect()->route('pemeriksaan.index')->with('message', 'Data Pemeriksaan berhasil dihapus');
+        return redirect()->route('pemeriksaan.index')->with('error', 'Data Pemeriksaan berhasil dihapus');
     }
 }
