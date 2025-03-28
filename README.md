@@ -9,3 +9,5 @@ Sistem Monitoring kesehatan lansia berbasis Website di Posyandu Lansia Ngudi wal
 - komunikasi dengan keluarga lansia dan akses data secara real-time oleh kader atau petugas posyandu lainnya.
 
 Sistem ini memiliki hak akses dari Petugas Posyandu dan juga pihak keluarga lansia yang akan memudahkan dalam mengelola data lansia dan meningkatkan efisiensi pemantauan kesehatan.
+
+### Installasi
