@@ -57,31 +57,29 @@
             <div class="overflow-x-auto bg-white shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <table class="w-full text-sm text-left text-gray-500 rtl:text-right">
-                        {{-- {{ $gizi->isEmpty() ? 'hidden' : '' }} --}}
+                        {{-- {{ $pemeriksaan->isEmpty() ? 'hidden' : '' }} --}}
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                             <tr class="grid grid-cols-12">
-                                <th class="col-span-4 px-6 py-3">Gambar</th>
-                                <th class="col-span-2 px-6 py-3">Jenis gizi</th>
-                                <th class="col-span-2 px-6 py-3">Menu gizi</th>
-                                <th class="col-span-2 px-6 py-3">Bahan Makanan</th>
+                                <th class="col-span-4 px-6 py-3">#</th>
+                                <th class="col-span-2 px-6 py-3">Nama Lansia</th>
+                                <th class="col-span-2 px-6 py-3">Pemberian Gizi</th>
                                 <th class="col-span-1 px-6 py-3">Aksi</th>
                             </tr>
                         </thead>
-                        {{-- <tbody id="giziTable">
-                            @forelse ($gizi as $item)
+                         <tbody id="giziTable">
+                            @forelse ($pemeriksaan as $item)
                                 <tr class="grid grid-cols-12 bg-white border-b border-gray-200">
-                                    <td class="col-span-4 p-5">
-                                        <img src="{{ asset('storage/' . $item->gambar) }}" class="rounded-md w-72"
-                                            alt="">
+                                    <td class="col-span-2 px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                        {{ $pemeriksaan->id_pemeriksaan ?? '-' }}
                                     </td>
                                     <td class="col-span-2 px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                        {{ $item->jenis_gizi ?? '-' }}
-                                    </td>
-                                    <td class="col-span-2 px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                        {{ $item->menu ?? '-' }}
+                                        Sokearno
                                     </td>
                                     <td class="col-span-2 px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                         {{ $item->bahan_makanan ?? '-' }}
+                                    </td>
+                                    <td class="col-span-2 px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                        belum ditentukan
                                     </td>
                                     <td class="flex col-span-1 gap-2 px-2 py-4">
                                         <a href={{ route('gizi.edit', $item->id) }}
@@ -107,10 +105,10 @@
                                     <span>Data Kosong!</span>
                                 </div>
                             @endforelse
-                        </tbody> --}}
+                        </tbody> 
                     </table>
                     <div class="mt-4 bg-slate-100">
-                        {{-- {{ $kegiatan->links() }} --}}
+                        {{ $pemeriksaan->links() }}
                     </div>
                 </div>
             </div>

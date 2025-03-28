@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('pemeriksaan', function (Blueprint $table) {
             $table->id();
             $table->uuid('id_pemeriksaan')->unique();
-            $table->unsignedBigInteger('gizi_id')->nullable(false);
+            // $table->unsignedBigInteger('gizi_id')->nullable(false);
             $table->foreignId('lansia_id')->constrained('lansias')->onDelete('cascade');
             $table->date('tanggal_cek');
             $table->decimal('berat_badan', 8, 2)->nullable();
@@ -28,7 +28,7 @@ return new class extends Migration
             $table->timestamps();
 
             // Foreign key constraint untuk gizi_id
-            $table->foreign('gizi_id')->references('id')->on('gizi')->onDelete('cascade');
+            // $table->foreign('gizi_id')->references('id')->on('gizi')->onDelete('cascade');
         });
     }
 

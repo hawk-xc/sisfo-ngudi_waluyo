@@ -39,7 +39,7 @@
                                                 kg/m²
                                                 <input type="number" placeholder="IMT Lansia, ex. 70" step="0.1"
                                                     class="grow w-full input {{ $errors->has('imt') ? 'input-error' : '' }}"
-                                                    value="{{ old('imt') }}" name="imt" disabled />
+                                                    value="{{ old('imt') }}" name="imt" readonly />
                                             </label>
                                             @if ($errors->first('imt'))
                                                 <p class="fieldset-label text-error">
