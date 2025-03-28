@@ -52,6 +52,17 @@
                 }
             });
         }
+
+        function callToast(icon, message) {
+            Swal.fire({
+                position: 'bottom-end',
+                icon: icon,
+                title: message,
+                showConfirmButton: false,
+                timer: 3000,
+                toast: true
+            });
+        }
     </script>
 </body>
 
