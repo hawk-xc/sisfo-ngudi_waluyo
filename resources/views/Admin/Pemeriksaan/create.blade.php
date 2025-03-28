@@ -126,8 +126,8 @@
                                     <div class="flex w-full md:gap-3 md:flex-row max-sm:flex-col">
                                         {{-- analisa_imt --}}
                                         <div class="flex flex-col w-full gap-2 p-2">
-                                            <label for="analisa_imt">Analisa IMT</label>
-                                            <select class="select select-success" name="analisa_imt">
+                                            <label for="analisis_imt">Analisa IMT</label>
+                                            <select class="select select-success" name="analisis_imt">
                                                 <option disabled selected>Pilih Analisa IMT</option>
                                                 <option value="normal">Normal</option>
                                                 <option value="kurus">Kurus</option>
@@ -138,8 +138,8 @@
 
                                         {{-- analisa_tensi --}}
                                         <div class="flex flex-col w-full gap-2 p-2">
-                                            <label for="analisa_tensi">Analisa Tensi</label>
-                                            <select class="select select-success" name="analisa_tensi">
+                                            <label for="analisis_tensi">Analisa Tensi</label>
+                                            <select class="select select-success" name="analisis_tensi">
                                                 <option disabled selected>Pilih Analisa Tensi</option>
                                                 <option value="hipotensi">Hipotensi (Rendah)</option>
                                                 <option value="normal">Normal</option>
@@ -169,7 +169,7 @@
                                     <div class="flex flex-col gap-2 p-2 mt-1">
                                         <label for="tanggal_pemeriksaan">Tanggal Pemeriksaan</label>
                                         <fieldset class="fieldset">
-                                            <input type="datetime-local" name="tanggal_pemeriksaan"
+                                            <input type="date" name="tanggal_pemeriksaan"
                                                 value="{{ old('tanggal_pemeriksaan') }}" id="tanggal_pemeriksaan"
                                                 class="w-full input-success input {{ $errors->has('tanggal_pemeriksaan') ? 'input-error' : '' }}">
                                             @if ($errors->first('tanggal_pemeriksaan'))
@@ -311,6 +311,11 @@
 
     <script>
         $(document).ready(function() {
+            // Simpan nilai lansia_id yang sudah ada
+            var selectedLansiaId = "{{ old('lansia_id') }}";
+            var selectedLansiaData = null;
+
+            // Inisialisasi Select2
             $('#input_filter-lansia_id').select2({
                 placeholder: 'Pilih Lansia atau ketik untuk mencari...',
                 theme: 'bootstrap-5',
@@ -360,15 +365,14 @@
                         '<div class="flex flex-col p-2">' +
                         '<span class="font-semibold font-xl">' + item.nama + '</span>' +
                         '<div class="flex flex-wrap gap-2 text-sm">' +
-                        '<span>NIK: ' + item.nik + '</span>' +
+                        '<span>NIK: ' + (item.nik || '-') + '</span>' +
                         '<span>•</span>' +
-                        '<span>Umur: ' + item.umur + ' tahun</span>' +
+                        '<span>Umur: ' + (item.umur || '-') + ' tahun</span>' +
                         '<span>•</span>' +
                         '<span>Alamat: ' + (item.alamat || '-') + '</span>' +
                         '</div>' +
-                        '<div class="text-sm">Penanggung Jawab: ' + (
-                            item.pj_nama ||
-                            '-') + '</div>' +
+                        '<div class="text-sm">Penanggung Jawab: ' + (item.pj_nama || '-') +
+                        '</div>' +
                         '</div>'
                     );
 
@@ -376,13 +380,65 @@
                 },
                 templateSelection: function(item) {
                     if (!item.id) return item.text;
-                    return item.nama + ' (NIK: ' + item.nik + ')';
+                    // Gunakan data yang sudah disimpan jika tersedia
+                    if (selectedLansiaData && item.id === selectedLansiaData.id) {
+                        return selectedLansiaData.nama + ' (NIK: ' + selectedLansiaData.nik + ')';
+                    }
+                    // Fallback untuk data baru yang dipilih
+                    return item.text;
                 }
             });
 
+            // Jika ada lansia_id yang sudah dipilih, load data tersebut
+            if (selectedLansiaId) {
+                // Buat AJAX request untuk mendapatkan detail lansia
+                $.ajax({
+                    url: "{{ route('lansia.select2') }}",
+                    data: {
+                        id: selectedLansiaId
+                    },
+                    dataType: 'json'
+                }).done(function(data) {
+                    if (data.data && data.data.length > 0) {
+                        var lansia = data.data[0];
+
+                        // Format data sesuai kebutuhan Select2
+                        selectedLansiaData = {
+                            id: lansia.id,
+                            text: lansia.nama + ' (NIK: ' + lansia.nik + ')',
+                            nama: lansia.nama,
+                            nik: lansia.nik,
+                            umur: lansia.umur,
+                            alamat: lansia.alamat,
+                            pj_nama: lansia.pj_nama
+                        };
+
+                        // Buat option baru dan tambahkan ke select
+                        var option = new Option(
+                            selectedLansiaData.text,
+                            selectedLansiaData.id,
+                            true,
+                            true
+                        );
+
+                        $('#input_filter-lansia_id').append(option).trigger('change');
+
+                        // Perbarui tampilan
+                        $('#input_filter-lansia_id').trigger({
+                            type: 'select2:select',
+                            params: {
+                                data: selectedLansiaData
+                            }
+                        });
+                    }
+                }).fail(function() {
+                    console.error('Gagal memuat data lansia');
+                });
+            }
+
+            // Fungsi untuk menangani ketika dropdown dibuka
             $('#input_filter-lansia_id').on('select2:open', function() {
                 if ($('#input_filter-lansia_id').find('option').length <= 1) {
-                    $('#input_filter-lansia_id').select2('open');
                     $('.select2-search__field').val('').trigger('input');
                 }
             });
@@ -390,6 +446,12 @@
             // Reset form
             $('#resetButton').on('click', function() {
                 $('#input_filter-lansia_id').val(null).trigger('change');
+                selectedLansiaData = null;
+            });
+
+            // Handle ketika memilih item baru
+            $('#input_filter-lansia_id').on('select2:select', function(e) {
+                selectedLansiaData = e.params.data;
             });
         });
     </script>
