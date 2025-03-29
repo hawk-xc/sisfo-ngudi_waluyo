@@ -7,13 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pemeriksaan extends Model
 {
-    /** @use HasFactory<\Database\Factories\PemeriksaanFactory> */
     use HasFactory;
+
     protected $table = 'pemeriksaan';
     protected $guarded = ['id'];
 
     protected $fillable = [
-        'id_pemeriksaan',
         'imt',
         'lansia_id',
         'berat_badan',
@@ -29,5 +28,17 @@ class Pemeriksaan extends Model
     public function lansia()
     {
         return $this->belongsTo(Lansia::class);
+    }
+
+    public function gizi()
+    {
+        return $this->belongsToMany(Gizi::class, 'pemeriksaan_gizi', 'pemeriksaan_id', 'gizi_id')
+            ->withTimestamps();
+    }
+
+    // Alternative if you need to access the pivot as a model
+    public function pemeriksaanGizi()
+    {
+        return $this->hasMany(PemeriksaanGizi::class);
     }
 }
