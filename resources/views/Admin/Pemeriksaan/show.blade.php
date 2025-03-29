@@ -5,6 +5,20 @@
         </h2>
     </x-slot>
 
+    @if (session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                callToast('success', '{{ session('success') }}')
+            })
+        </script>
+    @elseif (session('error'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                callToast('error', '{{ session('error') }}')
+            })
+        </script>
+    @endif
+
     <dialog id="my_modal_1" class="modal">
         <div class="modal-box">
             <h3 class="text-lg font-bold">Tambah Data Gizi Lansia!</h3>
@@ -152,7 +166,8 @@
                                 Gizi</button>
                         </span>
                         <div class="overflow-x-auto">
-                            <table class="table table-zebra">
+                            <table
+                                class="table table-zebra {{ $pemeriksaan->pemeriksaanGizi->isEmpty() ? 'hidden' : '' }}">
                                 <!-- head -->
                                 <thead>
                                     <tr>
@@ -160,17 +175,48 @@
                                         <th>Jenis Gizi</th>
                                         <th>Menu Gizi</th>
                                         <th>Bahan Makanan</th>
+                                        <th>Harga</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($pemeriksaan->gizi as $item)
+                                    @php
+                                        $counter = 0;
+                                    @endphp
+                                    @forelse ($pemeriksaan->pemeriksaanGizi as $item)
+                                        @php
+                                            $counter++;
+                                        @endphp
                                         <tr>
-                                            <th>{{ $item->id }}</th>
-                                            <td>{{ $item->jenis_gizi }}</td>
-                                            <td>{{ $item->menu }}</td>
-                                            <td>{{ $item->bahan_makanan }}</td>
+                                            <th>{{ $counter }}</th>
+                                            <td>{{ $item->gizi->jenis_gizi }}</td>
+                                            <td>{{ $item->gizi->menu }}</td>
+                                            <td>{{ $item->gizi->bahan_makanan }}</td>
+                                            <td>{{ 'Rp ' . $item->gizi->harga ?? '-' }}</td>
+                                            <th class="join">
+                                                <a href="{{ route('gizi.edit', $item->gizi->id) }}"
+                                                    class="btn join-item btn-sm btn-outline btn-secondary">
+                                                    <i class="ri-edit-line"></i>
+                                                </a>
+
+                                                <form id="delete-form-{{ $item->id }}"
+                                                    action="{{ route('pemeriksaan.remove_gizi', $item->id) }}"
+                                                    method="POST" class="hidden">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <input type="hidden" name="id" value="{{ $item->id }}">
+                                                </form>
+
+                                                <button class="btn join-item btn-sm btn-error btn-outline"
+                                                    onclick="confirmDelete('{{ $item->id }}')">
+                                                    <i class="ri-delete-bin-fill"></i>
+                                                </button>
+                                            </th>
                                         </tr>
                                     @empty
+                                        <div class="flex items-center justify-center w-full mt-3 align-middle">
+                                            <span>Data Gizi Lansia Kosong!</span>
+                                        </div>
                                     @endforelse
                                 </tbody>
                             </table>

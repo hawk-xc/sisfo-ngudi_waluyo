@@ -193,11 +193,30 @@ class PemeriksaanController extends Controller
         $pemeriksaan_id = $request->pemeriksaan_id;
         $gizi_id = $request->gizi_id;
 
+        if (empty($gizi_id)) {
+            return back()->with('error', 'Gagal Simpan : Data Gizi Belum dipilih');
+        }
+
         PemeriksaanGizi::create([
             'pemeriksaan_id' => $pemeriksaan_id,
             'gizi_id' => $gizi_id
         ]);
 
         return back()->with('success', 'Berhasil menambahkan data Gizi!');
+    }
+
+    public function remove_gizi(Request $request)
+    {
+        $pemeriksaan_gizi_id = $request->id;
+
+        // dd($pemeriksaan_gizi_id);
+
+        try {
+            $query = PemeriksaanGizi::findOrFail($pemeriksaan_gizi_id)->delete();
+
+            return back()->with('success', 'Data Gizi pada detail pemeriksaan berhasil dihapus!');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Data Gizi pada detail Pemeriksaan gagal dihapus!');
+        }
     }
 }

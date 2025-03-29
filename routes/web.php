@@ -35,6 +35,7 @@ Route::group([
         'update' => 'pemeriksaan.update'
     ]);
     Route::post('/attact-gizi', [PemeriksaanController::class, 'attach_gizi'])->name('pemeriksaan.attach_gizi');
+    Route::delete('/remove-gizi', [PemeriksaanController::class, 'remove_gizi'])->name('pemeriksaan.remove_gizi');
     Route::resource('/kegiatan', KegiatanController::class)->names([
         'index' => 'kegiatan.index',
         'create' => 'kegiatan.create',
