@@ -184,4 +184,60 @@ class GiziController extends Controller
 
         return redirect()->route('gizi.index')->with('message', 'Gizi berhasil dihapus');
     }
+
+    public function select2(Request $request)
+    {
+        $data = Gizi::query();
+
+        // Select kolom yang diperlukan
+        $data->select(['id', 'jenis_gizi', 'keterangan', 'urt', 'menu', 'status', 'bahan_makanan', 'berat', 'harga']);
+
+        // Jika ada pencarian berdasarkan ID (untuk old input)
+        if ($request->has('id')) {
+            $data->where('id', $request->id);
+            $results = $data->get();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Data Gizi Fetched',
+                'data' => $results,
+            ]);
+        }
+
+        // Jika ada pencarian biasa
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $data->where(function ($query) use ($search) {
+                $query->where('jenis_gizi', 'like', '%' . $search . '%')
+                    ->orWhere('menu', 'like', '%' . $search . '%')
+                    ->orWhere('bahan_makanan', 'like', '%' . $search . '%');
+            });
+        }
+
+        $data->orderBy('jenis_gizi', 'asc');
+
+        // Handle pagination
+        if ($request->has('page')) {
+            $perPage = 10;
+            $results = $data->paginate($perPage);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Data Gizi Fetched',
+                'data' => $results->items(),
+                'pagination' => [
+                    'more' => $results->hasMorePages()
+                ]
+            ]);
+        }
+
+        // Default: tampilkan 10 data pertama
+        $results = $data->limit(10)->get();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data Lansia Fetched',
+            'data' => $results,
+        ]);
+    }
 }
