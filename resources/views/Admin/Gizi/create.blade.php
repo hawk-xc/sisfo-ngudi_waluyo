@@ -71,7 +71,7 @@
                                         <label for="bahan_makanan">Bahan Makanan</label>
                                         <fieldset class="fieldset">
                                             <input type="text" name="bahan_makanan" id="bahan_makanan"
-                                                placeholder="Menu Gizi"
+                                                placeholder="Bahan Makanan"
                                                 class="w-full input {{ $errors->has('bahan_makanan') ? 'input-error' : '' }}"
                                                 value="{{ old('bahan_makanan') }}">
                                             @if ($errors->first('bahan_makanan'))
