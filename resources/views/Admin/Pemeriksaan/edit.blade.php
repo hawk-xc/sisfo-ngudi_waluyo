@@ -27,9 +27,9 @@
                                 </ul>
                             </div>
                         @endif
-                        <form action="{{ route('pemeriksaan.store') }}" method="POST">
+                        <form action="{{ route('pemeriksaan.update', $pemeriksaan->id) }}" method="POST">
                             @csrf
-                            @method('POST')
+                            @method('PUT')
                             <div class="flex flex-col w-full gap-5 p-5 md:flex-row">
                                 <div id="form" class="flex flex-col flex-1 gap-3">
                                     <div class="flex flex-col w-full gap-2 p-2">
@@ -224,7 +224,7 @@
                                     Reset
                                 </button>
                                 <button type="submit" class="btn btn-outline btn-sm btn-primary">
-                                    Simpan Kegiatan
+                                    Update Kegiatan
                                 </button>
                             </div>
                         </form>

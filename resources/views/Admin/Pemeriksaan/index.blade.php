@@ -8,13 +8,13 @@
     @if (session('success'))
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                callToast('success', 'Data Pemeriksaan berhasil ditambah!')
+                callToast('success', '{{ session('success') }}')
             })
         </script>
     @elseif (session('error'))
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                callToast('error', 'Data Pemeriksaan berhasil dihapus!')
+                callToast('error', '{{ session('error') }}')
             })
         </script>
     @endif
