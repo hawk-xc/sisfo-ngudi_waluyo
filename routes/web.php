@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\PemeriksaanController;
 use App\Http\Controllers\Admin\GiziController;
 use App\Http\Controllers\Admin\KegiatanController;
+use App\Http\Controllers\Admin\PenanggungJawabController;
 use App\Http\Controllers\LansiaController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -65,6 +66,14 @@ Route::group([
         Route::delete('/delete-lansia/{id}', [LansiaController::class, 'destroy'])->name('lansia.destroy');
         Route::get('/select2', [LansiaController::class, 'select2'])->name('lansia.select2');
     });
+    Route::resource('/pj', PenanggungJawabController::class)->names([
+        'index' => 'pj.index',
+        'create' => 'pj.create',
+        'store' => 'pj.store',
+        'edit' => 'pj.edit',
+        'update' => 'pj.update',
+        'destroy' => 'pj.destroy',
+    ]);
 });
 
 
