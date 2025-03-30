@@ -14,6 +14,7 @@ class Pemeriksaan extends Model
 
     protected $fillable = [
         'imt',
+        'id_pemeriksaan',
         'lansia_id',
         'berat_badan',
         'tinggi_badan',
