@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Services\PasswordService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PenanggungJawabController extends Controller
 {
@@ -12,7 +15,9 @@ class PenanggungJawabController extends Controller
      */
     public function index()
     {
-        return view('Admin.PJ.index');
+        $pj_users = User::where('role_id', 3)->with('lansias')->get();
+
+        return view('Admin.PJ.index', compact('pj_users'));
     }
 
     /**
@@ -20,7 +25,7 @@ class PenanggungJawabController extends Controller
      */
     public function create()
     {
-        //
+        return view('Admin.PJ.create');
     }
 
     /**
@@ -28,7 +33,35 @@ class PenanggungJawabController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $password = Str::random(rand(1, 9));
+
+        $message = [
+            'name.required' => 'Nama Penanggung Jawab harus diisi',
+            'email.required' => 'Email Penanggung Jawab harus diisi',
+            'email.email' => 'Email Penanggung Jawab harus valid',
+            'email.unique' => 'Email Penanggung Jawab sudah terdaftar'
+        ];
+
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+        ], $message);
+
+        try {
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => bcrypt($password),
+                'raw_password' => PasswordService::encrypt($password),
+                'role_id' => 3
+            ]);
+
+            return redirect()->route('pj.index')
+                ->with('success', 'Data Penanggung jawab Berhasil dibuat!');
+        } catch (\Exception $e) {
+            return redirect()->route('pj.index')
+                ->with('error', 'Data Penanggung jawab Gagal dibuat!');
+        }
     }
 
     /**
@@ -36,7 +69,11 @@ class PenanggungJawabController extends Controller
      */
     public function show(string $id)
     {
-        return view('Admin.PJ.show');
+        $pj_user = User::where('id', $id)->with('lansias')->first();
+
+        $decryptedPassword = PasswordService::decrypt($pj_user->raw_password);
+
+        return view('Admin.PJ.show', compact(['pj_user', 'decryptedPassword']));
     }
 
     /**
