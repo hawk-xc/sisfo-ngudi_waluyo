@@ -17,20 +17,23 @@ class PemeriksaanController extends Controller
         $sort = $request->query('sort', 'asc');
         $search = $request->query('search');
 
-        $query = Pemeriksaan::with('lansia')->orderBy('created_at', $sort);
+        $query = Pemeriksaan::with(['lansia', 'pemeriksaanGizi'])
+            ->orderBy('created_at', $sort);
 
         if ($search) {
             $query->whereHas('lansia', function ($q) use ($search) {
-                $q->where('name', 'like', "%$search%");
+                $q->where('nama', 'like', "%{$search}%");
             });
         }
 
         $pemeriksaan = $query->paginate(10);
 
         if ($request->ajax()) {
-            return view('Admin.Pemeriksaan.partials.gizi_table', compact('pemeriksaan'))->render();
+            return response()->json([
+                'html' => view('Admin.Pemeriksaan.partials.pemeriksaan_table', compact('pemeriksaan'))->render(),
+                'pagination' => $pemeriksaan->links()->toHtml()
+            ]);
         }
-
 
         return view('Admin.Pemeriksaan.index', compact('pemeriksaan', 'sort'));
     }
