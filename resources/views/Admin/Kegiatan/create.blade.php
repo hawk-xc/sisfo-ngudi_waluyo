@@ -53,7 +53,7 @@
                                     <div class="flex flex-col gap-2 p-2">
                                         <label for="name">Tanggal Kegiatan</label>
                                         <fieldset class="fieldset">
-                                            <input type="datetime-local" name="tanggal_kegiatan"
+                                            <input type="date" name="tanggal_kegiatan"
                                                 value="{{ old('tanggal_kegiatan') }}" id="tanggal_kegiatan"
                                                 class="w-full input {{ $errors->has('tanggal_kegiatan') ? 'input-error' : '' }}">
                                             @if ($errors->first('tanggal_kegiatan'))

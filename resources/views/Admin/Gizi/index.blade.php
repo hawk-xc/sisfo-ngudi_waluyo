@@ -5,6 +5,20 @@
         </h2>
     </x-slot>
 
+    @if (session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                callToast('success', '{{ session('success') }}')
+            })
+        </script>
+    @elseif (session('error'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                callToast('error', '{{ session('error') }}')
+            })
+        </script>
+    @endif
+
     <div class="px-4 py-12 md:px-0">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="flex flex-col gap-4 p-4 mb-4 bg-white shadow-sm sm:rounded-lg md:flex-row md:items-center">
@@ -83,9 +97,9 @@
                                     <td class="col-span-2 px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                         {{ $item->bahan_makanan ?? '-' }}
                                     </td>
-                                    <td class="flex col-span-1 gap-2 px-2 py-4">
+                                    <td class="flex col-span-1 px-2 py-4 join">
                                         <a href={{ route('gizi.edit', $item->id) }}
-                                            class="btn btn-sm btn-outline btn-primary">
+                                            class="btn btn-sm btn-outline join-item btn-warning">
                                             <i class="ri-edit-2-fill"></i>
                                         </a>
 
@@ -96,7 +110,7 @@
                                             @method('DELETE')
                                         </form>
 
-                                        <button class="btn btn-sm btn-error btn-outline"
+                                        <button class="btn btn-sm btn-error join-item btn-outline"
                                             onclick="confirmDelete('{{ $item->id }}')">
                                             <i class="ri-delete-bin-fill"></i>
                                         </button>
@@ -110,7 +124,7 @@
                         </tbody>
                     </table>
                     <div class="mt-4 bg-slate-100">
-                        {{-- {{ $kegiatan->links() }} --}}
+                        {{ $gizi->links() }}
                     </div>
                 </div>
             </div>
@@ -134,19 +148,19 @@
                 row.style.display = name.includes(filter) ? '' : 'none';
             });
         });
-          document.getElementById('search').addEventListener('input', function() {
-        let query = this.value;
+        document.getElementById('search').addEventListener('input', function() {
+            let query = this.value;
 
-        fetch("{{ route('gizi.index') }}?search=" + query, {
-            headers: {
-                "X-Requested-With": "XMLHttpRequest"
-            }
-        })
-        .then(response => response.text())
-        .then(html => {
-            document.getElementById('giziTable').innerHTML = html;
-        })
-        .catch(error => console.error('Error:', error));
-    });
+            fetch("{{ route('gizi.index') }}?search=" + query, {
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest"
+                    }
+                })
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('giziTable').innerHTML = html;
+                })
+                .catch(error => console.error('Error:', error));
+        });
     </script>
 </x-app-layout>

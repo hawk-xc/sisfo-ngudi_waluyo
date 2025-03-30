@@ -87,24 +87,19 @@ class KegiatanController extends Controller
             ? $request->file('gambar')->store('kegiatan', 'public')
             : null;
 
-        $kegiatan = Kegiatan::create([
-            'nama_kegiatan' => $validatedData['nama_kegiatan'],
-            'slug' => $slug,
-            'keterangan' => $validatedData['keterangan'],
-            'gambar' => $gambarPath,
-            'tanggal_kegiatan' => $tanggalKegiatan
-        ]);
+        try {
+            $kegiatan = Kegiatan::create([
+                'nama_kegiatan' => $validatedData['nama_kegiatan'],
+                'slug' => $slug,
+                'keterangan' => $validatedData['keterangan'],
+                'gambar' => $gambarPath,
+                'tanggal_kegiatan' => $tanggalKegiatan
+            ]);
 
-        return redirect()->route('kegiatan.index')->with('message', 'Kegiatan berhasil dibuat');
-    }
-
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+            return redirect()->route('kegiatan.index')->with('success', 'Data Kegiatan berhasil ditambahkan!');
+        } catch (\Exception $e) {
+            return redirect()->route('kegiatan.index')->with('error', 'Data Kegiatan gagal ditambahkan!');
+        }
     }
 
     /**
@@ -149,9 +144,13 @@ class KegiatanController extends Controller
             $kegiatan->gambar = $gambarPath;
         }
 
-        $kegiatan->save();
+        try {
+            $kegiatan->save();
 
-        return redirect()->route('kegiatan.index')->with('message', 'Kegiatan berhasil diperbarui');
+            return redirect()->route('kegiatan.index')->with('message', 'Data Kegiatan berhasil diperbarui');
+        } catch (\Exception $e) {
+            return redirect()->route('kegiatan.index')->with('error', 'Data Kegiatan gagal diubah');
+        }
     }
 
     /**
@@ -162,6 +161,6 @@ class KegiatanController extends Controller
         $kegiatan = Kegiatan::where('slug', $slug)->firstOrFail();
         $kegiatan->delete();
 
-        return redirect()->route('kegiatan.index')->with('message', 'Kegiatan berhasil dihapus');
+        return redirect()->route('kegiatan.index')->with('success', 'Data Kegiatan berhasil dihapus');
     }
 }

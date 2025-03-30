@@ -5,6 +5,20 @@
         </h2>
     </x-slot>
 
+    @if (session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                callToast('success', '{{ session('success') }}')
+            })
+        </script>
+    @elseif (session('error'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                callToast('error', '{{ session('error') }}')
+            })
+        </script>
+    @endif
+
     <div class="px-4 py-12 md:px-0">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="flex flex-col gap-4 p-4 mb-4 bg-white shadow-sm sm:rounded-lg md:flex-row md:items-center">
@@ -56,81 +70,124 @@
 
             <div class="overflow-x-auto bg-white shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <table class="w-full text-sm text-left text-gray-500 rtl:text-right">
-                        {{-- {{ $pemeriksaan->isEmpty() ? 'hidden' : '' }} --}}
+                    <table
+                        class="w-full text-sm text-left text-gray-500 rtl:text-right {{ $pemeriksaan->isEmpty() ? 'hidden' : '' }}">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                             <tr class="grid grid-cols-12">
-                                <th class="col-span-4 px-6 py-3">#</th>
+                                <th class="col-span-1 px-6 py-3">ID</th>
                                 <th class="col-span-2 px-6 py-3">Nama Lansia</th>
-                                <th class="col-span-2 px-6 py-3">Pemberian Gizi</th>
-                                <th class="col-span-1 px-6 py-3">Aksi</th>
+                                <th class="col-span-2 px-6 py-3">Tanggal Pemeriksaan</th>
+                                <th class="col-span-2 px-6 py-3">IMT</th>
+                                <th class="col-span-3 px-6 py-3">Pemberian Gizi</th>
+                                <th class="col-span-2 px-6 py-3">Aksi</th>
                             </tr>
                         </thead>
-                         <tbody id="giziTable">
+                        <tbody id="pemeriksaanTable">
                             @forelse ($pemeriksaan as $item)
                                 <tr class="grid grid-cols-12 bg-white border-b border-gray-200">
-                                    <td class="col-span-2 px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                        {{ $pemeriksaan->id_pemeriksaan ?? '-' }}
+                                    <td class="col-span-1 px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                        {{ '#' . $item->id ?? '-' }}
                                     </td>
                                     <td class="col-span-2 px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                        Sokearno
+                                        @if ($item->lansia)
+                                            @switch($item->lansia->jenis_kelamin)
+                                                @case('Laki-laki')
+                                                    Tn.
+                                                @break
+
+                                                @default
+                                                    Ny.
+                                            @endswitch
+                                        @endif
+                                        {{ $item->lansia->nama ?? '-' }}
                                     </td>
                                     <td class="col-span-2 px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                        {{ $item->bahan_makanan ?? '-' }}
+                                        {{ $item->tanggal_pemeriksaan ?? '-' }}
                                     </td>
                                     <td class="col-span-2 px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                        belum ditentukan
+                                        {{ $item->imt . ' kg/m²' ?? '-' }}
                                     </td>
-                                    <td class="flex col-span-1 gap-2 px-2 py-4">
-                                        <a href={{ route('gizi.edit', $item->id) }}
-                                            class="btn btn-sm btn-outline btn-primary">
+                                    <td class="col-span-3 px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                        @if ($item->pemeriksaanGizi->count() > 0)
+                                            <span class="badge badge-primary">
+                                                {{ $item->pemeriksaanGizi->count() }} Data Gizi ditambahkan
+                                            </span>
+                                        @else
+                                            <span class="badge badge-warning">
+                                                belum ditentukan
+                                            </span>
+                                        @endif
+                                    </td>
+                                    <td class="flex col-span-2 px-2 py-4 join">
+                                        <a href="{{ route('pemeriksaan.show', $item->id) }}"
+                                            class="btn join-item btn-sm btn-outline btn-primary">
+                                            <i class="ri-eye-line"></i>
+                                        </a>
+
+                                        <a href={{ route('pemeriksaan.edit', $item->id) }}
+                                            class="btn join-item btn-sm btn-outline btn-warning">
                                             <i class="ri-edit-2-fill"></i>
                                         </a>
 
                                         <form id="delete-form-{{ $item->id }}"
-                                            action="{{ route('gizi.destroy', $item->id) }}" method="POST"
+                                            action="{{ route('pemeriksaan.destroy', $item->id) }}" method="POST"
                                             class="hidden">
                                             @csrf
                                             @method('DELETE')
                                         </form>
 
-                                        <button class="btn btn-sm btn-error btn-outline"
+                                        <button class="btn join-item btn-sm btn-error btn-outline"
                                             onclick="confirmDelete('{{ $item->id }}')">
                                             <i class="ri-delete-bin-fill"></i>
                                         </button>
                                     </td>
                                 </tr>
-                            @empty
-                                <div class="flex items-center justify-center w-full mt-3 align-middle">
-                                    <span>Data Kosong!</span>
-                                </div>
-                            @endforelse
-                        </tbody> 
-                    </table>
-                    <div class="mt-4 bg-slate-100">
-                        {{ $pemeriksaan->links() }}
+                                @empty
+                                    <div class="flex items-center justify-center w-full mt-3 align-middle">
+                                        <span>Data Kosong!</span>
+                                    </div>
+                                @endforelse
+                            </tbody>
+                        </table>
+                        <div class="mt-4 bg-slate-100 pagination">
+                            {{ $pemeriksaan->links() }}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <script>
-        document.getElementById('search').addEventListener('input', function() {
-            @if (session('success'))
-                Swal.fire({
-                    title: "Sukses!",
-                    text: "{{ session('success') }}",
-                    icon: "success",
-                    confirmButtonText: "OK"
-                });
-            @endif
+        <script>
+            document.getElementById('search').addEventListener('input', function(e) {
+                let query = this.value;
 
-            let filter = this.value.toLowerCase();
-            let rows = document.querySelectorAll('#giziTable tr');
-            rows.forEach(row => {
-                let name = row.cells[0].textContent.toLowerCase();
-                row.style.display = name.includes(filter) ? '' : 'none';
+                // Tampilkan loading indicator jika diperlukan
+                document.getElementById('pemeriksaanTable').innerHTML =
+                    '<tr><td colspan="6" class="py-4 text-center">Mencari data...</td></tr>';
+
+                fetch(`{{ route('pemeriksaan.index') }}?search=${query}`, {
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'Accept': 'application/json'
+                        }
+                    })
+                    .then(response => {
+                        if (!response.ok) throw new Error('Network response was not ok');
+                        return response.json();
+                    })
+                    .then(data => {
+                        document.getElementById('pemeriksaanTable').innerHTML = data.html;
+
+                        // Update pagination
+                        let paginationContainer = document.querySelector('.pagination');
+                        if (paginationContainer) {
+                            paginationContainer.innerHTML = data.pagination;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        document.getElementById('pemeriksaanTable').innerHTML =
+                            '<tr><td colspan="6" class="py-4 text-center text-red-500">Terjadi kesalahan saat memuat data</td></tr>';
+                    });
             });
-        });
-    </script>
-</x-app-layout>
+        </script>
+    </x-app-layout>

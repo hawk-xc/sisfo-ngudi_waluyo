@@ -31,8 +31,11 @@ Route::group([
         'show' => 'pemeriksaan.show',
         'create' => 'pemeriksaan.create',
         'store' => 'pemeriksaan.store',
-        'edit' => 'pemeriksaan.edit'
+        'edit' => 'pemeriksaan.edit',
+        'update' => 'pemeriksaan.update'
     ]);
+    Route::post('/attact-gizi', [PemeriksaanController::class, 'attach_gizi'])->name('pemeriksaan.attach_gizi');
+    Route::delete('/remove-gizi', [PemeriksaanController::class, 'remove_gizi'])->name('pemeriksaan.remove_gizi');
     Route::resource('/kegiatan', KegiatanController::class)->names([
         'index' => 'kegiatan.index',
         'create' => 'kegiatan.create',
@@ -49,6 +52,7 @@ Route::group([
         'update' => 'gizi.update',
         'destroy' => 'gizi.destroy',
     ]);
+    Route::get('/select2', [GiziController::class, 'select2'])->name('gizi.select2');
     Route::group([
         'prefix' => 'lansia',
     ], function () {
