@@ -14,6 +14,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
+    'password_encryption_key' => env('PASSWORD_ENCRYPTION_KEY'),
 
     /*
     |--------------------------------------------------------------------------
