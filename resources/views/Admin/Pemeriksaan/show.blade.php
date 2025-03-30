@@ -206,7 +206,7 @@
                                             <td>{{ 'Rp ' . $item->gizi->harga ?? '-' }}</td>
                                             <th class="join">
                                                 <a href="{{ route('gizi.edit', $item->gizi->id) }}"
-                                                    class="btn join-item btn-sm btn-outline btn-secondary">
+                                                    class="btn join-item btn-sm btn-outline btn-warning">
                                                     <i class="ri-edit-line"></i>
                                                 </a>
 
