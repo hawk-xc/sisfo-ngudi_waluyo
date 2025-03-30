@@ -38,11 +38,18 @@
                             <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                                 <div>
                                     <p class="font-medium text-gray-600">Nama:</p>
-                                    <p class="text-lg font-semibold">John Doe</p>
+                                    <p class="text-lg font-semibold">{{ $pj_user->name }}</p>
                                 </div>
                                 <div>
                                     <p class="font-medium text-gray-600">Tanggal ditambahkan:</p>
-                                    <p class="text-lg font-semibold">10-10-2024</p>
+                                    <p class="text-lg font-semibold">{{ $pj_user->created_at }}</p>
+                                    <span class="text-xs font-light text-slate-500">
+                                        {{ \Carbon\Carbon::parse($pj_user->created_at)->isoFormat('DD MMMM YYYY HH:mm') }}
+                                        ({{ \Carbon\Carbon::parse($pj_user->created_at)->diffForHumans(now(), [
+                                            'parts' => 3,
+                                            'join' => ', ',
+                                        ]) }})
+                                    </span>
                                 </div>
                                 <div>
                                     <p class="font-medium text-gray-600">Jenis Hak:</p>
@@ -60,11 +67,21 @@
                                     <tbody class="border">
                                         <tr>
                                             <th>Email</th>
-                                            <td>johndoe@gmail.com</td>
+                                            <td>{{ $pj_user->email }}</td>
                                         </tr>
                                         <tr>
                                             <th>Password</th>
-                                            <td>randomstring7-10</td>
+                                            <td>
+                                                <div class="flex items-center gap-2">
+                                                    <span id="passwordField">••••••••</span>
+                                                    <button type="button" id="togglePassword"
+                                                        class="text-gray-500 hover:text-gray-700">
+                                                        <i class="ri-eye-off-line" id="passwordIcon"></i>
+                                                    </button>
+                                                    <input type="hidden" id="realPassword"
+                                                        value="{{ $decryptedPassword }}">
+                                                </div>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -77,7 +94,7 @@
                                 diampu
                             </h3>
                             <div class="overflow-x-auto">
-                                <table class="table table-zebra">
+                                <table class="table table-zebra {{ $pj_user->lansias->isEmpty() ? 'hidden' : '' }}">
                                     {{-- {{ $pemeriksaan->pemeriksaanGizi->isEmpty() ? 'hidden' : '' }} --}}
                                     <thead>
                                         <tr>
@@ -90,32 +107,33 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <th>1</th>
-                                            <td>Rosevelt</td>
-                                            <td>350101012121</td>
-                                            <td class="badge badge-warning">Perempuan</td>
-                                            <td>70 Tahun</td>
-                                            <th class="join">
-                                                <a href="{{ route('lansia.show', 1) }}"
-                                                    class="btn join-item btn-sm btn-outline btn-primary">
-                                                    <i class="ri-eye-line"></i>
-                                                </a>
-                                            </th>
-                                        </tr>
-                                        <tr>
-                                            <th>2</th>
-                                            <td>Daniel</td>
-                                            <td>350101012122</td>
-                                            <td class="badge badge-primary">Laki-laki</td>
-                                            <td>67 Tahun</td>
-                                            <th class="join">
-                                                <a href="{{ route('lansia.show', 1) }}"
-                                                    class="btn join-item btn-sm btn-outline btn-primary">
-                                                    <i class="ri-eye-line"></i>
-                                                </a>
-                                            </th>
-                                        </tr>
+                                        @php
+                                            $counter = 0;
+                                        @endphp
+                                        @forelse ($pj_user->lansias as $lansia)
+                                            @php
+                                                $counter++;
+                                            @endphp
+                                            <tr>
+                                                <th>{{ $counter }}</th>
+                                                <td>{{ $lansia->nama ?? '-' }}</td>
+                                                <td>{{ $lansia->nik ?? '-' }}</td>
+                                                <td
+                                                    class="badge {{ $lansia->jenis_kelamin == 'Perempuan' ? 'badge-warning' : 'badge-primary' }}">
+                                                    {{ $lansia->jenis_kelamin }}</td>
+                                                <td>{{ $lansia->umur . ' Tahun' ?? '-' }}</td>
+                                                <th class="join">
+                                                    <a href="{{ route('lansia.show', $lansia->id) }}"
+                                                        class="btn join-item btn-sm btn-outline btn-primary">
+                                                        <i class="ri-eye-line"></i>
+                                                    </a>
+                                                </th>
+                                            </tr>
+                                        @empty
+                                            <div class="flex items-center justify-center w-full mt-3 align-middle">
+                                                <span>Data Kosong!</span>
+                                            </div>
+                                        @endforelse
                                     </tbody>
                                 </table>
                             </div>
@@ -189,76 +207,27 @@
     </style>
 
     <script>
-        $(document).ready(function() {
-            // ==================== SELECT2 GIZI ====================
-            $('#input_filter-gizi_id').select2({
-                placeholder: 'Pilih Menu Gizi atau ketik untuk mencari...',
-                theme: 'bootstrap-5',
-                allowClear: true,
-                width: '100%',
-                dropdownParent: $('#my_modal_1'),
-                ajax: {
-                    url: "{{ route('gizi.select2') }}",
-                    delay: 250,
-                    dataType: 'json',
-                    data: function(params) {
-                        return {
-                            search: params.term,
-                            page: params.page || 1
-                        };
-                    },
-                    processResults: function(data, params) {
-                        params.page = params.page || 1;
-                        return {
-                            results: $.map(data.data, function(item) {
-                                return {
-                                    id: item.id,
-                                    text: `${item.jenis_gizi} - ${item.menu}`,
-                                    jenis_gizi: item.jenis_gizi,
-                                    menu: item.menu,
-                                    bahan_makanan: item.bahan_makanan,
-                                    urt: item.urt,
-                                    berat: item.berat,
-                                    harga: item.harga
-                                };
-                            }),
-                            pagination: {
-                                more: (params.page * 10) < script(data.total || data.data.length)
-                            }
-                        };
-                    },
-                    cache: true
-                },
-                templateResult: function(item) {
-                    if (item.loading) return item.text;
-                    if (!item.id) return item.text;
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleButton = document.getElementById('togglePassword');
+            const passwordField = document.getElementById('passwordField');
+            const passwordIcon = document.getElementById('passwordIcon');
+            const realPassword = document.getElementById('realPassword').value;
 
-                    return $(
-                        '<div class="flex flex-col p-2">' +
-                        '<span class="font-semibold font-xl">' + item.jenis_gizi + '</span>' +
-                        '<div class="flex flex-wrap gap-2 text-sm">' +
-                        '<span>Menu: ' + (item.menu || '-') + '</span>' +
-                        '<span>•</span>' +
-                        '<span>Bahan: ' + (item.bahan_makanan || '-') + '</span>' +
-                        '</div>' +
-                        '<div class="flex gap-2 text-sm">' +
-                        '<span>URT: ' + (item.urt || '-') + '</span>' +
-                        '<span>•</span>' +
-                        '<span>Berat: ' + (item.berat || '-') + ' gram</span>' +
-                        '</div>' +
-                        '</div>'
-                    );
-                },
-                templateSelection: function(item) {
-                    if (!item.id) return item.text;
-                    return item.jenis_gizi + ' - ' + item.menu;
+            let isVisible = false;
+
+            toggleButton.addEventListener('click', function() {
+                isVisible = !isVisible;
+
+                if (isVisible) {
+                    passwordField.textContent = realPassword;
+                    passwordIcon.classList.remove('ri-eye-off-line');
+                    passwordIcon.classList.add('ri-eye-line');
+                } else {
+                    passwordField.textContent = '••••••••';
+                    passwordIcon.classList.remove('ri-eye-line');
+                    passwordIcon.classList.add('ri-eye-off-line');
                 }
             });
-
-            // Fungsi untuk membuka modal
-            window.showGiziModal = function() {
-                document.getElementById('my_modal_1').showModal();
-            };
         });
     </script>
 </x-app-layout>
