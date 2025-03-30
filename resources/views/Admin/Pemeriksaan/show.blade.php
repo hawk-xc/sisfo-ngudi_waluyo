@@ -156,7 +156,18 @@
                             </div>
                         </section>
                     </div>
-                    <div id="second-content" class="p-6 mt-5">
+                    @if ($pemeriksaan->keterangan)
+                        <div id="second-content" class="p-6 mt-5">
+                            <h3 class="flex items-center mb-4 text-xl font-semibold text-gray-800">
+                                <i class="mr-2 text-orange-400 ri-sticky-note-line"></i> Keterangan Detail Pemeriksaan
+                                Lansia
+                            </h3>
+                            <span>
+                                {!! $pemeriksaan->keterangan !!}
+                            </span>
+                        </div>
+                    @endif
+                    <div id="third-content" class="p-6 mt-5">
                         <span class="flex flex-row items-center justify-between">
                             <h3 class="flex items-center mb-4 text-xl font-semibold text-gray-800">
                                 <i class="mr-2 text-green-400 ri-restaurant-line"></i> Informasi Gizi Lansia

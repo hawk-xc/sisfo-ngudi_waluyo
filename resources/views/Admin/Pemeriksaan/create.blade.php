@@ -129,10 +129,18 @@
                                             <label for="analisis_imt">Analisa IMT</label>
                                             <select class="select select-success" name="analisis_imt">
                                                 <option disabled selected>Pilih Analisa IMT</option>
-                                                <option value="normal">Normal</option>
-                                                <option value="kurus">Kurus</option>
-                                                <option value="gemuk">Gemuk</option>
-                                                <option value="obesitas">Obesitas</option>
+                                                <option value="normal"
+                                                    {{ old('analisis_imt') == 'normal' ? 'selected' : '' }}>Normal
+                                                </option>
+                                                <option value="kurus"
+                                                    {{ old('analisis_imt') == 'kurus' ? 'selected' : '' }}>Kurus
+                                                </option>
+                                                <option value="gemuk"
+                                                    {{ old('analisis_imt') == 'gemuk' ? 'selected' : '' }}>Gemuk
+                                                </option>
+                                                <option value="obesitas"
+                                                    {{ old('analisis_imt') == 'obesitas' ? 'selected' : '' }}>Obesitas
+                                                </option>
                                             </select>
                                         </div>
 
@@ -141,12 +149,24 @@
                                             <label for="analisis_tensi">Analisa Tensi</label>
                                             <select class="select select-success" name="analisis_tensi">
                                                 <option disabled selected>Pilih Analisa Tensi</option>
-                                                <option value="hipotensi">Hipotensi (Rendah)</option>
-                                                <option value="normal">Normal</option>
-                                                <option value="prehipertensi">Prehipertensi</option>
-                                                <option value="hipertensi_stage1">Hipertensi Stage 1</option>
-                                                <option value="hipertensi_stage2">Hipertensi Stage 2</option>
-                                                <option value="krisis_hipertensi">Krisis Hipertensi</option>
+                                                <option value="hipotensi"
+                                                    {{ old('analisis_tensi') == 'hipotensi' ? 'selected' : '' }}>
+                                                    Hipotensi (Rendah)</option>
+                                                <option value="normal"
+                                                    {{ old('analisis_tensi') == 'normal' ? 'selected' : '' }}>Normal
+                                                </option>
+                                                <option value="prehipertensi"
+                                                    {{ old('analisis_tensi') == 'prehipertensi' ? 'selected' : '' }}>
+                                                    Prehipertensi</option>
+                                                <option value="hipertensi_stage1"
+                                                    {{ old('analisis_tensi') == 'hipertensi_stage1' ? 'selected' : '' }}>
+                                                    Hipertensi Stage 1</option>
+                                                <option value="hipertensi_stage2"
+                                                    {{ old('analisis_tensi') == 'hipertensi_stage2' ? 'selected' : '' }}>
+                                                    Hipertensi Stage 2</option>
+                                                <option value="krisis_hipertensi"
+                                                    {{ old('analisis_tensi') == 'krisis_hipertensi' ? 'selected' : '' }}>
+                                                    Krisis Hipertensi</option>
                                             </select>
                                         </div>
                                     </div>

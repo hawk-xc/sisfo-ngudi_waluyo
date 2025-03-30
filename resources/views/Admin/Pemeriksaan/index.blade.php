@@ -108,9 +108,15 @@
                                         {{ $item->imt . ' kg/m²' ?? '-' }}
                                     </td>
                                     <td class="col-span-3 px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                        <span class="badge badge-warning">
-                                            belum ditentukan
-                                        </span>
+                                        @if ($item->pemeriksaanGizi->count() > 0)
+                                            <span class="badge badge-primary">
+                                                {{ $item->pemeriksaanGizi->count() }} Data Gizi ditambahkan
+                                            </span>
+                                        @else
+                                            <span class="badge badge-warning">
+                                                belum ditentukan
+                                            </span>
+                                        @endif
                                     </td>
                                     <td class="flex col-span-2 px-2 py-4 join">
                                         <a href="{{ route('pemeriksaan.show', $item->id) }}"
