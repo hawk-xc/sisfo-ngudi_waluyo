@@ -12,17 +12,17 @@
         <td class="col-span-2 px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
             {{ $item->bahan_makanan ?? '-' }}
         </td>
-        <td class="flex col-span-1 gap-2 px-2 py-4">
-            <a href={{ route('gizi.edit', $item->id) }} class="btn btn-sm btn-outline btn-primary">
+        <td class="flex col-span-1 px-2 py-4 join">
+            <a href={{ route('gizi.edit', $item->id) }} class="btn join-item btn-sm btn-outline btn-primary">
                 <i class="ri-edit-2-fill"></i>
             </a>
-            <button class="btn btn-sm btn-error btn-outline" onclick="confirmDelete('{{ $item->id }}')">
+            <button class="btn btn-sm join-item btn-error btn-outline" onclick="confirmDelete('{{ $item->id }}')">
                 <i class="ri-delete-bin-fill"></i>
             </button>
         </td>
     </tr>
 @empty
     <tr>
-        <td colspan="5" class="text-center p-4">Data Kosong!</td>
+        <td colspan="5" class="p-4 text-center">Data Kosong!</td>
     </tr>
 @endforelse

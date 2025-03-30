@@ -88,18 +88,22 @@ class GiziController extends Controller
             ? $request->file('gambar')->store('gizi', 'public')
             : null;
 
-        $kegiatan = Gizi::create([
-            'jenis_gizi' => $validatedData['jenis_gizi'],
-            'menu_gizi' => $validatedData['menu_gizi'],
-            'bahan_makanan' => $validatedData['bahan_makanan'],
-            'berat' => $validatedData['berat'],
-            'urt' => $validatedData['urt'],
-            'harga' => $validatedData['harga'],
-            'keterangan' => $validatedData['keterangan'],
-            'gambar' => $gambarPath
-        ]);
+        try {
+            $kegiatan = Gizi::create([
+                'jenis_gizi' => $validatedData['jenis_gizi'],
+                'menu_gizi' => $validatedData['menu_gizi'],
+                'bahan_makanan' => $validatedData['bahan_makanan'],
+                'berat' => $validatedData['berat'],
+                'urt' => $validatedData['urt'],
+                'harga' => $validatedData['harga'],
+                'keterangan' => $validatedData['keterangan'],
+                'gambar' => $gambarPath
+            ]);
 
-        return redirect()->route('gizi.index')->with('message', 'Berhasil menambah Gizi');
+            return redirect()->route('gizi.index')->with('success', 'Berhasil menambah Data Gizi!');
+        } catch (\Exception $e) {
+            return redirect()->route('gizi.index')->with('error', 'Gagal menambah Data Gizi!');
+        }
     }
 
     /**
@@ -169,9 +173,13 @@ class GiziController extends Controller
             $gizi->gambar = $gambarPath;
         }
 
-        $gizi->save();
+        try {
+            $gizi->save();
 
-        return redirect()->route('gizi.index')->with('message', 'Berhasil update data Gizi');
+            return redirect()->route('gizi.index')->with('success', 'Berhasil Update Data Gizi!');
+        } catch (\Exception $e) {
+            return redirect()->route('gizi.index')->with('error', 'Gagal Update Data Gizi!');
+        }
     }
 
     /**
@@ -180,9 +188,14 @@ class GiziController extends Controller
     public function destroy(string $id)
     {
         $gizi = Gizi::findOrFail($id);
-        $gizi->delete();
 
-        return redirect()->route('gizi.index')->with('message', 'Gizi berhasil dihapus');
+        try {
+            $gizi->delete();
+
+            return redirect()->route('gizi.index')->with('success', 'Data Gizi berhasil dihapus!');
+        } catch (\Exception $e) {
+            return redirect()->route('gizi.index')->with('error', 'Data Gizi gagal dihapus, data gizi telah ditambahkan ke data pemeriksaan!');
+        }
     }
 
     public function select2(Request $request)
