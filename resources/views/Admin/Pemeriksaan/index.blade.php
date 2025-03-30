@@ -125,7 +125,7 @@
                                         </a>
 
                                         <a href={{ route('pemeriksaan.edit', $item->id) }}
-                                            class="btn join-item btn-sm btn-outline btn-danger">
+                                            class="btn join-item btn-sm btn-outline btn-warning">
                                             <i class="ri-edit-2-fill"></i>
                                         </a>
 

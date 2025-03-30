@@ -95,7 +95,7 @@
                                     </td>
                                     <td class="flex col-span-1 px-2 py-4 join">
                                         <a href={{ route('kegiatan.edit', $item->slug) }}
-                                            class="btn btn-sm btn-outline btn-primary join-item">
+                                            class="btn btn-sm btn-outline btn-warning join-item">
                                             <i class="ri-edit-2-fill"></i>
                                         </a>
 

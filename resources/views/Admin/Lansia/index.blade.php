@@ -5,10 +5,10 @@
         </h2>
     </x-slot>
 
-    <div class="py-12 px-4 md:px-0">
+    <div class="px-4 py-12 md:px-0">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div class="bg-white shadow-sm sm:rounded-lg mb-4 p-4 flex flex-col md:flex-row gap-4 md:items-center">
-                <ul class="menu bg-base-200 lg:menu-horizontal rounded-box flex-1">
+            <div class="flex flex-col gap-4 p-4 mb-4 bg-white shadow-sm sm:rounded-lg md:flex-row md:items-center">
+                <ul class="flex-1 menu bg-base-200 lg:menu-horizontal rounded-box">
                     <li>
                         <a href="{{ route('lansia.create') }}" class="flex items-center gap-2">
                             <i class="ri-user-add-line"></i>
@@ -16,25 +16,29 @@
                         </a>
                     </li>
                     <li class="dropdown dropdown-hover dropdown-end">
-                        <label tabindex="0" class="btn btn-ghost flex items-center gap-2">
+                        <label tabindex="0" class="flex items-center gap-2 btn btn-ghost">
                             <i class="ri-arrow-up-down-line"></i>
                             Sort by
                         </label>
-                        <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box shadow-md w-44 p-2 absolute z-50">
+                        <ul tabindex="0"
+                            class="absolute z-50 p-2 shadow-md dropdown-content menu bg-base-100 rounded-box w-44">
                             <li>
-                                <a href="{{ route('lansia.index', ['sort' => 'asc']) }}" class="flex items-center gap-2">
+                                <a href="{{ route('lansia.index', ['sort' => 'asc']) }}"
+                                    class="flex items-center gap-2">
                                     <i class="ri-sort-asc"></i> Sort Asc
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('lansia.index', ['sort' => 'desc']) }}" class="flex items-center gap-2">
+                                <a href="{{ route('lansia.index', ['sort' => 'desc']) }}"
+                                    class="flex items-center gap-2">
                                     <i class="ri-sort-desc"></i> Sort Desc
                                 </a>
                             </li>
                         </ul>
                     </li>
                 </ul>
-                <input type="text" id="search" class="input input-bordered w-full md:w-1/3" placeholder="Cari lansia...">
+                <input type="text" id="search" class="w-full input input-bordered md:w-1/3"
+                    placeholder="Cari lansia...">
             </div>
 
             <div class="overflow-x-auto bg-white shadow-sm sm:rounded-lg">
@@ -58,17 +62,22 @@
                                     <td class="px-4 py-2">{{ $lansia->umur }} Tahun</td>
                                     <td class="px-4 py-2">{{ $lansia->jenis_kelamin }}</td>
                                     <td class="px-4 py-2">{{ $lansia->pj_nama }}</td>
-                                    <td class="px-4 py-2 flex gap-2">
-                                        <a href="{{ route('lansia.show', $lansia->id) }}" class="btn btn-sm btn-primary">
+                                    <td class="flex px-4 py-2 join">
+                                        <a href="{{ route('lansia.show', $lansia->id) }}"
+                                            class="btn btn-sm btn-primary btn-outline join-item">
                                             <i class="ri-eye-fill"></i>
                                         </a>
-                                        <a href="{{ route('lansia.edit', $lansia->id) }}" class="btn btn-sm btn-warning">
+                                        <a href="{{ route('lansia.edit', $lansia->id) }}"
+                                            class="btn btn-sm btn-warning btn-outline join-item">
                                             <i class="ri-edit-2-fill"></i>
                                         </a>
-                                        <button class="btn btn-sm btn-error delete-btn" data-id="{{ $lansia->id }}">
+                                        <button class="btn btn-sm btn-error delete-btn btn-outline join-item"
+                                            data-id="{{ $lansia->id }}">
                                             <i class="ri-delete-bin-6-fill"></i>
                                         </button>
-                                        <form id="delete-form-{{ $lansia->id }}" action="{{ route('lansia.destroy', $lansia->id) }}" method="POST" class="hidden">
+                                        <form id="delete-form-{{ $lansia->id }}"
+                                            action="{{ route('lansia.destroy', $lansia->id) }}" method="POST"
+                                            class="hidden">
                                             @csrf
                                             @method('DELETE')
                                         </form>
@@ -87,8 +96,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            @if(session('success'))
+        document.addEventListener('DOMContentLoaded', function() {
+            @if (session('success'))
                 Swal.fire({
                     title: "Sukses!",
                     text: "{{ session('success') }}",
@@ -99,7 +108,7 @@
 
             const deleteButtons = document.querySelectorAll('.delete-btn');
             deleteButtons.forEach(button => {
-                button.addEventListener('click', function () {
+                button.addEventListener('click', function() {
                     const lansiaId = this.getAttribute('data-id');
                     Swal.fire({
                         title: "Yakin ingin menghapus?",
@@ -129,4 +138,3 @@
         });
     </script>
 </x-app-layout>
-

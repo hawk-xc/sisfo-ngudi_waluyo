@@ -99,7 +99,7 @@
                                     </td>
                                     <td class="flex col-span-1 px-2 py-4 join">
                                         <a href={{ route('gizi.edit', $item->id) }}
-                                            class="btn btn-sm btn-outline join-item btn-primary">
+                                            class="btn btn-sm btn-outline join-item btn-warning">
                                             <i class="ri-edit-2-fill"></i>
                                         </a>
 
