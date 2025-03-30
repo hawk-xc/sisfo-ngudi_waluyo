@@ -54,37 +54,37 @@
                                 <th class="px-4 py-2">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody id="lansiaTable">
-                            @foreach ($lansias as $lansia)
-                                <tr class="bg-white border-b border-gray-200">
-                                    <td class="px-4 py-2">{{ $lansia->nama }}</td>
-                                    <td class="px-4 py-2">{{ $lansia->alamat }}</td>
-                                    <td class="px-4 py-2">{{ $lansia->umur }} Tahun</td>
-                                    <td class="px-4 py-2">{{ $lansia->jenis_kelamin }}</td>
-                                    <td class="px-4 py-2">{{ $lansia->pj_nama }}</td>
-                                    <td class="flex px-4 py-2 join">
-                                        <a href="{{ route('lansia.show', $lansia->id) }}"
-                                            class="btn btn-sm btn-primary btn-outline join-item">
-                                            <i class="ri-eye-fill"></i>
-                                        </a>
-                                        <a href="{{ route('lansia.edit', $lansia->id) }}"
-                                            class="btn btn-sm btn-warning btn-outline join-item">
-                                            <i class="ri-edit-2-fill"></i>
-                                        </a>
-                                        <button class="btn btn-sm btn-error delete-btn btn-outline join-item"
-                                            data-id="{{ $lansia->id }}">
-                                            <i class="ri-delete-bin-6-fill"></i>
-                                        </button>
-                                        <form id="delete-form-{{ $lansia->id }}"
-                                            action="{{ route('lansia.destroy', $lansia->id) }}" method="POST"
-                                            class="hidden">
-                                            @csrf
-                                            @method('DELETE')
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
+<tbody id="lansiaTable">
+    @forelse ($lansias as $lansia)
+        <tr class="bg-white border-b border-gray-200">
+            <td class="px-4 py-2">{{ $lansia->nama }}</td>
+            <td class="px-4 py-2">{{ $lansia->alamat }}</td>
+            <td class="px-4 py-2">{{ $lansia->umur }} Tahun</td>
+            <td class="px-4 py-2">{{ $lansia->jenis_kelamin }}</td>
+            <td class="px-4 py-2">{{ $lansia->pj_nama }}</td>
+            <td class="flex px-4 py-2 join">
+                <a href="{{ route('lansia.show', $lansia->id) }}" class="btn btn-sm btn-primary btn-outline join-item">
+                    <i class="ri-eye-fill"></i>
+                </a>
+                <a href="{{ route('lansia.edit', $lansia->id) }}" class="btn btn-sm btn-warning btn-outline join-item">
+                    <i class="ri-edit-2-fill"></i>
+                </a>
+                <button class="btn btn-sm btn-error delete-btn btn-outline join-item" data-id="{{ $lansia->id }}">
+                    <i class="ri-delete-bin-6-fill"></i>
+                </button>
+                <form id="delete-form-{{ $lansia->id }}" action="{{ route('lansia.destroy', $lansia->id) }}" method="POST" class="hidden">
+                    @csrf
+                    @method('DELETE')
+                </form>
+            </td>
+        </tr>
+    @empty
+        <tr>
+            <td colspan="6" class="px-4 py-2 text-center text-gray-500">Data Kosong!</td>
+        </tr>
+    @endforelse
+</tbody>
+
                     </table>
                     <div class="mt-4 bg-slate-100">
                         {{ $lansias->links() }}
