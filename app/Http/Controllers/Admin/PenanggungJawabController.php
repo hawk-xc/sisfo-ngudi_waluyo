@@ -81,6 +81,8 @@ class PenanggungJawabController extends Controller
                 'role_id' => 3
             ]);
 
+            $user->assignRole('pj');
+
             return redirect()->route('pj.index')
                 ->with('success', 'Data Penanggung jawab Berhasil dibuat!');
         } catch (\Exception $e) {
