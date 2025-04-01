@@ -81,7 +81,7 @@
                                 <th class="col-span-2 px-6 py-3">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody id="pjTable">
+                        <tbody id="usersTable">
                             <tr class="grid grid-cols-12 bg-white border-b border-gray-200">
                                 @forelse ($pj_users as $pj_user)
                                     <td class="col-span-1 px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
@@ -127,7 +127,7 @@
                         </tbody>
                     </table>
                     <div class="mt-4 bg-slate-100 pagination">
-                        {{-- {{ $pemeriksaan->links() }} --}}
+                        {{ $pj_users->links() }}
                     </div>
                 </div>
             </div>
@@ -138,10 +138,10 @@
             let query = this.value;
 
             // Tampilkan loading indicator jika diperlukan
-            document.getElementById('pemeriksaanTable').innerHTML =
+            document.getElementById('usersTable').innerHTML =
                 '<tr><td colspan="6" class="py-4 text-center">Mencari data...</td></tr>';
 
-            fetch(`{{ route('pemeriksaan.index') }}?search=${query}`, {
+            fetch(`{{ route('pj.index') }}?search=${query}`, {
                     headers: {
                         'X-Requested-With': 'XMLHttpRequest',
                         'Accept': 'application/json'
@@ -152,7 +152,7 @@
                     return response.json();
                 })
                 .then(data => {
-                    document.getElementById('pemeriksaanTable').innerHTML = data.html;
+                    document.getElementById('usersTable').innerHTML = data.html;
 
                     // Update pagination
                     let paginationContainer = document.querySelector('.pagination');
@@ -162,7 +162,7 @@
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    document.getElementById('pemeriksaanTable').innerHTML =
+                    document.getElementById('usersTable').innerHTML =
                         '<tr><td colspan="6" class="py-4 text-center text-red-500">Terjadi kesalahan saat memuat data</td></tr>';
                 });
         });

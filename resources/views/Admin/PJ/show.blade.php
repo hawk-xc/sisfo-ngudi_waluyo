@@ -24,7 +24,7 @@
             <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <div class="relative overflow-x-auto">
-                        <a href="{{ route('pemeriksaan.index') }}" class="btn btn-outline btn-neutral btn-sm">
+                        <a href="{{ route('pj.index') }}" class="btn btn-outline btn-neutral btn-sm">
                             <i class="ri-arrow-left-long-line"></i>
                             Kembali ke halaman Penanggung Jawab
                         </a>
