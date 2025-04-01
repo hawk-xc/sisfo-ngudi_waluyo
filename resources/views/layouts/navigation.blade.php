@@ -12,21 +12,30 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard.index')" :active="request()->routeIs('dashboard.*')">
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard*')">
                         {{ __('Halaman Utama') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('pj.index')" :active="request()->routeIs('pj.*')">
-                        {{ __('Penanggung Jawab') }}
-                    </x-nav-link>
+
+                    @can('kader|admin')
+                        <x-nav-link :href="route('pj.index')" :active="request()->routeIs('pj.*')">
+                            {{ __('Penanggung Jawab') }}
+                        </x-nav-link>
+                    @endcan
+
                     <x-nav-link :href="route('pemeriksaan.index')" :active="request()->routeIs('pemeriksaan.*')">
                         {{ __('Pemeriksaan') }}
                     </x-nav-link>
+
                     <x-nav-link :href="route('lansia.index')" :active="request()->routeIs('lansia.*')">
                         {{ __('Data Lansia') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('gizi.index')" :active="request()->routeIs('gizi.*')">
-                        {{ __('Pusat Gizi') }}
-                    </x-nav-link>
+
+                    @can('kader|admin')
+                        <x-nav-link :href="route('gizi.index')" :active="request()->routeIs('gizi.*')">
+                            {{ __('Pusat Gizi') }}
+                        </x-nav-link>
+                    @endcan
+
                     <x-nav-link :href="route('kegiatan.index')" :active="request()->routeIs('kegiatan.*')">
                         {{ __('Kegiatan') }}
                     </x-nav-link>
