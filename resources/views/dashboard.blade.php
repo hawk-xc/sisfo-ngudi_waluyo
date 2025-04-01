@@ -30,10 +30,10 @@
                 </div>
                 <div class="dashboard-card">
                     <div class="dashboard-card-content">
-                        <span class="text-sm text-gray-600">Gizi</span>
+                        <span class="text-sm text-gray-600">Total Penanggung Jawab</span>
                         <h1 class="text-3xl font-extrabold">250</h1>
                     </div>
-                    <x-image src="{{ asset('assets/images/icons/gizi.png') }}" alt="gizi-logo"
+                    <x-image src="{{ asset('assets/images/icons/pj.png') }}" alt="pj-logo"
                         class="w-20 ml-auto max-sm:hidden" />
                 </div>
             </div>
