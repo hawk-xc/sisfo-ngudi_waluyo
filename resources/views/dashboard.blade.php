@@ -14,7 +14,7 @@
                 <div class="dashboard-card">
                     <div class="dashboard-card-content">
                         <span class="text-sm text-gray-600">Lansia</span>
-                        <h1 class="text-3xl font-extrabold">34</h1>
+                        <h1 class="text-3xl font-extrabold">{{ $metadata['lansia_count'] }}</h1>
                     </div>
                     <x-image src="{{ asset('assets/images/icons/lansia.png') }}" alt="lansia-logo"
                         class="w-20 ml-auto max-sm:hidden" />
@@ -23,7 +23,7 @@
                 <div class="dashboard-card">
                     <div class="dashboard-card-content">
                         <span class="text-sm text-gray-600">Cek Kesehatan</span>
-                        <h1 class="text-3xl font-extrabold">67</h1>
+                        <h1 class="text-3xl font-extrabold">{{ $metadata['pemeriksaan_count'] }}</h1>
                     </div>
                     <x-image src="{{ asset('assets/images/icons/check.png') }}" alt="cek_kesehatan-logo"
                         class="w-20 ml-auto max-sm:hidden" />
@@ -31,7 +31,7 @@
                 <div class="dashboard-card">
                     <div class="dashboard-card-content">
                         <span class="text-sm text-gray-600">Total Penanggung Jawab</span>
-                        <h1 class="text-3xl font-extrabold">250</h1>
+                        <h1 class="text-3xl font-extrabold">{{ $metadata['user_count'] }}</h1>
                     </div>
                     <x-image src="{{ asset('assets/images/icons/pj.png') }}" alt="pj-logo"
                         class="w-20 ml-auto max-sm:hidden" />
