@@ -15,6 +15,9 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Halaman Utama') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('pj.index')" :active="request()->routeIs('pj.*')">
+                        {{ __('Penanggung Jawab') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('pemeriksaan.index')" :active="request()->routeIs('pemeriksaan.*')">
                         {{ __('Pemeriksaan') }}
                     </x-nav-link>

@@ -22,6 +22,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'raw_password',
+        'role_id',
         'lansia_id'
     ];
 
