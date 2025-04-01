@@ -22,19 +22,24 @@ Route::middleware('auth')->group(function () {
 
 Route::group([
     'prefix' => 'dashboard',
-    'middleware' => ['auth', 'role:kader|admin'],
+    'middleware' => ['auth'],
 ], function () {
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
-    Route::resource('/pemeriksaan', PemeriksaanController::class)->names([
-        'index' => 'pemeriksaan.index',
-        'show' => 'pemeriksaan.show',
-        'create' => 'pemeriksaan.create',
-        'store' => 'pemeriksaan.store',
-        'edit' => 'pemeriksaan.edit',
-        'update' => 'pemeriksaan.update'
-    ]);
-    Route::post('/attact-gizi', [PemeriksaanController::class, 'attach_gizi'])->name('pemeriksaan.attach_gizi');
-    Route::delete('/remove-gizi', [PemeriksaanController::class, 'remove_gizi'])->name('pemeriksaan.remove_gizi');
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::group(['middleware' => 'role:pj|kader|admin'], function () {
+        Route::resource('/pemeriksaan', PemeriksaanController::class)->names([
+            'index' => 'pemeriksaan.index',
+            'show' => 'pemeriksaan.show',
+            'create' => 'pemeriksaan.create',
+            'store' => 'pemeriksaan.store',
+            'edit' => 'pemeriksaan.edit',
+            'update' => 'pemeriksaan.update'
+        ]);
+
+        Route::post('/attact-gizi', [PemeriksaanController::class, 'attach_gizi'])->name('pemeriksaan.attach_gizi');
+        Route::delete('/remove-gizi', [PemeriksaanController::class, 'remove_gizi'])->name('pemeriksaan.remove_gizi');
+    });
+
     Route::resource('/kegiatan', KegiatanController::class)->names([
         'index' => 'kegiatan.index',
         'create' => 'kegiatan.create',
@@ -42,18 +47,23 @@ Route::group([
         'edit' => 'kegiatan.edit',
         'update' => 'kegiatan.update',
         'destroy' => 'kegiatan.destroy',
-    ]);
-    Route::resource('/gizi', GiziController::class)->names([
-        'index' => 'gizi.index',
-        'create' => 'gizi.create',
-        'store' => 'gizi.store',
-        'edit' => 'gizi.edit',
-        'update' => 'gizi.update',
-        'destroy' => 'gizi.destroy',
-    ]);
-    Route::get('/select2', [GiziController::class, 'select2'])->name('gizi.select2');
+    ])->middleware('role:pj|kader|admin');
+
+    Route::group(['middleware' => 'role:kader|admin'], function () {
+        Route::resource('/gizi', GiziController::class)->names([
+            'index' => 'gizi.index',
+            'create' => 'gizi.create',
+            'store' => 'gizi.store',
+            'edit' => 'gizi.edit',
+            'update' => 'gizi.update',
+            'destroy' => 'gizi.destroy',
+        ]);
+        Route::get('/select2', [GiziController::class, 'select2'])->name('gizi.select2');
+    });
+
     Route::group([
         'prefix' => 'lansia',
+        'middleware' => 'role:pj|kader|admin'
     ], function () {
         Route::get('/', [LansiaController::class, 'index'])->name('lansia.index');
         Route::get('/tambah-lansia', [LansiaController::class, 'create'])->name('lansia.create');
@@ -64,6 +74,7 @@ Route::group([
         Route::delete('/delete-lansia/{id}', [LansiaController::class, 'destroy'])->name('lansia.destroy');
         Route::get('/select2', [LansiaController::class, 'select2'])->name('lansia.select2');
     });
+
     Route::resource('/pj', PenanggungJawabController::class)->names([
         'index' => 'pj.index',
         'create' => 'pj.create',
@@ -71,7 +82,7 @@ Route::group([
         'edit' => 'pj.edit',
         'update' => 'pj.update',
         'destroy' => 'pj.destroy',
-    ]);
+    ])->middleware('role:kader|admin');
 });
 
 
