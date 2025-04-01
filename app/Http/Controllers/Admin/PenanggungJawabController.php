@@ -13,11 +13,36 @@ class PenanggungJawabController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $pj_users = User::where('role_id', 3)->with('lansias')->get();
+        $sort = $request->query('sort', 'asc');
+        $search = $request->query('search');
 
-        return view('Admin.PJ.index', compact('pj_users'));
+        $query = User::select([
+            'id',
+            'name',
+            'email',
+            'role_id'
+        ])->where('role_id', 3)->with(['lansias' => function ($q) {
+            $q->select('id');
+        }])->orderBy('created_at', $sort);
+
+        if ($search) {
+            $query->with(['lansias' => function ($q) {
+                $q->select('id');
+            }])->where('name', 'like', "%{$search}%")->orWhere('email', 'like', "%{$search}%")->orWhere('id', 'like', "%{$search}%");
+        }
+
+        $pj_users = $query->paginate(10);
+
+        if ($request->ajax()) {
+            return response()->json([
+                'html' => view('Admin.PJ.partials.users_table', compact('pj_users'))->render(),
+                'pagination' => $pj_users->links()->toHtml()
+            ]);
+        }
+
+        return view('Admin.PJ.index', compact('pj_users', 'sort'));
     }
 
     /**
@@ -81,7 +106,9 @@ class PenanggungJawabController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $pj_user = User::where('id', $id)->first();
+
+        return view('Admin.PJ.edit', compact('pj_user'));
     }
 
     /**
@@ -89,7 +116,30 @@ class PenanggungJawabController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $message = [
+            'name.required' => 'Nama Penanggung Jawab harus diisi',
+            'email.required' => 'Email Penanggung Jawab harus diisi',
+            'email.email' => 'Email Penanggung Jawab harus valid',
+            'email.unique' => 'Email Penanggung Jawab sudah terdaftar'
+        ];
+
+        $validated_data = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,' . $id,
+        ], $message);
+
+        try {
+            $pj_user = User::where('id', $id)->first();
+
+            $pj_user->name = $validated_data['name'];
+            $pj_user->email = $validated_data['email'];
+
+            $pj_user->update();
+
+            return redirect()->route('pj.index')->with('success', 'Data Penanggung jawab Berhasil diubah!');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Data Penanggung jawab Gagal diubah!');
+        }
     }
 
     /**
@@ -97,6 +147,14 @@ class PenanggungJawabController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $pj_user = User::where('id', $id)->first();
+
+            $pj_user->delete();
+
+            return back()->with('success', 'Data Penanggung jawab Berhasil dihapus!');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Data Penanggung jawab Gagal dihapus!');
+        }
     }
 }
