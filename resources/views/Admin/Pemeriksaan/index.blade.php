@@ -24,13 +24,15 @@
             <div class="flex flex-col gap-4 p-4 mb-4 bg-white shadow-sm sm:rounded-lg md:flex-row md:items-center">
                 <ul class="flex items-center justify-between flex-1 menu bg-base-200 lg:menu-horizontal rounded-box">
                     <div class="flex flex-row items-center gap-3">
-                        <li>
+                    @role('kader|admin')    
+                    <li>
                             <a href="{{ route('pemeriksaan.create') }}"
                                 class="flex items-center gap-2 btn-sm btn btn-outline btn-neutral">
                                 <i class="ri-user-add-line"></i>
                                 Tambah Data Pemeriksaan
                             </a>
                         </li>
+                        @endrole
                         <li class="dropdown dropdown-hover dropdown-end">
                             <label tabindex="0" class="flex items-center gap-2 btn btn-ghost">
                                 <i class="ri-arrow-up-down-line"></i>
@@ -124,6 +126,7 @@
                                             <i class="ri-eye-line"></i>
                                         </a>
 
+                                        @role('kader|admin')
                                         <a href={{ route('pemeriksaan.edit', $item->id) }}
                                             class="btn join-item btn-sm btn-outline btn-warning">
                                             <i class="ri-edit-2-fill"></i>
@@ -140,6 +143,7 @@
                                             onclick="confirmDelete('{{ $item->id }}')">
                                             <i class="ri-delete-bin-fill"></i>
                                         </button>
+                                        @endrole
                                     </td>
                                 </tr>
                                 @empty
