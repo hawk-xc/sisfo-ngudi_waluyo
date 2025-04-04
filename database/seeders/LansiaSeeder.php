@@ -15,6 +15,7 @@ class LansiaSeeder extends Seeder
     {
         $lansias = [
             [
+                'user_id' => 1,
                 'nik' => '3276010101010001',
                 'nama' => 'Budi Santoso',
                 'umur' => 70,
@@ -26,6 +27,7 @@ class LansiaSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'user_id' => 1,
                 'nik' => '3276010101010002',
                 'nama' => 'Siti Aminah',
                 'umur' => 68,
@@ -37,6 +39,7 @@ class LansiaSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'user_id' => 1,
                 'nik' => '3276010101010003',
                 'nama' => 'Suparman',
                 'umur' => 75,
