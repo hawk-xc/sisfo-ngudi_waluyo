@@ -28,14 +28,16 @@
                     <x-image src="{{ asset('assets/images/icons/check.png') }}" alt="cek_kesehatan-logo"
                         class="w-20 ml-auto max-sm:hidden" />
                 </div>
-                <div class="dashboard-card">
-                    <div class="dashboard-card-content">
-                        <span class="text-sm text-gray-600">Total Penanggung Jawab</span>
-                        <h1 class="text-3xl font-extrabold">{{ $metadata['user_count'] }}</h1>
+                @role('kader|admin')
+                    <div class="dashboard-card">
+                        <div class="dashboard-card-content">
+                            <span class="text-sm text-gray-600">Total Penanggung Jawab</span>
+                            <h1 class="text-3xl font-extrabold">{{ $metadata['user_count'] }}</h1>
+                        </div>
+                        <x-image src="{{ asset('assets/images/icons/pj.png') }}" alt="pj-logo"
+                            class="w-20 ml-auto max-sm:hidden" />
                     </div>
-                    <x-image src="{{ asset('assets/images/icons/pj.png') }}" alt="pj-logo"
-                        class="w-20 ml-auto max-sm:hidden" />
-                </div>
+                @endrole
             </div>
             <div id="dashboard-grafik" class="max-w-full p-5 bg-white rounded-sm shadow-sm">
                 ini untuk grafik
