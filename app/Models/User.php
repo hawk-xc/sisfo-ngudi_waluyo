@@ -60,4 +60,8 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class);
     }
+
+    public function checkRole() {
+        return $this->role_id;
+    }
 }
