@@ -72,7 +72,17 @@
                         <tbody id="lansiaTable">
                             @forelse ($lansias as $lansia)
                                 <tr class="bg-white border-b border-gray-200">
-                                    <td class="px-4 py-2 font-bold">{{ $lansia->nama }}</td>
+                                    <td class="px-4 py-2 font-bold">
+                                        @switch($lansia->jenis_kelamin)
+                                            @case('Laki-laki')
+                                                Tn.
+                                            @break
+
+                                            @default
+                                                Ny.
+                                        @endswitch
+                                        {{ $lansia->nama }}
+                                    </td>
                                     <td class="px-4 py-2">{{ $lansia->alamat }}</td>
                                     <td class="px-4 py-2">{{ $lansia->umur }} Tahun</td>
                                     <td class="px-4 py-2">{{ $lansia->jenis_kelamin }}</td>
@@ -100,63 +110,63 @@
                                         @endrole
                                     </td>
                                 </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="6" class="px-4 py-2 text-center text-gray-500">Data Kosong!</td>
-                                </tr>
-                            @endforelse
-                        </tbody>
+                                @empty
+                                    <tr>
+                                        <td colspan="6" class="px-4 py-2 text-center text-gray-500">Data Kosong!</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
 
-                    </table>
-                    <div class="mt-4 bg-slate-100">
-                        {{ $lansias->links() }}
+                        </table>
+                        <div class="mt-4 bg-slate-100">
+                            {{ $lansias->links() }}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            @if (session('success'))
-                Swal.fire({
-                    title: "Sukses!",
-                    text: "{{ session('success') }}",
-                    icon: "success",
-                    confirmButtonText: "OK"
-                });
-            @endif
-
-            const deleteButtons = document.querySelectorAll('.delete-btn');
-            deleteButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const lansiaId = this.getAttribute('data-id');
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                @if (session('success'))
                     Swal.fire({
-                        title: "Yakin ingin menghapus?",
-                        text: "Data lansia ini akan dihapus secara permanen!",
-                        icon: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#d33",
-                        cancelButtonColor: "#3085d6",
-                        confirmButtonText: "Ya, Hapus!",
-                        cancelButtonText: "Batal"
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            document.getElementById(`delete-form-${lansiaId}`).submit();
-                        }
+                        title: "Sukses!",
+                        text: "{{ session('success') }}",
+                        icon: "success",
+                        confirmButtonText: "OK"
+                    });
+                @endif
+
+                const deleteButtons = document.querySelectorAll('.delete-btn');
+                deleteButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const lansiaId = this.getAttribute('data-id');
+                        Swal.fire({
+                            title: "Yakin ingin menghapus?",
+                            text: "Data lansia ini akan dihapus secara permanen!",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#d33",
+                            cancelButtonColor: "#3085d6",
+                            confirmButtonText: "Ya, Hapus!",
+                            cancelButtonText: "Batal"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                document.getElementById(`delete-form-${lansiaId}`).submit();
+                            }
+                        });
+                    });
+                });
+
+                document.getElementById('search').addEventListener('input', function() {
+                    let filter = this.value.toLowerCase();
+                    let rows = document.querySelectorAll('#lansiaTable tr');
+                    rows.forEach(row => {
+                        let name = row.cells[0].textContent.toLowerCase();
+                        row.style.display = name.includes(filter) ? '' : 'none';
                     });
                 });
             });
-
-            document.getElementById('search').addEventListener('input', function() {
-                let filter = this.value.toLowerCase();
-                let rows = document.querySelectorAll('#lansiaTable tr');
-                rows.forEach(row => {
-                    let name = row.cells[0].textContent.toLowerCase();
-                    row.style.display = name.includes(filter) ? '' : 'none';
-                });
-            });
-        });
-    </script>
-</x-app-layout>
+        </script>
+    </x-app-layout>
