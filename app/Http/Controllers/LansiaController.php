@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Lansia;
 use App\Http\Requests\StoreLansiaRequest;
 use App\Http\Requests\UpdateLansiaRequest;
+use App\Models\Lansia;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -25,7 +25,12 @@ class LansiaController extends Controller
         if (!in_array($sort, ['asc', 'desc'])) {
             $sort = 'asc';
         }
+
         $query = Lansia::orderBy($field, $sort);
+
+        if (auth()->user()->checkRole() === 3) {
+            $query->where('user_id', auth()->user()->id);
+        }
 
         if ($search) {
             $query->where('nama', 'like', "%$search%")->orWhere('alamat', 'like', "%$search%")->orWhere('pj_nama', 'like', "%$search");
@@ -196,10 +201,15 @@ class LansiaController extends Controller
         $data = Lansia::query();
 
         // Select kolom yang diperlukan
-        $data->select(['id', 'nama', 'nik', 'alamat', 'tanggal_lahir', 'pj_nama']);
+        $data->select(['id', 'user_id', 'nama', 'nik', 'alamat', 'tanggal_lahir', 'pj_nama']);
 
         // Hitung umur
         $data->selectRaw('TIMESTAMPDIFF(YEAR, tanggal_lahir, CURDATE()) as umur');
+
+        // Filter berdasarkan user_id jika role = 3
+        if (auth()->user()->checkRole() === 3) {
+            $data->where('user_id', auth()->user()->id);
+        }
 
         // Jika ada pencarian berdasarkan ID (untuk old input)
         if ($request->has('id')) {
