@@ -106,7 +106,8 @@
                                             class="btn join-item btn-sm btn-outline btn-warning">
                                             <i class="ri-edit-2-fill"></i>
                                         </a>
-
+                                        
+                                        @role('admin')
                                         <form id="delete-form-id_pj" action="{{ route('pj.destroy', 1) }}"
                                             method="POST" class="hidden">
                                             @csrf
@@ -117,6 +118,7 @@
                                             onclick="confirmDelete('1')">
                                             <i class="ri-delete-bin-fill"></i>
                                         </button>
+                                        @endrole
                                     </td>
                                 @empty
                                     <div class="flex items-center justify-center w-full mt-3 align-middle">
