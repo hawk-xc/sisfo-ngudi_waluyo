@@ -16,11 +16,11 @@
                         {{ __('Halaman Utama') }}
                     </x-nav-link>
 
-                    @can('kader|admin')
+                    @role('kader|admin')
                         <x-nav-link :href="route('pj.index')" :active="request()->routeIs('pj.*')">
                             {{ __('Penanggung Jawab') }}
                         </x-nav-link>
-                    @endcan
+                    @endrole
 
                     <x-nav-link :href="route('pemeriksaan.index')" :active="request()->routeIs('pemeriksaan.*')">
                         {{ __('Pemeriksaan') }}
@@ -30,11 +30,11 @@
                         {{ __('Data Lansia') }}
                     </x-nav-link>
 
-                    @can('kader|admin')
+                    @role('kader|admin')
                         <x-nav-link :href="route('gizi.index')" :active="request()->routeIs('gizi.*')">
                             {{ __('Pusat Gizi') }}
                         </x-nav-link>
-                    @endcan
+                    @endrole
 
                     <x-nav-link :href="route('kegiatan.index')" :active="request()->routeIs('kegiatan.*')">
                         {{ __('Kegiatan') }}
