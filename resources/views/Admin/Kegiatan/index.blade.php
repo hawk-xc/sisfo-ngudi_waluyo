@@ -24,6 +24,7 @@
             <div class="flex flex-col gap-4 p-4 mb-4 bg-white shadow-sm sm:rounded-lg md:flex-row md:items-center">
                 <ul class="flex items-center justify-between flex-1 menu bg-base-200 lg:menu-horizontal rounded-box">
                     <div class="flex flex-row items-center gap-3">
+                        @role('kader|admin')
                         <li>
                             <a href="{{ route('kegiatan.create') }}"
                                 class="flex items-center gap-2 btn-sm btn btn-outline btn-neutral">
@@ -31,6 +32,7 @@
                                 Tambah Kegiatan
                             </a>
                         </li>
+                        @endrole
                         <li class="dropdown dropdown-hover dropdown-end">
                             <label tabindex="0" class="flex items-center gap-2 btn btn-ghost">
                                 <i class="ri-arrow-up-down-line"></i>
@@ -77,7 +79,9 @@
                                 <th class="col-span-3 px-6 py-3">Banner Kegiatan</th>
                                 <th class="col-span-4 px-6 py-3">Nama Kegiatan</th>
                                 <th class="col-span-3 px-6 py-3">Tanggal Kegiatan</th>
-                                <th class="col-span-1 px-6 py-3">Aksi</th>
+                                @role('kader|admin')
+                                    <th class="col-span-1 px-6 py-3">Aksi</th>
+                                @endrole
                             </tr>
                         </thead>
                         <tbody id="kegiatanTable">
@@ -93,6 +97,7 @@
                                     <td class="col-span-3 px-6 py-4">
                                         {{ $item->formatted_date ?? '-' }}
                                     </td>
+                                    @role('kader|admin')
                                     <td class="flex col-span-1 px-2 py-4 join">
                                         <a href={{ route('kegiatan.edit', $item->slug) }}
                                             class="btn btn-sm btn-outline btn-warning join-item">
@@ -111,6 +116,7 @@
                                             <i class="ri-delete-bin-fill"></i>
                                         </button>
                                     </td>
+                                    @endrole
                                 </tr>
                             @empty
                                 <div class="flex items-center justify-center w-full mt-3 align-middle">
