@@ -95,6 +95,7 @@ class LansiaController extends Controller
 
         // Simpan data lansia
         $lansia = Lansia::create([
+            'user_id' => $request->pj_id,
             'nik' => $request->nik,
             'nama' => $request->nama,
             'alamat' => $request->alamat,
