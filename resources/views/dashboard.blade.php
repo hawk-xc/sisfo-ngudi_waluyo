@@ -4,6 +4,7 @@
             {{ __('Dashboard Klinik Ngudi Waluyo') }}
         </h2>
     </x-slot>
+    @vite('resources/js/app.js')
 
     <div class="py-12">
         <div class="flex flex-col gap-5 mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -46,6 +47,6 @@
                 </div>
             </div>
         </div>
-        <script src="{{ mix('js/app.js') }}"></script>
+        {{-- <script src="{{ mix('js/app.js') }}"></script> --}}
     </div>
 </x-app-layout>
