@@ -16,7 +16,7 @@
     <header class="flex flex-wrap items-center justify-between px-6 py-4 bg-white shadow-md">
         <div class="flex items-center space-x-4">
             <img src="{{ asset('assets/images/ngudiwaluyo_logo.jpg') }}" alt="Logo" class="h-12">
-            <h1 class="text-2xl font-bold text-gray-800">Posyandu Ngudi Waluyo</h1>
+            <h1 class="text-2xl font-bold text-gray-800">Poslansia Ngudi Waluyo Banjarsari</h1>
         </div>
         <nav class="hidden md:block">
             <ul class="flex space-x-6 text-gray-600">
@@ -86,7 +86,7 @@
 
     <!-- Footer -->
     <footer class="py-6 mt-10 text-center text-white bg-gray-800">
-        <p>&copy; 2025 Posyandu Ngudi Waluyo. All rights reserved.</p>
+        <p>&copy; 2025 Poslansia Ngudi Waluyo Banjarsari. All rights reserved.</p>
     </footer>
 
     <script>
