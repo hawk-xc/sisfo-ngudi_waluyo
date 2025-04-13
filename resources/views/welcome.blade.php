@@ -15,7 +15,7 @@
     <!-- Header -->
     <header class="flex flex-wrap items-center justify-between px-6 py-4 bg-white shadow-md">
         <div class="flex items-center space-x-4">
-            <img src="{{ asset('assets/images/ngudiwaluyo_logo.jpg') }}" alt="Logo" class="h-12">
+            <img src="{{ asset('assets/images/ngudiwaluyo_logo.png') }}" alt="Logo" class="h-16">
             <h1 class="text-2xl font-bold text-gray-800">Poslansia Ngudi Waluyo Banjarsari</h1>
         </div>
         <nav class="hidden md:block">
