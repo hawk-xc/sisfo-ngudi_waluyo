@@ -51,6 +51,6 @@ class LansiaSeeder extends Seeder
                 'updated_at' => now(),
             ],
         ];
-        DB::table('lansias')->insert($lansias);
+        // DB::table('lansias')->insert($lansias);
     }
 }
