@@ -11,7 +11,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/', [WelcomeController::class, 'index'])->name('landingpage');
+Route::get('/', WelcomeController::class)->name('landingpage');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
