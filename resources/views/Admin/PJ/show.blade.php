@@ -41,6 +41,10 @@
                                     <p class="text-lg font-semibold">{{ $pj_user->name }}</p>
                                 </div>
                                 <div>
+                                    <p class="font-medium text-gray-600">NIK:</p>
+                                    <p class="text-lg font-semibold">{{ $pj_user->nik }}</p>
+                                </div>
+                                <div>
                                     <p class="font-medium text-gray-600">Tanggal ditambahkan:</p>
                                     <p class="text-lg font-semibold">{{ $pj_user->created_at }}</p>
                                     <span class="text-xs font-light text-slate-500">
@@ -60,11 +64,35 @@
                         <hr>
                         <section id="informasi-kredensial">
                             <h3 class="flex items-center mb-4 text-xl font-semibold text-gray-800">
-                                <i class="mr-2 text-orange-500 ri-lock-password-line"></i> Informasi Kredensial Pengguna
+                                <i class="mr-2 text-orange-500 ri-lock-password-line"></i> Informasi Spesifik Pengguna
                             </h3>
                             <div class="overflow-x-auto">
                                 <table class="table">
                                     <tbody class="border">
+                                        <tr>
+                                            <th>Hubungan Penanggung Jawab</th>
+                                            <td class="font-bold underline">{{ $pj_user->relationship_name }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Jenis Kelamin</th>
+                                            <td>{{ $pj_user->gender == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Tanggal Lahir</th>
+                                            <td>{{ $pj_user->born_date }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Tempat Lahir</th>
+                                            <td>{{ $pj_user->born_place }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Alamat</th>
+                                            <td>{{ $pj_user->address }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>No Telp</th>
+                                            <td>{{ $pj_user->phone }}</td>
+                                        </tr>
                                         <tr>
                                             <th>Email</th>
                                             <td>{{ $pj_user->email }}</td>

@@ -93,7 +93,8 @@
                                     <td class="col-span-3 px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                         {{ $pj_user->email ?? '-' }}
                                     </td>
-                                    <td class="col-span-3 px-6 py-4 font-medium text-gray-900 whitespace-nowrap badge">
+                                    <td
+                                        class="flex items-center justify-center col-span-3 px-6 py-4 font-medium text-gray-900 align-middle whitespace-nowrap badge">
                                         {{ $pj_user->lansias()->count() . ' Lansia' ?? '-' }}
                                     </td>
                                     <td class="flex col-span-2 px-2 py-4 join">
