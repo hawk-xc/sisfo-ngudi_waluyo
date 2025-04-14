@@ -4,6 +4,7 @@ use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PemeriksaanController;
 use App\Http\Controllers\Admin\GiziController;
+use App\Http\Controllers\Admin\KaderController;
 use App\Http\Controllers\Admin\KegiatanController;
 use App\Http\Controllers\Admin\PenanggungJawabController;
 use App\Http\Controllers\LansiaController;
@@ -82,6 +83,14 @@ Route::group([
         'update' => 'pj.update',
         'destroy' => 'pj.destroy',
     ])->middleware('role:kader|admin');
+
+    Route::resource('/kader', KaderController::class)->names([
+        'index' => 'kader.index',
+        'show' => 'kader.show',
+        // 'edit' => 'kader.edit',
+        // 'update' => 'kader.update',
+        'destroy' => 'kader.destroy',
+    ])->middleware('role:admin');
 });
 
 
