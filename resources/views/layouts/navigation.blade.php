@@ -20,8 +20,8 @@
                         {{ __('Data Lansia') }}
                     </x-nav-link>
 
-                    @role('kader|admin')
-                        <x-nav-link :href="route('lansia.index')" :active="request()->routeIs('lansia.*')">
+                    @role('admin')
+                        <x-nav-link :href="route('kader.index')" :active="request()->routeIs('kader.*')">
                             {{ __('Data Kader') }}
                         </x-nav-link>
                     @endrole
@@ -122,8 +122,8 @@
             </div>
 
             <div class="mt-3 space-y-1">
-                @role('kader|admin')
-                    <x-responsive-nav-link :href="route('lansia.index')" :active="request()->routeIs('lansia.*')">
+                @role('admin')
+                    <x-responsive-nav-link :href="route('kader.index')" :active="request()->routeIs('kader.*')">
                         {{ __('Data Kader') }}
                     </x-responsive-nav-link>
                 @endrole
