@@ -58,9 +58,16 @@ class PenanggungJawabController extends Controller
      */
     public function store(Request $request)
     {
-        $password = Str::random(rand(1, 9));
+        $password = Str::random(8, 12);
 
         $message = [
+            'nik.required' => 'NIK harus diisi',
+            'born_place.required' => 'Tempat lahir harus diisi',
+            'born_date.required' => 'Tanggal lahir harus diisi',
+            'phone.required' => 'Nomor telepon harus diisi',
+            'gender.required' => 'Jenis kelamin harus dipilih',
+            'address.required' => 'Alamat harus diisi',
+            'relationship_name.required' => 'Hubungan harus diisi',
             'name.required' => 'Nama Penanggung Jawab harus diisi',
             'email.required' => 'Email Penanggung Jawab harus diisi',
             'email.email' => 'Email Penanggung Jawab harus valid',
@@ -68,12 +75,26 @@ class PenanggungJawabController extends Controller
         ];
 
         $request->validate([
+            'nik' => 'required',
+            'born_place' => 'required',
+            'born_date' => 'required|date',
+            'phone' => 'required',
+            'gender' => 'required|in:L,P',
+            'address' => 'required',
+            'relationship_name' => 'required',
             'name' => 'required',
             'email' => 'required|email|unique:users',
         ], $message);
 
         try {
             $user = User::create([
+                'nik' => $request->nik,
+                'born_place' => $request->born_place,
+                'born_date' => $request->born_date,
+                'phone' => $request->phone,
+                'gender' => $request->gender,
+                'address' => $request->address,
+                'relationship_name' => $request->relationship_name,
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => bcrypt($password),
@@ -119,6 +140,13 @@ class PenanggungJawabController extends Controller
     public function update(Request $request, string $id)
     {
         $message = [
+            'nik.required' => 'NIK harus diisi',
+            'born_place.required' => 'Tempat lahir harus diisi',
+            'born_date.required' => 'Tanggal lahir harus diisi',
+            'phone.required' => 'Nomor telepon harus diisi',
+            'gender.required' => 'Jenis kelamin harus dipilih',
+            'address.required' => 'Alamat harus diisi',
+            'relationship_name.required' => 'Hubungan harus diisi',
             'name.required' => 'Nama Penanggung Jawab harus diisi',
             'email.required' => 'Email Penanggung Jawab harus diisi',
             'email.email' => 'Email Penanggung Jawab harus valid',
@@ -126,21 +154,35 @@ class PenanggungJawabController extends Controller
         ];
 
         $validated_data = $request->validate([
+            'nik' => 'required',
+            'born_place' => 'required',
+            'born_date' => 'required|date',
+            'phone' => 'required',
+            'gender' => 'required|in:L,P',
+            'address' => 'required',
+            'relationship_name' => 'required',
             'name' => 'required',
             'email' => 'required|email|unique:users,email,' . $id,
         ], $message);
 
         try {
-            $pj_user = User::where('id', $id)->first();
+            $pj_user = User::findOrFail($id);
 
-            $pj_user->name = $validated_data['name'];
-            $pj_user->email = $validated_data['email'];
-
-            $pj_user->update();
+            $pj_user->update([
+                'nik' => $validated_data['nik'],
+                'born_place' => $validated_data['born_place'],
+                'born_date' => $validated_data['born_date'],
+                'phone' => $validated_data['phone'],
+                'gender' => $validated_data['gender'],
+                'address' => $validated_data['address'],
+                'relationship_name' => $validated_data['relationship_name'],
+                'name' => $validated_data['name'],
+                'email' => $validated_data['email']
+            ]);
 
             return redirect()->route('pj.index')->with('success', 'Data Penanggung jawab Berhasil diubah!');
         } catch (\Exception $e) {
-            return back()->with('error', 'Data Penanggung jawab Gagal diubah!');
+            return back()->with('error', 'Data Penanggung jawab Gagal diubah!')->withInput();
         }
     }
 
