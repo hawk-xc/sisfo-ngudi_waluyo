@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
             'name' => 'admin1',
             'email' => 'admin1@gmail.com',
             'password' => bcrypt('password'),
-            'raw_password' => PasswordService::encrypt($password),
+            'raw_password' => PasswordService::encrypt('password'),
             'role_id' => 1,
         ]);
         $admin->assignRole('admin');
@@ -37,7 +37,7 @@ class UserSeeder extends Seeder
             'born_place' => 'Jakarta',
             'email' => 'pj@gmail.com',
             'role_id' => 3,
-            'raw_password' => PasswordService::encrypt($password),
+            'raw_password' => PasswordService::encrypt('password'),
             'password' => bcrypt('password'),
         ]);
         // $pj2 = User::create([
@@ -69,7 +69,7 @@ class UserSeeder extends Seeder
             'relationship_name' => 'Keluarga',
             'email' => 'kader@gmail.com',
             'role_id' => 2,
-            'raw_password' => PasswordService::encrypt($password),
+            'raw_password' => PasswordService::encrypt('password'),
             'password' => bcrypt('password'),
         ]);
         $kader->assignRole('kader');
@@ -85,7 +85,7 @@ class UserSeeder extends Seeder
             'relationship_name' => 'Teman',
             'email' => 'wahyu@gmail.com',
             'role_id' => 2,
-            'raw_password' => PasswordService::encrypt($password),
+            'raw_password' => PasswordService::encrypt('password'),
             'password' => bcrypt('password'),
         ]);
         $wahyu->assignRole('kader');
