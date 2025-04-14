@@ -70,8 +70,8 @@
 
             <div class="overflow-x-auto bg-white shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <table class="w-full text-sm text-left text-gray-500 rtl:text-right">
-                        {{-- {{ $pemeriksaan->isEmpty() ? 'hidden' : '' }} --}}
+                    <table
+                        class="w-full text-sm text-left text-gray-500 rtl:text-right  {{ $pj_users->isEmpty() ? 'hidden' : '' }}">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                             <tr class="grid grid-cols-12">
                                 <th class="col-span-1 px-6 py-3">ID</th>
@@ -82,8 +82,8 @@
                             </tr>
                         </thead>
                         <tbody id="usersTable">
-                            <tr class="grid grid-cols-12 bg-white border-b border-gray-200">
-                                @forelse ($pj_users as $pj_user)
+                            @forelse ($pj_users as $pj_user)
+                                <tr class="grid grid-cols-12 bg-white border-b border-gray-200">
                                     <td class="col-span-1 px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                         {{ $pj_user->id ?? '-' }}
                                     </td>
@@ -106,25 +106,25 @@
                                             class="btn join-item btn-sm btn-outline btn-warning">
                                             <i class="ri-edit-2-fill"></i>
                                         </a>
-                                        
-                                        @role('admin')
-                                        <form id="delete-form-id_pj" action="{{ route('pj.destroy', 1) }}"
-                                            method="POST" class="hidden">
-                                            @csrf
-                                            @method('DELETE')
-                                        </form>
 
-                                        <button class="btn join-item btn-sm btn-error btn-outline"
-                                            onclick="confirmDelete('1')">
-                                            <i class="ri-delete-bin-fill"></i>
-                                        </button>
+                                        @role('admin')
+                                            <form id="delete-form-id_pj" action="{{ route('pj.destroy', 1) }}"
+                                                method="POST" class="hidden">
+                                                @csrf
+                                                @method('DELETE')
+                                            </form>
+
+                                            <button class="btn join-item btn-sm btn-error btn-outline"
+                                                onclick="confirmDelete('1')">
+                                                <i class="ri-delete-bin-fill"></i>
+                                            </button>
                                         @endrole
                                     </td>
                                 @empty
                                     <div class="flex items-center justify-center w-full mt-3 align-middle">
                                         <span>Data Kosong!</span>
                                     </div>
-                                @endforelse
+                            @endforelse
                             </tr>
                         </tbody>
                     </table>
