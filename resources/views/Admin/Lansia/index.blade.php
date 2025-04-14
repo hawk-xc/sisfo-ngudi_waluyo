@@ -58,8 +58,9 @@
 
             <div class="overflow-x-auto bg-white shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <table class="w-full text-sm text-left rtl:text-right">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                    <table class="w-full text-sm text-left rtl:text-right ">
+                        <thead
+                            class="text-xs text-gray-700 uppercase bg-gray-50 {{ $lansias->isEmpty() ? 'hidden' : '' }}">
                             <tr>
                                 <th class="px-4 py-2">Nama</th>
                                 <th class="px-4 py-2">Alamat</th>
