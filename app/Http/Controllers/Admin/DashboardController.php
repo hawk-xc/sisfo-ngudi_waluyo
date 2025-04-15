@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use \App\Models\Lansia;
 use \App\Models\Pemeriksaan;
 use \App\Models\User;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
@@ -19,6 +20,9 @@ class DashboardController extends Controller
         if (auth()->user()->checkRole() === 3) {
             $lansiaQuery->where('user_id', auth()->user()->id);
         }
+
+        $lansiaQuery->whereDate('created_at', Carbon::today());
+
         $metadata['lansia_count'] = $lansiaQuery->count();
 
         // Query untuk Pemeriksaan
