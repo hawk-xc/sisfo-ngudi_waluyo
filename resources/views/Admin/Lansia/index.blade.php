@@ -10,13 +10,15 @@
             <div class="flex flex-col gap-4 p-4 mb-4 bg-white shadow-sm sm:rounded-lg md:flex-row md:items-center">
                 <ul class="flex items-center justify-between flex-1 menu bg-base-200 lg:menu-horizontal rounded-box">
                     <div class="flex flex-row items-center gap-3">
-                        <li>
-                            <a href="{{ route('lansia.create') }}"
-                                class="flex items-center gap-2 btn-sm btn btn-outline btn-neutral">
-                                <i class="ri-user-add-line"></i>
-                                Tambah Data Lansia
-                            </a>
-                        </li>
+                        @role('kader|admin')
+                            <li>
+                                <a href="{{ route('lansia.create') }}"
+                                    class="flex items-center gap-2 btn-sm btn btn-outline btn-neutral">
+                                    <i class="ri-user-add-line"></i>
+                                    Tambah Data Lansia
+                                </a>
+                            </li>
+                        @endrole
                         <li class="dropdown dropdown-hover dropdown-end">
                             <label tabindex="0" class="flex items-center gap-2 btn btn-ghost">
                                 <i class="ri-arrow-up-down-line"></i>
@@ -56,8 +58,9 @@
 
             <div class="overflow-x-auto bg-white shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <table class="w-full text-sm text-left text-gray-500 rtl:text-right"  {{ $lansias->isEmpty() ? 'hidden' : '' }}>
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                    <table class="w-full text-sm text-left rtl:text-right ">
+                        <thead
+                            class="text-xs text-gray-700 uppercase bg-gray-50 {{ $lansias->isEmpty() ? 'hidden' : '' }}">
                             <tr>
                                 <th class="px-4 py-2">Nama</th>
                                 <th class="px-4 py-2">Alamat</th>
@@ -67,87 +70,104 @@
                                 <th class="px-4 py-2">Aksi</th>
                             </tr>
                         </thead>
-<tbody id="lansiaTable">
-    @forelse ($lansias as $lansia)
-        <tr class="bg-white border-b border-gray-200">
-            <td class="px-4 py-2">{{ $lansia->nama }}</td>
-            <td class="px-4 py-2">{{ $lansia->alamat }}</td>
-            <td class="px-4 py-2">{{ $lansia->umur }} Tahun</td>
-            <td class="px-4 py-2">{{ $lansia->jenis_kelamin }}</td>
-            <td class="px-4 py-2">{{ $lansia->pj_nama }}</td>
-            <td class="flex px-4 py-2 join">
-                <a href="{{ route('lansia.show', $lansia->id) }}" class="btn btn-sm btn-primary btn-outline join-item">
-                    <i class="ri-eye-fill"></i>
-                </a>
-                <a href="{{ route('lansia.edit', $lansia->id) }}" class="btn btn-sm btn-warning btn-outline join-item">
-                    <i class="ri-edit-2-fill"></i>
-                </a>
-                <button class="btn btn-sm btn-error delete-btn btn-outline join-item" data-id="{{ $lansia->id }}">
-                    <i class="ri-delete-bin-6-fill"></i>
-                </button>
-                <form id="delete-form-{{ $lansia->id }}" action="{{ route('lansia.destroy', $lansia->id) }}" method="POST" class="hidden">
-                    @csrf
-                    @method('DELETE')
-                </form>
-            </td>
-        </tr>
-    @empty
-    <div class="flex items-center justify-center w-full mt-3 align-middle">
-                                    <span>Data Kosong!</span>
-                                </div>
-    @endforelse
-</tbody>
+                        <tbody id="lansiaTable">
+                            @forelse ($lansias as $lansia)
+                                <tr class="bg-white border-b border-gray-200">
+                                    <td class="px-4 py-2 font-bold">
+                                        @switch($lansia->jenis_kelamin)
+                                            @case('Laki-laki')
+                                                Tn.
+                                            @break
 
-                    </table>
-                    <div class="mt-4 bg-slate-100">
-                        {{ $lansias->links() }}
+                                            @default
+                                                Ny.
+                                        @endswitch
+                                        {{ $lansia->nama }}
+                                    </td>
+                                    <td class="px-4 py-2">{{ $lansia->alamat }}</td>
+                                    <td class="px-4 py-2">{{ $lansia->umur }} Tahun</td>
+                                    <td class="px-4 py-2">{{ $lansia->jenis_kelamin }}</td>
+                                    <td class="px-4 py-2">{{ $lansia->pj_nama }}</td>
+                                    <td class="flex px-4 py-2 join">
+                                        <a href="{{ route('lansia.show', $lansia->id) }}"
+                                            class="btn btn-sm btn-primary btn-outline join-item">
+                                            <i class="ri-eye-fill"></i>
+                                        </a>
+                                        @role('kader|admin')
+                                            <a href="{{ route('lansia.edit', $lansia->id) }}"
+                                                class="btn btn-sm btn-warning btn-outline join-item">
+                                                <i class="ri-edit-2-fill"></i>
+                                            </a>
+                                            <button class="btn btn-sm btn-error delete-btn btn-outline join-item"
+                                                data-id="{{ $lansia->id }}">
+                                                <i class="ri-delete-bin-6-fill"></i>
+                                            </button>
+                                            <form id="delete-form-{{ $lansia->id }}"
+                                                action="{{ route('lansia.destroy', $lansia->id) }}" method="POST"
+                                                class="hidden">
+                                                @csrf
+                                                @method('DELETE')
+                                            </form>
+                                        @endrole
+                                    </td>
+                                </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="6" class="px-4 py-2 text-center text-gray-500">Data Kosong!</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+
+                        </table>
+                        <div class="mt-4 bg-slate-100">
+                            {{ $lansias->links() }}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            @if (session('success'))
-                Swal.fire({
-                    title: "Sukses!",
-                    text: "{{ session('success') }}",
-                    icon: "success",
-                    confirmButtonText: "OK"
-                });
-            @endif
-
-            const deleteButtons = document.querySelectorAll('.delete-btn');
-            deleteButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const lansiaId = this.getAttribute('data-id');
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                @if (session('success'))
                     Swal.fire({
-                        title: "Yakin ingin menghapus?",
-                        text: "Data lansia ini akan dihapus secara permanen!",
-                        icon: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#d33",
-                        cancelButtonColor: "#3085d6",
-                        confirmButtonText: "Ya, Hapus!",
-                        cancelButtonText: "Batal"
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            document.getElementById(`delete-form-${lansiaId}`).submit();
-                        }
+                        title: "Sukses!",
+                        text: "{{ session('success') }}",
+                        icon: "success",
+                        confirmButtonText: "OK"
+                    });
+                @endif
+
+                const deleteButtons = document.querySelectorAll('.delete-btn');
+                deleteButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const lansiaId = this.getAttribute('data-id');
+                        Swal.fire({
+                            title: "Yakin ingin menghapus?",
+                            text: "Data lansia ini akan dihapus secara permanen!",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#d33",
+                            cancelButtonColor: "#3085d6",
+                            confirmButtonText: "Ya, Hapus!",
+                            cancelButtonText: "Batal"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                document.getElementById(`delete-form-${lansiaId}`).submit();
+                            }
+                        });
+                    });
+                });
+
+                document.getElementById('search').addEventListener('input', function() {
+                    let filter = this.value.toLowerCase();
+                    let rows = document.querySelectorAll('#lansiaTable tr');
+                    rows.forEach(row => {
+                        let name = row.cells[0].textContent.toLowerCase();
+                        row.style.display = name.includes(filter) ? '' : 'none';
                     });
                 });
             });
-
-            document.getElementById('search').addEventListener('input', function() {
-                let filter = this.value.toLowerCase();
-                let rows = document.querySelectorAll('#lansiaTable tr');
-                rows.forEach(row => {
-                    let name = row.cells[0].textContent.toLowerCase();
-                    row.style.display = name.includes(filter) ? '' : 'none';
-                });
-            });
-        });
-    </script>
-</x-app-layout>
+        </script>
+    </x-app-layout>

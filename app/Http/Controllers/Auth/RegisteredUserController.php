@@ -33,6 +33,13 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'nik' => ['nullable', 'string', 'max:16', 'unique:' . User::class],
+            'born_place' => ['nullable', 'string', 'max:255'],
+            'born_date' => ['nullable', 'date'],
+            'address' => ['nullable', 'string', 'max:255'],
+            'phone' => ['nullable', 'string', 'max:15'],
+            'gender' => ['nullable', 'string', 'max:1'],
+            'relationship_name' => ['nullable', 'string', 'max:255'],
         ]);
 
         $user = User::create([
@@ -40,7 +47,16 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'role_id' => 2,
             'password' => Hash::make($request->password),
+            'nik' => $request->nik,
+            'born_place' => $request->born_place,
+            'born_date' => $request->born_date,
+            'address' => $request->address,
+            'phone' => $request->phone,
+            'gender' => $request->gender,
+            'relationship_name' => $request->relationship_name,
         ]);
+
+        $user->assignRole('kader');
 
         event(new Registered($user));
 

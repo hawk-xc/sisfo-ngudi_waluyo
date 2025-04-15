@@ -6,77 +6,77 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="mx-auto max-w-5xl sm:px-6 lg:px-8">
-            <div class="bg-white shadow-lg rounded-lg p-6">
-                <h3 class="text-2xl font-semibold text-gray-800 mb-4 flex items-center">
-                    <i class="ri-user-3-fill text-blue-500 mr-2"></i> Informasi Lansia
+        <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
+            <div class="p-6 bg-white rounded-lg shadow-lg">
+                <h3 class="flex items-center mb-4 text-2xl font-semibold text-gray-800">
+                    <i class="mr-2 text-blue-500 ri-user-3-fill"></i> Informasi Lansia
                 </h3>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                     <div>
-                        <p class="text-gray-600 font-medium">Nama:</p>
+                        <p class="font-medium text-gray-600">Nama:</p>
                         <p class="text-lg font-semibold">{{ $lansia->nama }}</p>
                     </div>
                     <div>
-                        <p class="text-gray-600 font-medium">NIK:</p>
+                        <p class="font-medium text-gray-600">NIK:</p>
                         <p class="text-lg font-semibold">{{ $lansia->nik }}</p>
                     </div>
                     <div>
-                        <p class="text-gray-600 font-medium">Alamat:</p>
+                        <p class="font-medium text-gray-600">Alamat:</p>
                         <p class="text-lg font-semibold">{{ $lansia->alamat }}</p>
                     </div>
                     <div>
-                        <p class="text-gray-600 font-medium">Usia:</p>
+                        <p class="font-medium text-gray-600">Usia:</p>
                         <p class="text-lg font-semibold">{{ $lansia->umur }} Tahun</p>
                     </div>
                     <div>
-                        <p class="text-gray-600 font-medium">Jenis Kelamin:</p>
+                        <p class="font-medium text-gray-600">Jenis Kelamin:</p>
                         <p class="text-lg font-semibold">{{ $lansia->jenis_kelamin }}</p>
                     </div>
                     <div>
-                        <p class="text-gray-600 font-medium">Status Perkawinan:</p>
+                        <p class="font-medium text-gray-600">Status Perkawinan:</p>
                         <p class="text-lg font-semibold">{{ $lansia->status_perkawinan }}</p>
                     </div>
                     <div>
-                        <p class="text-gray-600 font-medium">Agama:</p>
+                        <p class="font-medium text-gray-600">Agama:</p>
                         <p class="text-lg font-semibold">{{ $lansia->agama }}</p>
                     </div>
                     <div>
-                        <p class="text-gray-600 font-medium">Pendidikan Terakhir:</p>
+                        <p class="font-medium text-gray-600">Pendidikan Terakhir:</p>
                         <p class="text-lg font-semibold">{{ $lansia->pendidikan_terakhir }}</p>
                     </div>
                     <div>
-                        <p class="text-gray-600 font-medium">Riwayat Kesehatan:</p>
+                        <p class="font-medium text-gray-600">Riwayat Kesehatan:</p>
                         <p class="text-lg font-semibold">{{ $lansia->riwayat_kesehatan }}</p>
                     </div>
                     <div>
-                        <p class="text-gray-600 font-medium">Golongan Darah:</p>
+                        <p class="font-medium text-gray-600">Golongan Darah:</p>
                         <p class="text-lg font-semibold">{{ $lansia->golongan_darah }}</p>
                     </div>
                     <div>
-                        <p class="text-gray-600 font-medium">Rhesus:</p>
+                        <p class="font-medium text-gray-600">Rhesus:</p>
                         <p class="text-lg font-semibold">{{ $lansia->rhesus }}</p>
                     </div>
                 </div>
 
                 <hr class="my-6 border-gray-300">
 
-                <h3 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-                    <i class="ri-shield-user-line text-green-500 mr-2"></i> Penanggung Jawab
+                <h3 class="flex items-center mb-4 text-xl font-semibold text-gray-800">
+                    <i class="mr-2 text-green-500 ri-shield-user-line"></i> Penanggung Jawab
                 </h3>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                     <div>
-                        <p class="text-gray-600 font-medium">Nama PJ:</p>
+                        <p class="font-medium text-gray-600">Nama PJ:</p>
                         <p class="text-lg font-semibold">{{ $lansia->pj_nama }}</p>
                     </div>
                     <div>
-                        <p class="text-gray-600 font-medium">Email PJ:</p>
+                        <p class="font-medium text-gray-600">Email PJ:</p>
                         <p class="text-lg font-semibold">{{ $lansia->pj_email }}</p>
                     </div>
                 </div>
 
-                <div class="mt-6 flex justify-end">
+                <div class="flex justify-end mt-6">
                     <a href="{{ route('lansia.index') }}" class="btn btn-outline btn-secondary">
                         <i class="ri-arrow-left-line"></i> Kembali
                     </a>

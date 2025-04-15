@@ -91,7 +91,7 @@ class GiziController extends Controller
         try {
             $kegiatan = Gizi::create([
                 'jenis_gizi' => $validatedData['jenis_gizi'],
-                'menu_gizi' => $validatedData['menu_gizi'],
+                'menu' => $validatedData['menu_gizi'],
                 'bahan_makanan' => $validatedData['bahan_makanan'],
                 'berat' => $validatedData['berat'],
                 'urt' => $validatedData['urt'],

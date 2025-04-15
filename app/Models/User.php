@@ -19,8 +19,15 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
+        'nik',
         'name',
         'email',
+        'born_place',
+        'born_date',
+        'address',
+        'phone',
+        'gender',
+        'relationship_name',
         'password',
         'raw_password',
         'role_id',
@@ -59,5 +66,10 @@ class User extends Authenticatable
     public function roles()
     {
         return $this->belongsToMany(Role::class);
+    }
+
+    public function checkRole()
+    {
+        return $this->role_id;
     }
 }

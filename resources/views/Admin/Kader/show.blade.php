@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="text-xl font-semibold leading-tight text-gray-800">
-            {{ __('Detail Data Penanggung Jawab') }}
+            {{ __('Detail Data Kader') }}
         </h2>
     </x-slot>
 
@@ -24,32 +24,32 @@
             <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <div class="relative overflow-x-auto">
-                        <a href="{{ route('pj.index') }}" class="btn btn-outline btn-neutral btn-sm">
+                        <a href="{{ route('kader.index') }}" class="btn btn-outline btn-neutral btn-sm">
                             <i class="ri-arrow-left-long-line"></i>
-                            Kembali ke halaman Penanggung Jawab
+                            Kembali ke halaman Kader
                         </a>
                     </div>
                     <div id="main-content" class="flex flex-col w-full gap-8 p-6">
                         <section id="informasi-lansia" class="flex-1 w-full">
                             <h3 class="flex items-center mb-4 text-xl font-semibold text-gray-800">
-                                <i class="mr-2 text-blue-500 ri-user-3-fill"></i> Informasi Penanggung Jawab
+                                <i class="mr-2 text-blue-500 ri-user-3-fill"></i> Informasi Kader
                             </h3>
 
                             <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                                 <div>
                                     <p class="font-medium text-gray-600">Nama:</p>
-                                    <p class="text-lg font-semibold">{{ $pj_user->name }}</p>
+                                    <p class="text-lg font-semibold">{{ $kader->name ?? '-' }}</p>
                                 </div>
                                 <div>
                                     <p class="font-medium text-gray-600">NIK:</p>
-                                    <p class="text-lg font-semibold">{{ $pj_user->nik }}</p>
+                                    <p class="text-lg font-semibold">{{ $kader->nik ?? '-' }}</p>
                                 </div>
                                 <div>
                                     <p class="font-medium text-gray-600">Tanggal ditambahkan:</p>
-                                    <p class="text-lg font-semibold">{{ $pj_user->created_at }}</p>
+                                    <p class="text-lg font-semibold">{{ $kader->created_at }}</p>
                                     <span class="text-xs font-light text-slate-500">
-                                        {{ \Carbon\Carbon::parse($pj_user->created_at)->isoFormat('DD MMMM YYYY HH:mm') }}
-                                        ({{ \Carbon\Carbon::parse($pj_user->created_at)->diffForHumans(now(), [
+                                        {{ \Carbon\Carbon::parse($kader->created_at)->isoFormat('DD MMMM YYYY HH:mm') }}
+                                        ({{ \Carbon\Carbon::parse($kader->created_at)->diffForHumans(now(), [
                                             'parts' => 3,
                                             'join' => ', ',
                                         ]) }})
@@ -57,7 +57,7 @@
                                 </div>
                                 <div>
                                     <p class="font-medium text-gray-600">Jenis Hak:</p>
-                                    <p class="text-lg font-semibold">Penanggung Jawab</p>
+                                    <p class="text-lg font-semibold">Kader</p>
                                 </div>
                             </div>
                         </section>
@@ -70,32 +70,28 @@
                                 <table class="table">
                                     <tbody class="border">
                                         <tr>
-                                            <th>Hubungan Penanggung Jawab</th>
-                                            <td class="font-bold underline">{{ $pj_user->relationship_name }}</td>
-                                        </tr>
-                                        <tr>
                                             <th>Jenis Kelamin</th>
-                                            <td>{{ $pj_user->gender == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
+                                            <td>{{ $kader->gender == 'L' ? 'Laki-laki' : 'Perempuan' ?? '-' }}</td>
                                         </tr>
                                         <tr>
                                             <th>Tanggal Lahir</th>
-                                            <td>{{ $pj_user->born_date }}</td>
+                                            <td>{{ $kader->born_date ?? '-' }}</td>
                                         </tr>
                                         <tr>
                                             <th>Tempat Lahir</th>
-                                            <td>{{ $pj_user->born_place }}</td>
+                                            <td>{{ $kader->born_place ?? '-' }}</td>
                                         </tr>
                                         <tr>
                                             <th>Alamat</th>
-                                            <td>{{ $pj_user->address }}</td>
+                                            <td>{{ $kader->address ?? '-' }}</td>
                                         </tr>
                                         <tr>
                                             <th>No Telp</th>
-                                            <td>{{ $pj_user->phone }}</td>
+                                            <td>{{ $kader->phone ?? '-' }}</td>
                                         </tr>
                                         <tr>
                                             <th>Email</th>
-                                            <td>{{ $pj_user->email }}</td>
+                                            <td>{{ $kader->email }}</td>
                                         </tr>
                                         <tr>
                                             <th>Password</th>
@@ -116,56 +112,6 @@
                             </div>
                         </section>
                         <hr>
-                        <section id="informasi-data-lansia">
-                            <h3 class="flex items-center mb-4 text-xl font-semibold text-gray-800">
-                                <i class="mr-2 text-orange-500 ri-group-line"></i> Informasi Data Lansia yang
-                                diampu
-                            </h3>
-                            <div class="overflow-x-auto">
-                                <table class="table table-zebra {{ $pj_user->lansias->isEmpty() ? 'hidden' : '' }}">
-                                    {{-- {{ $pemeriksaan->pemeriksaanGizi->isEmpty() ? 'hidden' : '' }} --}}
-                                    <thead>
-                                        <tr>
-                                            <th></th>
-                                            <th>Nama Lansia</th>
-                                            <th>NIK</th>
-                                            <th>Jenis Kelamin</th>
-                                            <th>Umur</th>
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @php
-                                            $counter = 0;
-                                        @endphp
-                                        @forelse ($pj_user->lansias as $lansia)
-                                            @php
-                                                $counter++;
-                                            @endphp
-                                            <tr>
-                                                <th>{{ $counter }}</th>
-                                                <td>{{ $lansia->nama ?? '-' }}</td>
-                                                <td>{{ $lansia->nik ?? '-' }}</td>
-                                                <td
-                                                    class="badge {{ $lansia->jenis_kelamin == 'Perempuan' ? 'badge-warning' : 'badge-primary' }}">
-                                                    {{ $lansia->jenis_kelamin }}</td>
-                                                <td>{{ $lansia->umur . ' Tahun' ?? '-' }}</td>
-                                                <th class="join">
-                                                    <a href="{{ route('lansia.show', $lansia->id) }}"
-                                                        class="btn join-item btn-sm btn-outline btn-primary">
-                                                        <i class="ri-eye-line"></i>
-                                                    </a>
-                                                </th>
-                                            </tr>
-                                        @empty
-                                            <div class="flex items-center justify-center w-full mt-3 align-middle">
-                                                <span>Data Kosong!</span>
-                                            </div>
-                                        @endforelse
-                                    </tbody>
-                                </table>
-                            </div>
-                        </section>
                     </div>
                 </div>
             </div>

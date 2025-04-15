@@ -20,6 +20,14 @@ class PemeriksaanController extends Controller
         $query = Pemeriksaan::with(['lansia', 'pemeriksaanGizi'])
             ->orderBy('created_at', $sort);
 
+        if (auth()->user()->checkRole() === 3) {
+            $user_id = auth()->user()->id;
+
+            $query->whereHas('lansia.user', function($q) use ($user_id) {
+                $q->where('id', $user_id);
+            });
+        }
+
         if ($search) {
             $query->whereHas('lansia', function ($q) use ($search) {
                 $q->where('nama', 'like', "%{$search}%");

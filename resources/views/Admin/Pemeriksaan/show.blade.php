@@ -172,9 +172,11 @@
                             <h3 class="flex items-center mb-4 text-xl font-semibold text-gray-800">
                                 <i class="mr-2 text-green-400 ri-restaurant-line"></i> Informasi Gizi Lansia
                             </h3>
+                            @role('kader|admin')
                             <button onclick="my_modal_1.showModal()" class="btn btn-sm btn-outline btn-primary"><i
                                     class="ri-add-line"></i> Tambah
                                 Gizi</button>
+                                @endrole
                         </span>
                         <div class="overflow-x-auto">
                             <table
@@ -187,7 +189,9 @@
                                         <th>Menu Gizi</th>
                                         <th>Bahan Makanan</th>
                                         <th>Harga</th>
+                                        @role('kader|admin')
                                         <th>Aksi</th>
+                                        @endrole
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -204,6 +208,7 @@
                                             <td>{{ $item->gizi->menu }}</td>
                                             <td>{{ $item->gizi->bahan_makanan }}</td>
                                             <td>{{ 'Rp ' . $item->gizi->harga ?? '-' }}</td>
+                                            @role('kader|admin')
                                             <th class="join">
                                                 <a href="{{ route('gizi.edit', $item->gizi->id) }}"
                                                     class="btn join-item btn-sm btn-outline btn-warning">
@@ -223,6 +228,7 @@
                                                     <i class="ri-delete-bin-fill"></i>
                                                 </button>
                                             </th>
+                                            @endrole
                                         </tr>
                                     @empty
                                         <div class="flex items-center justify-center w-full mt-3 align-middle">
