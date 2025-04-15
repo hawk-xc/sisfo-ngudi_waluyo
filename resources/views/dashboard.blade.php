@@ -2,6 +2,7 @@
     <x-slot name="header">
         <h2 class="text-xl font-semibold leading-tight text-gray-800">
             {{ __('Dashboard Poslansia Ngudi Waluyo Banjarsari') }}
+            {{-- @dd(request()->route()->uri); --}}
         </h2>
     </x-slot>
     @vite('resources/js/app.js')
@@ -42,9 +43,7 @@
             </div>
             <div id="dashboard-grafik" class="max-w-full p-5 bg-white rounded-sm shadow-sm">
                 ini untuk grafik
-                <div class="w-96">
-                    <canvas id="lansiaChart" width="400" height="200"></canvas>
-                </div>
+
             </div>
         </div>
         {{-- <script src="{{ mix('js/app.js') }}"></script> --}}
