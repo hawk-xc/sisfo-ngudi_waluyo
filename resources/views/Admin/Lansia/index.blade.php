@@ -56,7 +56,7 @@
 
             <div class="overflow-x-auto bg-white shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <table class="w-full text-sm text-left text-gray-500 rtl:text-right">
+                    <table class="w-full text-sm text-left text-gray-500 rtl:text-right"  {{ $lansias->isEmpty() ? 'hidden' : '' }}>
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                             <tr>
                                 <th class="px-4 py-2">Nama</th>
@@ -92,9 +92,9 @@
             </td>
         </tr>
     @empty
-        <tr>
-            <td colspan="6" class="px-4 py-2 text-center text-gray-500">Data Kosong!</td>
-        </tr>
+    <div class="flex items-center justify-center w-full mt-3 align-middle">
+                                    <span>Data Kosong!</span>
+                                </div>
     @endforelse
 </tbody>
 
