@@ -23,7 +23,7 @@ class PemeriksaanController extends Controller
         if (auth()->user()->checkRole() === 3) {
             $user_id = auth()->user()->id;
 
-            $query->whereHas('lansia.user', function($q) use ($user_id) {
+            $query->whereHas('lansia.user', function ($q) use ($user_id) {
                 $q->where('id', $user_id);
             });
         }
