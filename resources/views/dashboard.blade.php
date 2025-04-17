@@ -43,7 +43,6 @@
             </div>
             <div id="dashboard-grafik" class="max-w-full p-5 bg-white rounded-sm shadow-sm">
                 ini untuk grafik
-
             </div>
         </div>
         {{-- <script src="{{ mix('js/app.js') }}"></script> --}}

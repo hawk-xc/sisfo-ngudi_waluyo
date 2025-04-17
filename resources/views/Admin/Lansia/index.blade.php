@@ -5,6 +5,20 @@
         </h2>
     </x-slot>
 
+    @if (session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                callToast('success', '{{ session('success') }}')
+            })
+        </script>
+    @elseif (session('error'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                callToast('error', '{{ session('error') }}')
+            })
+        </script>
+    @endif
+
     <div class="px-4 py-12 md:px-0">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="flex flex-col gap-4 p-4 mb-4 bg-white shadow-sm sm:rounded-lg md:flex-row md:items-center">
