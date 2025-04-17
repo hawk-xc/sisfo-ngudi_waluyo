@@ -10,7 +10,7 @@
             </button>
         </div>
 
-        <ul class="w-64 min-h-full p-4 space-y-2 menu bg-base-100 text-base-content" x-show="sidebarOpen">
+        <ul class="fixed w-64 min-h-full p-4 space-y-2 menu bg-base-100 text-base-content" x-show="sidebarOpen">
             <li class="{{ request()->routeIs('dashboard') ? 'bg-slate-200' : '' }} rounded-md"><a
                     href="{{ route('dashboard') }}"
                     class="{{ request()->routeIs('dashboard') ? 'font-semibold' : '' }}"><i class="ri-home-2-line"></i>
