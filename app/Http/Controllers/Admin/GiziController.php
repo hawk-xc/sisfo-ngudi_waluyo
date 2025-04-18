@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use \App\Models\Gizi;
+use \App\Models\PemeriksaanGizi;
 
 class GiziController extends Controller
 {
@@ -47,6 +48,8 @@ class GiziController extends Controller
      */
     public function store(Request $request)
     {
+        $pemeriksaan_id = $request->pemeriksaan_id;
+
         $messages = [
             // nama_gizi
             'jenis_gizi.required' => 'Jenis gizi wajib diisi.',
@@ -89,7 +92,7 @@ class GiziController extends Controller
             : null;
 
         try {
-            $kegiatan = Gizi::create([
+            $gizi = Gizi::create([
                 'jenis_gizi' => $validatedData['jenis_gizi'],
                 'menu' => $validatedData['menu_gizi'],
                 'bahan_makanan' => $validatedData['bahan_makanan'],
@@ -100,9 +103,14 @@ class GiziController extends Controller
                 'gambar' => $gambarPath
             ]);
 
-            return redirect()->route('gizi.index')->with('success', 'Berhasil menambah Data Gizi!');
+            PemeriksaanGizi::create([
+                'pemeriksaan_id' => $pemeriksaan_id,
+                'gizi_id' => $gizi->id
+            ]);
+
+            return redirect()->route('pemeriksaan.show', $pemeriksaan_id)->with('success', 'Berhasil menambah Data Gizi!');
         } catch (\Exception $e) {
-            return redirect()->route('gizi.index')->with('error', 'Gagal menambah Data Gizi!');
+            return redirect()->route('pemeriksaan.index', $pemeriksaan_id)->with('error', 'Gagal menambah Data Gizi!');
         }
     }
 
@@ -176,9 +184,9 @@ class GiziController extends Controller
         try {
             $gizi->save();
 
-            return redirect()->route('gizi.index')->with('success', 'Berhasil Update Data Gizi!');
+            return redirect()->route('pemeriksaan.index')->with('success', 'Berhasil Update Data Gizi!');
         } catch (\Exception $e) {
-            return redirect()->route('gizi.index')->with('error', 'Gagal Update Data Gizi!');
+            return redirect()->route('pemeriksaan.index')->with('error', 'Gagal Update Data Gizi!');
         }
     }
 

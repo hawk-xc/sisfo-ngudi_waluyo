@@ -109,14 +109,15 @@
                                         </a>
 
                                         @role('admin')
-                                            <form id="delete-form-id_pj" action="{{ route('pj.destroy', 1) }}"
-                                                method="POST" class="hidden">
+                                            <form id="delete-form-{{ $pj_user->id }}"
+                                                action="{{ route('pj.destroy', $pj_user->id) }}" method="POST"
+                                                class="hidden">
                                                 @csrf
                                                 @method('DELETE')
                                             </form>
 
                                             <button class="btn join-item btn-sm btn-error btn-outline"
-                                                onclick="confirmDelete('1')">
+                                                onclick="confirmDelete({{ $pj_user->id }})">
                                                 <i class="ri-delete-bin-fill"></i>
                                             </button>
                                         @endrole

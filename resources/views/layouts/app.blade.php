@@ -21,18 +21,18 @@
         @include('layouts.navigation')
 
         <!-- Page Heading -->
-        @isset($header)
+        {{-- @isset($header)
             <header class="bg-white shadow">
                 <div class="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
                     {{ $header }}
                 </div>
             </header>
-        @endisset
+        @endisset --}}
 
         <!-- Page Content -->
-        <main>
+        {{-- <main>
             {{ $slot }}
-        </main>
+        </main> --}}
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
