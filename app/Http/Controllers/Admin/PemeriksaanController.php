@@ -23,7 +23,7 @@ class PemeriksaanController extends Controller
         if (auth()->user()->checkRole() === 3) {
             $user_id = auth()->user()->id;
 
-            $query->whereHas('lansia.user', function($q) use ($user_id) {
+            $query->whereHas('lansia.user', function ($q) use ($user_id) {
                 $q->where('id', $user_id);
             });
         }
@@ -193,10 +193,21 @@ class PemeriksaanController extends Controller
      */
     public function destroy(string $id)
     {
-        $gizi = Pemeriksaan::findOrFail($id);
-        $gizi->delete();
+        $pemeriksaan = Pemeriksaan::findOrFail($id);
 
-        return redirect()->route('pemeriksaan.index')->with('error', 'Data Pemeriksaan berhasil dihapus');
+        try {
+            if ($pemeriksaan->gizi()->count() > 0) {
+                foreach (PemeriksaanGizi::where('pemeriksaan_id', $pemeriksaan->id)->get() as $pemeriksaan_gizi) {
+                    $pemeriksaan_gizi->delete();
+                }
+            }
+
+            $pemeriksaan->delete();
+        } catch (\Exception $e) {
+            return redirect()->route('pemeriksaan.index')->with('error', 'Data Pemeriksaan gagal dihapus');
+        }
+
+        return redirect()->route('pemeriksaan.index')->with('success', 'Data Pemeriksaan berhasil dihapus');
     }
 
     public function attach_gizi(Request $request)

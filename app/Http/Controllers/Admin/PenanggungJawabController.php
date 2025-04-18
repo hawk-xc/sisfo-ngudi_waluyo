@@ -191,6 +191,7 @@ class PenanggungJawabController extends Controller
      */
     public function destroy(string $id)
     {
+
         try {
             $pj_user = User::where('id', $id)->first();
 

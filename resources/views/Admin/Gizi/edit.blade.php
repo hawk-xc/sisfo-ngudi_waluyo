@@ -12,9 +12,9 @@
                     <div class="relative overflow-x-auto">
                         <h1 class="text-2xl font-extrabold">Edit Data Gizi</h1>
                         <div class="flex justify-end w-full">
-                            <a href="{{ route('gizi.index') }}" class="btn btn-outline btn-neutral btn-sm"><i
+                            <a href="{{ route('pemeriksaan.index') }}" class="btn btn-outline btn-neutral btn-sm"><i
                                     class="ri-arrow-left-long-line"></i>
-                                Kembali ke halaman gizi</a>
+                                Kembali ke halaman pemeriksaan</a>
                         </div>
                         <form action="{{ route('gizi.update', $gizi->id) }}" method="POST"
                             enctype="multipart/form-data">

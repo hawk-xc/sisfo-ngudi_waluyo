@@ -41,7 +41,6 @@
         }
     </style>
 </head>
-
 <body class="font-sans text-gray-800 bg-gray-50">
     <!-- Header -->
     <header class="sticky top-0 z-50 bg-white shadow-sm">

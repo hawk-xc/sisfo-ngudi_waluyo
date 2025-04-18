@@ -191,9 +191,16 @@ class LansiaController extends Controller
     public function destroy($id)
     {
         $lansia = Lansia::findOrFail($id);
-        $lansia->delete();
-        Alert::success('Sukses', 'Data lansia berhasil dihapus!');
-        return redirect()->route('lansia.index')->with('success', 'Data lansia berhasil dihapus.');
+        try {
+            $lansia->delete();
+            Alert::success('Sukses', 'Data lansia berhasil dihapus!');
+
+            return redirect()->route('lansia.index')->with('success', 'Data lansia berhasil dihapus.');
+        } catch (\Exception $e) {
+            Alert::error('Gagal', 'Data lansia gagal dihapus, pastikan tidak ada data pemeriksaan pada data Lansia terkait!');
+
+            return redirect()->route('lansia.index')->with('error', 'Data lansia gagal dihapus, pastikan tidak ada data pemeriksaan pada data Lansia terkait!');
+        }
     }
 
     public function select2(Request $request)
