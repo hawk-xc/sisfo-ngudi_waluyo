@@ -96,6 +96,13 @@ Route::group([
     Route::resource('/laporan', LaporanController::class)->names([
         'index' => 'laporan.index',
     ])->middleware('role:kader|admin');
+
+    Route::group(['prefix' => 'laporan'], function () {
+        Route::get('/data/pemeriksaan', [LaporanController::class, 'pemeriksaan_data'])->name('laporan.data.pemeriksaan');
+        Route::get('/data/pj', [LaporanController::class, 'pj_data'])->name('laporan.data.pj');
+        Route::get('/data/kader', [LaporanController::class, 'kader_data'])->name('laporan.data.kader');
+        Route::get('/data/lansia', [LaporanController::class, 'lansia_data'])->name('laporan.data.lansia');
+    });
 });
 
 
