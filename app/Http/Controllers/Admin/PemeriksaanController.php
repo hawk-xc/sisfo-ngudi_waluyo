@@ -84,6 +84,11 @@ class PemeriksaanController extends Controller
             'analisis_imt.in' => 'Analisa IMT harus berupa normal, kurus, gemuk, atau obesitas.',
             'analisis_tensi.required' => 'Analisa tensi wajib diisi.',
             'analisis_tensi.in' => 'Analisa tensi harus berupa normal, hipotensi, prehipertensi, hipertensi stage 1, hipertensi stage 2, atau krisis hipertensi.',
+
+            // add new column
+            'healthy_check.required' => 'Pemeriksaan kesehatan wajib diisi.',
+            'mentality_check.required' => 'Pemeriksaan mental wajib diisi.',
+
             'keterangan.string' => 'Keterangan harus berupa teks.',
         ];
 
@@ -97,11 +102,21 @@ class PemeriksaanController extends Controller
             'tensi_diastolik' => 'required|numeric|max:255',
             'analisis_imt' => 'required|in:normal,kurus,gemuk,obesitas',
             'analisis_tensi' => 'required|in:normal,hipotensi,prehipertensi,hipertensi_stage1,hipertensi_stage2,krisis_hipertensi',
+
+            // new column
+            'healthy_check' => 'required',
+            'mentality_check' => 'required',
+
             'keterangan' => 'nullable|string',
         ], $messages);
 
         try {
             $validatedData['id_pemeriksaan'] = (string) \Illuminate\Support\Str::uuid();
+            $validatedData['kader_name'] = auth()->user()->name;
+
+            $validatedData['hospital_referral'] = $request->hospital_referral ?? null;
+
+            dd($validatedData);
             $pemeriksaan = Pemeriksaan::create($validatedData);
 
             return redirect(route('pemeriksaan.index'))
