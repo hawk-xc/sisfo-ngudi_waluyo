@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use App\Models\Pemeriksaan;
+use App\Models\Lansia;
+use App\Models\User;
+
 class LaporanController extends Controller
 {
     /**
@@ -15,51 +19,20 @@ class LaporanController extends Controller
         return view('Admin.Laporan.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function lansia_data(Request $request)
     {
-        //
+        return view('Admin.Laporan.data.lansia');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function pemeriksaan_data(Request $request)
     {
-        //
+        $pemeriksaan = Pemeriksaan::with(['lansia', 'gizi'])->get();
+
+        return view('Admin.Laporan.data.pemeriksaan', compact('pemeriksaan'));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function pj_data(Request $request)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return view('Admin.Laporan.data.pj');
     }
 }
