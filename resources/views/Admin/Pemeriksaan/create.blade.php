@@ -178,22 +178,22 @@
                                             <select class="select select-success" name="healthy_check">
                                                 <option disabled selected>Pilih Kondisi Kesehatan</option>
                                                 <option value="sehat"
-                                                    {{ old('analisis_kesehatan') == 'sehat' ? 'selected' : '' }}>Sehat
+                                                    {{ old('healthy_check') == 'sehat' ? 'selected' : '' }}>Sehat
                                                 </option>
                                                 <option value="flu"
-                                                    {{ old('analisis_kesehatan') == 'flu' ? 'selected' : '' }}>Flu /
+                                                    {{ old('healthy_check') == 'flu' ? 'selected' : '' }}>Flu /
                                                     Demam Ringan</option>
                                                 <option value="batuk_pilek"
-                                                    {{ old('analisis_kesehatan') == 'batuk_pilek' ? 'selected' : '' }}>
+                                                    {{ old('healthy_check') == 'batuk_pilek' ? 'selected' : '' }}>
                                                     Batuk / Pilek</option>
                                                 <option value="cedera_ringan"
-                                                    {{ old('analisis_kesehatan') == 'cedera_ringan' ? 'selected' : '' }}>
+                                                    {{ old('healthy_check') == 'cedera_ringan' ? 'selected' : '' }}>
                                                     Cedera Ringan</option>
                                                 <option value="kondisi_kronis"
-                                                    {{ old('analisis_kesehatan') == 'kondisi_kronis' ? 'selected' : '' }}>
+                                                    {{ old('healthy_check') == 'kondisi_kronis' ? 'selected' : '' }}>
                                                     Kondisi Kronis (Asma/Diabetes)</option>
                                                 <option value="perlu_pemeriksaan"
-                                                    {{ old('analisis_kesehatan') == 'perlu_pemeriksaan' ? 'selected' : '' }}>
+                                                    {{ old('healthy_check') == 'perlu_pemeriksaan' ? 'selected' : '' }}>
                                                     Perlu Pemeriksaan Lanjut</option>
                                             </select>
                                         </div>
@@ -205,22 +205,22 @@
                                             <select class="select select-success" name="mentality_check">
                                                 <option disabled selected>Pilih Kondisi Mental</option>
                                                 <option value="sehat"
-                                                    {{ old('analisis_mental') == 'sehat' ? 'selected' : '' }}>Sehat
+                                                    {{ old('mentality_check') == 'sehat' ? 'selected' : '' }}>Sehat
                                                     Mental</option>
                                                 <option value="cemas_ringan"
-                                                    {{ old('analisis_mental') == 'cemas_ringan' ? 'selected' : '' }}>
+                                                    {{ old('mentality_check') == 'cemas_ringan' ? 'selected' : '' }}>
                                                     Cemas Ringan</option>
                                                 <option value="cemas_berat"
-                                                    {{ old('analisis_mental') == 'cemas_berat' ? 'selected' : '' }}>
+                                                    {{ old('mentality_check') == 'cemas_berat' ? 'selected' : '' }}>
                                                     Cemas Berat</option>
                                                 <option value="depresi_ringan"
-                                                    {{ old('analisis_mental') == 'depresi_ringan' ? 'selected' : '' }}>
+                                                    {{ old('mentality_check') == 'depresi_ringan' ? 'selected' : '' }}>
                                                     Depresi Ringan</option>
                                                 <option value="depresi_berat"
-                                                    {{ old('analisis_mental') == 'depresi_berat' ? 'selected' : '' }}>
+                                                    {{ old('mentality_check') == 'depresi_berat' ? 'selected' : '' }}>
                                                     Depresi Berat</option>
                                                 <option value="perlu_konsultasi"
-                                                    {{ old('analisis_mental') == 'perlu_konsultasi' ? 'selected' : '' }}>
+                                                    {{ old('mentality_check') == 'perlu_konsultasi' ? 'selected' : '' }}>
                                                     Perlu Konsultasi Profesional</option>
                                             </select>
                                         </div>

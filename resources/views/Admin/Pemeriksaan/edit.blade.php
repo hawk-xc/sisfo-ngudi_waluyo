@@ -175,6 +175,77 @@
                                             </select>
                                         </div>
                                     </div>
+
+                                    <div class="flex w-full md:gap-3 md:flex-row max-sm:flex-col">
+                                        {{-- analisa_kesehatan --}}
+                                        <div class="flex flex-col w-full gap-2 p-2">
+                                            <label for="analisis_kesehatan">Kondisi Kesehatan</label>
+                                            <select class="select select-success" name="healthy_check">
+                                                <option disabled selected>Pilih Kondisi Kesehatan</option>
+                                                <option value="sehat"
+                                                    {{ old('healthy_check', $pemeriksaan->healthy_check ?? '') == 'sehat' ? 'selected' : '' }}>
+                                                    Sehat
+                                                </option>
+                                                <option value="flu"
+                                                    {{ old('healthy_check', $pemeriksaan->healthy_check ?? '') == 'flu' ? 'selected' : '' }}>
+                                                    Flu /
+                                                    Demam Ringan</option>
+                                                <option value="batuk_pilek"
+                                                    {{ old('healthy_check', $pemeriksaan->healthy_check ?? '') == 'batuk_pilek' ? 'selected' : '' }}>
+                                                    Batuk / Pilek</option>
+                                                <option value="cedera_ringan"
+                                                    {{ old('healthy_check', $pemeriksaan->healthy_check ?? '') == 'cedera_ringan' ? 'selected' : '' }}>
+                                                    Cedera Ringan</option>
+                                                <option value="kondisi_kronis"
+                                                    {{ old('healthy_check', $pemeriksaan->healthy_check ?? '') == 'kondisi_kronis' ? 'selected' : '' }}>
+                                                    Kondisi Kronis (Asma/Diabetes)</option>
+                                                <option value="perlu_pemeriksaan"
+                                                    {{ old('healthy_check', $pemeriksaan->healthy_check ?? '') == 'perlu_pemeriksaan' ? 'selected' : '' }}>
+                                                    Perlu Pemeriksaan Lanjut</option>
+                                            </select>
+                                        </div>
+
+
+                                        {{-- analisa_mental --}}
+                                        <div class="flex flex-col w-full gap-2 p-2">
+                                            <label for="analisis_mental">Kondisi Mental</label>
+                                            <select class="select select-success" name="mentality_check">
+                                                <option disabled selected>Pilih Kondisi Mental</option>
+                                                <option value="sehat"
+                                                    {{ old('mentality_check', $pemeriksaan->mentality_check ?? '') == 'sehat' ? 'selected' : '' }}>
+                                                    Sehat
+                                                    Mental</option>
+                                                <option value="cemas_ringan"
+                                                    {{ old('mentality_check', $pemeriksaan->mentality_check ?? '') == 'cemas_ringan' ? 'selected' : '' }}>
+                                                    Cemas Ringan</option>
+                                                <option value="cemas_berat"
+                                                    {{ old('mentality_check', $pemeriksaan->mentality_check ?? '') == 'cemas_berat' ? 'selected' : '' }}>
+                                                    Cemas Berat</option>
+                                                <option value="depresi_ringan"
+                                                    {{ old('mentality_check', $pemeriksaan->mentality_check ?? '') == 'depresi_ringan' ? 'selected' : '' }}>
+                                                    Depresi Ringan</option>
+                                                <option value="depresi_berat"
+                                                    {{ old('mentality_check', $pemeriksaan->mentality_check ?? '') == 'depresi_berat' ? 'selected' : '' }}>
+                                                    Depresi Berat</option>
+                                                <option value="perlu_konsultasi"
+                                                    {{ old('mentality_check', $pemeriksaan->mentality_check ?? '') == 'perlu_konsultasi' ? 'selected' : '' }}>
+                                                    Perlu Konsultasi Profesional</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex flex-col gap-2 p-4 bg-orange-100">
+                                        <div class="flex flex-row gap-2">
+                                            <input type="checkbox" name="hospital_referral" id="hospital_referral"
+                                                class="checkbox checkbox-primary checkbox-sm"
+                                                checked={{ old('hospital_referral', $pemeriksaan->hospital_referral) }} />
+                                            <label for="hospital_referral">Perlu Rujukan</label>
+                                        </div>
+                                        <span class="text-xs text-gray-600">
+                                            Perlu rujukan ke Rumah Sakit apabila terdapat indikasi adanya kondisi
+                                            kesehatan yang tidak stabil atau memerlukan pengawasan lebih lanjut.
+                                        </span>
+                                    </div>
                                 </div>
 
 
@@ -209,7 +280,7 @@
                                         <fieldset class="fieldset">
                                             <textarea name="keterangan"
                                                 class="w-full textarea textarea-success {{ $errors->has('keterangan') ? 'textarea-error' : '' }}" id="keterangan"
-                                                cols="30" rows="5" placeholder="Keterangan...">{{ old('keterangan', $pemeriksaan->keterangan) }}</textarea>
+                                                cols="30" rows="15" placeholder="Keterangan...">{{ old('keterangan', $pemeriksaan->keterangan) }}</textarea>
                                             @if ($errors->first('keterangan'))
                                                 <p class="fieldset-label text-error">
                                                     {{ $errors->first('keterangan') }}</p>
