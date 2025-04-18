@@ -42,6 +42,43 @@
     </style>
 </head>
 
+<<<<<<<<< Temporary merge branch 1
+<body class="text-gray-900 bg-gray-50">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white shadow-md">
+        <div class="container flex items-center justify-between px-6 py-4 mx-auto">
+            <div class="flex items-center space-x-4">
+                <img src="{{ asset('assets/images/ngudiwaluyo_logo.png') }}" alt="Logo" class="h-12">
+                <h1 class="text-xl font-bold text-blue-700">Poslansia Ngudi Waluyo Banjarsari</h1>
+            </div>
+            <nav class="hidden md:flex space-x-6 text-gray-700 font-medium">
+                <a href="#" class="hover:text-blue-500">Halaman Utama</a>
+                <a href="#profil" class="hover:text-blue-500">Profil</a>
+                <a href="#kegiatan" class="hover:text-blue-500">Kegiatan</a>
+                <a href="#contact" class="hover:text-blue-500">Kontak</a>
+            </nav>
+            <button id="menu-toggle" class="md:hidden text-gray-700 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+        <nav id="mobile-menu" class="hidden px-6 pb-4 md:hidden">
+            <a href="#" class="block py-2 text-gray-700 hover:text-blue-500">Halaman Utama</a>
+            <a href="#profil" class="block py-2 text-gray-700 hover:text-blue-500">Profil</a>
+            <a href="#kegiatan" class="block py-2 text-gray-700 hover:text-blue-500">Kegiatan</a>
+            <a href="#contact" class="block py-2 text-gray-700 hover:text-blue-500">Kontak</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative flex items-center justify-center min-h-screen bg-cover bg-center" style="background-image: url({{ asset('assets/images/bg-lansia.png') }})">
+        <div class="absolute inset-0 bg-black bg-opacity-60"></div>
+        <div class="z-10 max-w-2xl px-6 text-center text-white">
+            <h2 class="text-4xl font-bold md:text-5xl">Selamat Datang</h2>
+            <p class="mt-4 text-lg">Sistem Informasi Kesehatan Pos Lansia</p>
+            <a href="{{ route('login') }}" class="inline-block px-6 py-3 mt-6 text-white bg-blue-600 rounded-full hover:bg-blue-700">Masuk ke Sistem</a>
+=========
 <body class="font-sans text-gray-800 bg-gray-50">
     <!-- Header -->
     <header class="sticky top-0 z-50 bg-white shadow-sm">
