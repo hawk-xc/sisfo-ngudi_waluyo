@@ -102,6 +102,9 @@ Route::group([
         Route::get('/data/pj', [LaporanController::class, 'pj_data'])->name('laporan.data.pj');
         Route::get('/data/kader', [LaporanController::class, 'kader_data'])->name('laporan.data.kader');
         Route::get('/data/lansia', [LaporanController::class, 'lansia_data'])->name('laporan.data.lansia');
+
+        Route::get('/export/{type}', [LaporanController::class, 'export'])
+            ->name('laporan.export');
     });
 });
 
