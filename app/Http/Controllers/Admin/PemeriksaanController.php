@@ -88,6 +88,10 @@ class PemeriksaanController extends Controller
             // add new column
             'healthy_check.required' => 'Pemeriksaan kesehatan wajib diisi.',
             'mentality_check.required' => 'Pemeriksaan mental wajib diisi.',
+            'lingkar_perut.required' => 'Lingkar perut wajib diisi.',
+            'lingkar_perut.numeric' => 'Lingkar perut harus berupa angka.',
+            'gula_darah.required' => 'Gula darah wajib diisi.',
+            'gula_darah.numeric' => 'Gula Darah harus berupa angka.',
 
             'keterangan.string' => 'Keterangan harus berupa teks.',
         ];
@@ -106,6 +110,8 @@ class PemeriksaanController extends Controller
             // new column
             'healthy_check' => 'required',
             'mentality_check' => 'required',
+            'lingkar_perut' => 'required|numeric|max:255',
+            'gula_darah' => 'required|numeric|max:255',
 
             'keterangan' => 'nullable|string',
         ], $messages);
@@ -178,6 +184,10 @@ class PemeriksaanController extends Controller
             // add new column
             'healthy_check.required' => 'Pemeriksaan kesehatan wajib diisi.',
             'mentality_check.required' => 'Pemeriksaan mental wajib diisi.',
+            'lingkar_perut.required' => 'Lingkar perut wajib diisi.',
+            'lingkar_perut.numeric' => 'Lingkar perut harus berupa angka.',
+            'gula_darah.required' => 'Gula darah wajib diisi.',
+            'gula_darah.numeric' => 'Gula Darah harus berupa angka.',
 
             'keterangan.string' => 'Keterangan harus berupa teks.',
         ];
@@ -196,6 +206,8 @@ class PemeriksaanController extends Controller
             // new column
             'healthy_check' => 'required',
             'mentality_check' => 'required',
+            'lingkar_perut' => 'required|numeric|max:255',
+            'gula_darah' => 'required|numeric|max:255',
 
             'keterangan' => 'nullable|string',
         ], $messages);
