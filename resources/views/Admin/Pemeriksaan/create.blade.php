@@ -124,6 +124,46 @@
                                     </div>
 
                                     <div class="flex w-full md:gap-3 md:flex-row max-sm:flex-col">
+                                        {{-- lingkar_perut --}}
+                                        <div class="flex flex-col w-full gap-2 p-2">
+                                            <label for="lingkar_perut">Lingkar Perut</label>
+                                            <fieldset class="fieldset">
+                                                <label class="w-full input">
+                                                    Cm
+                                                    <input type="number" placeholder="Lingkar Perut, ex. 40"
+                                                        step="0.1"
+                                                        class="grow w-full input {{ $errors->has('lingkar_perut') ? 'input-error' : '' }}"
+                                                        value="{{ old('lingkar_perut') ?? $pemeriksaan->lingkar_perut }}"
+                                                        name="lingkar_perut" />
+                                                </label>
+                                                @if ($errors->first('lingkar_perut'))
+                                                    <p class="fieldset-label text-error">
+                                                        {{ $errors->first('lingkar_perut') }}</p>
+                                                @endif
+                                            </fieldset>
+                                        </div>
+
+                                        {{-- gula_darah --}}
+                                        <div class="flex flex-col w-full gap-2 p-2">
+                                            <label for="gula_darah">Gula Darah</label>
+                                            <fieldset class="fieldset">
+                                                <label class="w-full input">
+                                                    mg/dL
+                                                    <input type="number" placeholder="Gula Darah, ex. 80"
+                                                        step="0.1"
+                                                        class="grow w-full input {{ $errors->has('gula_darah') ? 'input-error' : '' }}"
+                                                        value="{{ old('gula_darah') ?? $pemeriksaan->gula_darah }}"
+                                                        name="gula_darah" />
+                                                </label>
+                                                @if ($errors->first('gula_darah'))
+                                                    <p class="fieldset-label text-error">
+                                                        {{ $errors->first('gula_darah') }}</p>
+                                                @endif
+                                            </fieldset>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex w-full md:gap-3 md:flex-row max-sm:flex-col">
                                         {{-- analisa_imt --}}
                                         <div class="flex flex-col w-full gap-2 p-2">
                                             <label for="analisis_imt">Analisa IMT</label>

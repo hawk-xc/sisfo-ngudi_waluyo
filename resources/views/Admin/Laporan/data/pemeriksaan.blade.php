@@ -20,6 +20,8 @@
     @endif
 
     <div class="px-4 py-12 md:px-0">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="flex flex-col gap-4 p-4 mb-4 bg-white shadow-sm sm:rounded-lg md:flex-row md:items-center">
                 <ul class="flex items-center justify-between flex-1 menu bg-base-200 lg:menu-horizontal rounded-box">
@@ -45,17 +47,24 @@
                                 </li>
                             </ul>
                         </li>
+
+                        <input type="text" id="dateRange" placeholder="Pilih Rentang Tanggal Pemeriksaan..." readonly
+                            class="input w-72 input-sm">
                     </div>
-                    <button class="btn btn-outline">
-                        <i class="ri-file-pdf-2-line"></i> Export Data
-                    </button>
+                    <div>
+                        <button onclick="exportData('pemeriksaan', 'pdf')" class="btn btn-outline btn-neutral btn-sm">
+                            <i class="ri-file-pdf-2-line"></i> Export PDF
+                        </button>
+                        <a href="{{ route('laporan.index') }}" class="btn btn-outline btn-neutral btn-sm">
+                            <i class="ri-arrow-left-long-line"></i>
+                            Kembali ke halaman Laporan
+                        </a>
+                    </div>
                 </ul>
             </div>
 
             <div class="overflow-x-auto bg-white shadow-sm sm:rounded-lg">
                 <div class="p-2 pt-5 text-gray-900">
-
-
                     <table class="pemeriksaan-table" {{ $pemeriksaan->isEmpty() ? 'style="display: none;"' : '' }}>
                         <div class="w-full mb-3 font-semibold text-center">
                             <h2>DATA PEMERIKSAAN LANSIA</h2>
@@ -69,12 +78,13 @@
                                 <th>Nama</th>
                                 <th>Tgl-lahir</th>
                                 <th>NIK</th>
+                                <th>BB</th>
+                                <th>TB</th>
                                 <th>IMT</th>
-                                <th>Kesehatan</th>
-                                <th>Kesehatan Mental</th>
-                                <th>Analisa Tensi</th>
-                                <th>Tensi Diastolik</th>
-                                <th>Tensi Sistolik</th>
+                                <th>Tensi</th>
+                                <th>Lingkar Perut</th>
+                                <th>Gula Darah</th>
+                                <th>Keterangan</th>
                                 <th>Rujukan</th>
                             </tr>
                         </thead>
@@ -92,12 +102,13 @@
                                     <td>{{ \Carbon\Carbon::parse($item->lansia->tanggal_lahir ?? '')->format('d/m/Y') }}
                                     </td>
                                     <td>{{ $item->lansia->nik ?? '-' }}</td>
+                                    <td>{{ $item->berat_badan . ' Kg' ?? '-' }}</td>
+                                    <td>{{ $item->tinggi_badan . ' Cm' ?? '-' }}</td>
                                     <td>{{ $item->imt . ' kg/m²' ?? '-' }}</td>
-                                    <td>{{ $item->healthy_check ?? '-' }}</td>
-                                    <td>{{ $item->mentality_check ?? '-' }}</td>
                                     <td>{{ $item->analisis_tensi ?? '-' }}</td>
-                                    <td>{{ $item->tensi_diastolik . ' mmHg' ?? '-' }}</td>
-                                    <td>{{ $item->tensi_sistolik . ' mmHg' ?? '-' }}</td>
+                                    <td>{{ $item->lingkar_perut . ' Cm' ?? '-' }}</td>
+                                    <td>{{ $item->gula_darah . ' mg/dL' ?? '-' }}</td>
+                                    <td>{{ $item->healthy_check ?? '-' }}</td>
                                     <td>{{ $item->hospital_referral ? 'Ya' : 'Tidak' ?? '-' }}</td>
                                 </tr>
                             @empty
@@ -115,6 +126,81 @@
             </div>
         </div>
     </div>
+    <!-- Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- Jika ingin menggunakan bahasa Indonesia -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/id.js"></script>
+
+    <!-- Export Data -->
+    <script>
+        function exportData(dataType, exportType) {
+            const dateRange = document.getElementById('dateRange').value;
+            let url = `/dashboard/laporan/export/${dataType}?export_type=${exportType}`;
+
+            if (dateRange) {
+                url += `&date_range=${encodeURIComponent(dateRange)}`;
+            }
+
+            window.location.href = url;
+        }
+    </script>
+
+    <script>
+        // Inisialisasi flatpickr
+        const dateRangePicker = flatpickr("#dateRange", {
+            mode: "range",
+            dateFormat: "Y-m-d", // Ubah format untuk match dengan database
+            locale: "id",
+            allowInput: true,
+            static: true,
+            onChange: function(selectedDates, dateStr, instance) {
+                if (selectedDates.length === 2) {
+                    // Format tanggal untuk dikirim: "Y-m-d to Y-m-d"
+                    const formattedDates = selectedDates.map(date =>
+                        date.toISOString().split('T')[0]
+                    ).join(' to ');
+                    loadDataByDateRange(formattedDates);
+                }
+            }
+        });
+
+        function loadDataByDateRange(dateRange) {
+            const tableBody = document.getElementById('pemeriksaanTable');
+            if (!tableBody) {
+                console.error('Element tabel tidak ditemukan!');
+                return;
+            }
+
+            // Tampilkan loading indicator
+            tableBody.innerHTML =
+                '<tr><td colspan="12" class="py-4 text-center">Memuat data...</td></tr>';
+
+            fetch(`{{ route('laporan.data.pemeriksaan') }}?date_range=${encodeURIComponent(dateRange)}`, {
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.html) {
+                        tableBody.innerHTML = data.html;
+                    } else {
+                        tableBody.innerHTML =
+                            '<tr><td colspan="12"><div class="empty-data"><span>Data tidak ditemukan</span></div></td></tr>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    tableBody.innerHTML =
+                        '<tr><td colspan="12" class="py-4 text-center text-red-500">Terjadi kesalahan saat memuat data</td></tr>';
+                });
+        }
+    </script>
+
     <style>
         .pemeriksaan-table {
             width: 100%;
@@ -176,38 +262,4 @@
             margin-top: 0.75rem;
         }
     </style>
-    <script>
-        document.getElementById('search').addEventListener('input', function(e) {
-            let query = this.value;
-
-            // Tampilkan loading indicator jika diperlukan
-            document.getElementById('pemeriksaanTable').innerHTML =
-                '<tr><td colspan="6" class="py-4 text-center">Mencari data...</td></tr>';
-
-            fetch(`{{ route('pemeriksaan.index') }}?search=${query}`, {
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'Accept': 'application/json'
-                    }
-                })
-                .then(response => {
-                    if (!response.ok) throw new Error('Network response was not ok');
-                    return response.json();
-                })
-                .then(data => {
-                    document.getElementById('pemeriksaanTable').innerHTML = data.html;
-
-                    // Update pagination
-                    let paginationContainer = document.querySelector('.pagination');
-                    if (paginationContainer) {
-                        paginationContainer.innerHTML = data.pagination;
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    document.getElementById('pemeriksaanTable').innerHTML =
-                        '<tr><td colspan="6" class="py-4 text-center text-red-500">Terjadi kesalahan saat memuat data</td></tr>';
-                });
-        });
-    </script>
 </x-app-layout>
