@@ -29,7 +29,9 @@ class Pemeriksaan extends Model
         'mentality_check',
         'healthy_check',
         'hospital_referral',
-        'kader_name'
+        'kader_name',
+        'gula_darah',
+        'lingkar_perut'
     ];
 
     public function lansia()
