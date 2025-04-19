@@ -139,7 +139,22 @@ class PemeriksaanController extends Controller
     {
         $pemeriksaan = Pemeriksaan::with(['lansia', 'gizi'])->findOrFail($id);
 
-        return view('Admin.Pemeriksaan.show', compact('pemeriksaan'));
+        // Ambil semua data pemeriksaan lansia ini untuk chart
+        $historis = Pemeriksaan::where('lansia_id', $pemeriksaan->lansia_id)
+            ->orderBy('tanggal_pemeriksaan', 'asc')
+            ->get(['tanggal_pemeriksaan', 'berat_badan', 'tinggi_badan', 'imt']);
+
+        // Kategori IMT berdasarkan WHO
+        $kategoriIMT = [
+            ['min' => 0, 'max' => 16.0, 'kategori' => 'Berat Badan Sangat Kurang', 'warna' => 'bg-red-500'],
+            ['min' => 16.0, 'max' => 16.9, 'kategori' => 'Berat Badan Kurang', 'warna' => 'bg-orange-500'],
+            ['min' => 17.0, 'max' => 18.4, 'kategori' => 'Kurang', 'warna' => 'bg-yellow-500'],
+            ['min' => 18.5, 'max' => 24.9, 'kategori' => 'Normal', 'warna' => 'bg-green-500'],
+            ['min' => 25.0, 'max' => 29.9, 'kategori' => 'Kelebihan Berat', 'warna' => 'bg-blue-500'],
+            ['min' => 30.0, 'max' => 100, 'kategori' => 'Obesitas', 'warna' => 'bg-purple-500'],
+        ];
+
+        return view('Admin.Pemeriksaan.show', compact('pemeriksaan', 'historis', 'kategoriIMT'));
     }
 
     /**
