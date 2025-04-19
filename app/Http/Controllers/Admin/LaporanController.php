@@ -26,7 +26,7 @@ class LaporanController extends Controller
             'Tensi',
             'Lingkar Perut (Cm)',
             'Gula Darah (mg/dL)',
-            'Keterangan',
+            'Kesehatan',
             'Rujukan'
         ],
         'lansia' => [
@@ -34,9 +34,14 @@ class LaporanController extends Controller
             'Nama',
             'NIK',
             'Tanggal Lahir',
-            'Alamat',
+            'Umur',
             'Jenis Kelamin',
-            'No HP'
+            'Status Perkawinan',
+            'Alamat',
+            'Agama',
+            'Pendidikan',
+            'Gol Darah',
+            'Riwayat',
         ],
         'pj' => [
             'No',
@@ -118,6 +123,7 @@ class LaporanController extends Controller
     }
 
     // Method untuk mendapatkan data
+    // Method untuk mendapatkan data
     protected function getExportData($dataType, Request $request)
     {
         switch ($dataType) {
@@ -125,26 +131,20 @@ class LaporanController extends Controller
                 return $this->getPemeriksaanData($request);
             case 'lansia':
                 return Lansia::query()
-                    ->when($request->has('date_range'), function ($query) use ($request) {
-                        $dates = explode(' to ', $request->date_range);
-                        if (count($dates) == 2) {
-                            $query->whereBetween('created_at', [
-                                \Carbon\Carbon::parse(trim($dates[0]))->startOfDay(),
-                                \Carbon\Carbon::parse(trim($dates[1]))->endOfDay()
-                            ]);
+                    ->when($request->filled('date_range'), function ($query) use ($request) {
+                        $dates = $this->parseDateRange($request->date_range);
+                        if ($dates) {
+                            $query->whereBetween('created_at', [$dates['start'], $dates['end']]);
                         }
                     })
                     ->orderBy('created_at', 'desc')
                     ->get();
             case 'pj':
                 return User::where('role', 'pj')
-                    ->when($request->has('date_range'), function ($query) use ($request) {
-                        $dates = explode(' to ', $request->date_range);
-                        if (count($dates) == 2) {
-                            $query->whereBetween('created_at', [
-                                \Carbon\Carbon::parse(trim($dates[0]))->startOfDay(),
-                                \Carbon\Carbon::parse(trim($dates[1]))->endOfDay()
-                            ]);
+                    ->when($request->filled('date_range'), function ($query) use ($request) {
+                        $dates = $this->parseDateRange($request->date_range);
+                        if ($dates) {
+                            $query->whereBetween('created_at', [$dates['start'], $dates['end']]);
                         }
                     })
                     ->orderBy('created_at', 'desc')
@@ -154,27 +154,58 @@ class LaporanController extends Controller
         }
     }
 
-    // Method untuk mendapatkan data pemeriksaan
-    protected function getPemeriksaanData(Request $request)
+    protected function parseDateRange($dateRange)
     {
-        $query = Pemeriksaan::with(['lansia', 'gizi'])->orderBy('tanggal_pemeriksaan', 'desc');
+        if (empty($dateRange)) {
+            return null;
+        }
 
-        if ($request->has('date_range') && !empty($request->date_range)) {
-            $dates = explode(' to ', $request->date_range);
+        // Coba kedua format pemisah
+        $dates = explode(' to ', $dateRange);
+        if (count($dates) !== 2) {
+            $dates = explode(' - ', $dateRange);
+        }
 
-            if (count($dates) == 2) {
-                try {
-                    $startDate = \Carbon\Carbon::parse(trim($dates[0]))->startOfDay();
-                    $endDate = \Carbon\Carbon::parse(trim($dates[1]))->endOfDay();
-                    $query->whereBetween('tanggal_pemeriksaan', [$startDate, $endDate]);
-                } catch (\Exception $e) {
-                    Log::error('Error parsing date range: ' . $e->getMessage());
-                }
+        if (count($dates) === 2) {
+            try {
+                return [
+                    'start' => \Carbon\Carbon::parse(trim($dates[0]))->startOfDay(),
+                    'end' => \Carbon\Carbon::parse(trim($dates[1]))->endOfDay()
+                ];
+            } catch (\Exception $e) {
+                Log::error('Error parsing date range: ' . $e->getMessage());
             }
         }
 
-        return $query->get();
+        return null;
     }
+
+
+    // Method untuk mendapatkan data pemeriksaan
+    protected function getPemeriksaanData(Request $request)
+    {
+        $query = Pemeriksaan::with(['lansia', 'gizi']);
+
+        // Debug request
+        Log::debug('Pemeriksaan Data Request:', $request->all());
+
+        // Handle sorting
+        $sortDirection = $request->get('sort', 'desc') === 'asc' ? 'asc' : 'desc';
+        $query->orderBy('tanggal_pemeriksaan', $sortDirection);
+
+        // Handle date range filter
+        $dates = $this->parseDateRange($request->date_range);
+        if ($dates) {
+            $query->whereBetween('tanggal_pemeriksaan', [$dates['start'], $dates['end']]);
+            Log::debug('Applied date filter:', $dates);
+        }
+
+        $results = $query->get();
+        Log::debug('Query results count:', ['count' => $results->count()]);
+
+        return $results;
+    }
+
 
     // Method untuk export Excel
     protected function exportToExcel($dataType, $data)
@@ -213,11 +244,14 @@ class LaporanController extends Controller
     protected function exportToPdf($dataType, $data)
     {
         $formattedData = $this->formatDataForExport($dataType, $data);
+        $currentDate = now()->format('d-m-Y');
 
         $pdf = PDF::loadView($this->exportViews[$dataType], [
             'data' => $formattedData,
             'heading' => $this->exportHeadings[$dataType],
-            'fileName' => $this->exportFileNames[$dataType]
+            'fileName' => $this->exportFileNames[$dataType],
+            'currentDate' => $currentDate,
+            'dateRange' => request()->date_range ?? null
         ])->setPaper('a4', 'landscape');
 
         return $pdf->download($this->exportFileNames[$dataType] . '.pdf');
@@ -240,7 +274,7 @@ class LaporanController extends Controller
                         'Tensi' => $item->analisis_tensi ?? '-',
                         'Lingkar Perut (Cm)' => $item->lingkar_perut ? $item->lingkar_perut . ' Cm' : '-',
                         'Gula Darah (mg/dL)' => $item->gula_darah ? $item->gula_darah . ' mg/dL' : '-',
-                        'Keterangan' => $item->healthy_check ?? '-',
+                        'Kesehatan' => $item->healthy_check ?? '-',
                         'Rujukan' => $item->hospital_referral ? 'Ya' : 'Tidak'
                     ];
                 });
@@ -251,9 +285,14 @@ class LaporanController extends Controller
                         'Nama' => $item->nama,
                         'NIK' => $item->nik,
                         'Tanggal Lahir' => $item->tanggal_lahir->format('d/m/Y'),
-                        'Alamat' => $item->alamat,
+                        'Umur' => $item->umur,
                         'Jenis Kelamin' => $item->jenis_kelamin,
-                        'No HP' => $item->no_hp
+                        'Status Perkawinan' => $item->status_perkawinan,
+                        'Alamat' => $item->alamat,
+                        'Agama' => $item->agama,
+                        'Pendidikan' => $item->pendidikan_terakhir,
+                        'Gol Darah' => $item->golongan_darah,
+                        'Riwayat' => $item->riwayat_kesehatan
                     ];
                 });
             case 'pj':

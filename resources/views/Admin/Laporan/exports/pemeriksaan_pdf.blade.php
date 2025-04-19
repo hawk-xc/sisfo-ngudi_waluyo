@@ -81,6 +81,10 @@
             /* Tidak perlu bold untuk isi tabel */
         }
 
+        .font-bold {
+            font-weight: bold;
+        }
+
         .empty-data {
             display: flex;
             align-items: center;
@@ -100,9 +104,14 @@
 
 <body>
     <div class="header">
-        <h2>DATA PEMERIKSAAN LANSIA</h2>
-        <h2>POSLANSIA.................. RW.................</h2>
-        <h2>KELURAHAN.................</h2>
+        <h2 class="font-bold">DATA PEMERIKSAAN LANSIA</h2>
+        <p class="font-bold">POSLANSIA.................. RW.................</p>
+        <p class="font-bold">KELURAHAN.................</p>
+
+        @if ($dateRange)
+            <p style="font-size: 9pt;">Rentang Tanggal: {{ $dateRange }}</p>
+        @endif
+        <p style="font-size: 9pt;">Tanggal Export: {{ $currentDate }}</p>
     </div>
 
     <table>
@@ -118,7 +127,7 @@
                 <th>Tensi</th>
                 <th>Lingkar Perut</th>
                 <th>Gula Darah</th>
-                <th>Keterangan</th>
+                <th>Kesehatan</th>
                 <th>Rujukan</th>
             </tr>
         </thead>
@@ -137,7 +146,7 @@
                     <td>{{ $item['Tensi'] }}</td>
                     <td>{{ $item['Lingkar Perut (Cm)'] }}</td>
                     <td>{{ $item['Gula Darah (mg/dL)'] }}</td>
-                    <td>{{ $item['Keterangan'] }}</td>
+                    <td>{{ $item['Kesehatan'] }}</td>
                     <td>{{ $item['Rujukan'] }}</td>
                 </tr>
             @empty

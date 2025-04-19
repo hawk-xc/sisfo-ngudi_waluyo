@@ -84,7 +84,7 @@
                                 <th>Tensi</th>
                                 <th>Lingkar Perut</th>
                                 <th>Gula Darah</th>
-                                <th>Keterangan</th>
+                                <th>Kesehatan</th>
                                 <th>Rujukan</th>
                             </tr>
                         </thead>
@@ -135,12 +135,23 @@
     <script>
         function exportData(dataType, exportType) {
             const dateRange = document.getElementById('dateRange').value;
+            const urlParams = new URLSearchParams(window.location.search);
+
             let url = `/dashboard/laporan/export/${dataType}?export_type=${exportType}`;
 
+            // Kirim parameter yang sama dengan tampilan web
             if (dateRange) {
-                url += `&date_range=${encodeURIComponent(dateRange)}`;
+                // Format tanggal sesuai dengan yang diharapkan controller
+                const formattedRange = dateRange.replace(/\s+/g, ' '); // Normalisasi spasi
+                url += `&date_range=${encodeURIComponent(formattedRange)}`;
             }
 
+            // Kirim parameter sort jika ada
+            if (urlParams.has('sort')) {
+                url += `&sort=${urlParams.get('sort')}`;
+            }
+
+            console.log('Export URL:', url); // Debug
             window.location.href = url;
         }
     </script>
