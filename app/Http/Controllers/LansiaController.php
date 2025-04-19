@@ -76,6 +76,8 @@ class LansiaController extends Controller
             'golongan_darah' => 'nullable|string|max:5',
             'rhesus' => 'nullable|string',
             'riwayat_kesehatan' => 'nullable|string',
+
+            'tanggal_lahir' => 'required|date',
         ], [
             'pj_email.unique' => 'User PJ sudah terdaftar.',
             'pj_nama.required_without_all' => 'Nama PJ wajib diisi jika tidak memilih akun yang sudah ada.',
@@ -114,6 +116,8 @@ class LansiaController extends Controller
             'golongan_darah' => $request->golongan_darah,
             'rhesus' => $request->rhesus,
             'riwayat_kesehatan' => $request->riwayat_kesehatan,
+
+            'tanggal_lahir' => $request->tanggal_lahir,
         ]);
 
 
@@ -163,6 +167,8 @@ class LansiaController extends Controller
             'golongan_darah' => 'nullable|string|max:5',
             'rhesus' => 'nullable|string',
             'riwayat_kesehatan' => 'nullable|string',
+
+            'tanggal_lahir' => 'required|date',
         ]);
 
         $lansia = Lansia::findOrFail($id);
@@ -180,6 +186,8 @@ class LansiaController extends Controller
             'golongan_darah' => $request->golongan_darah,
             'rhesus' => $request->rhesus,
             'riwayat_kesehatan' => $request->riwayat_kesehatan,
+
+            'tanggal_lahir' => $request->tanggal_lahir,
         ]);
 
         return redirect()->route('lansia.index')->with('success', 'Data berhasil diperbarui.');

@@ -23,7 +23,15 @@ class Pemeriksaan extends Model
         'tensi_diastolik',
         'analisis_imt',
         'analisis_tensi',
-        'keterangan'
+        'keterangan',
+
+        // new Column
+        'mentality_check',
+        'healthy_check',
+        'hospital_referral',
+        'kader_name',
+        'gula_darah',
+        'lingkar_perut'
     ];
 
     public function lansia()

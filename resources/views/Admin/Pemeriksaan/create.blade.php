@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-12 mb-10">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
@@ -124,6 +124,46 @@
                                     </div>
 
                                     <div class="flex w-full md:gap-3 md:flex-row max-sm:flex-col">
+                                        {{-- lingkar_perut --}}
+                                        <div class="flex flex-col w-full gap-2 p-2">
+                                            <label for="lingkar_perut">Lingkar Perut</label>
+                                            <fieldset class="fieldset">
+                                                <label class="w-full input">
+                                                    Cm
+                                                    <input type="number" placeholder="Lingkar Perut, ex. 40"
+                                                        step="0.1"
+                                                        class="grow w-full input {{ $errors->has('lingkar_perut') ? 'input-error' : '' }}"
+                                                        value="{{ old('lingkar_perut') ?? $pemeriksaan->lingkar_perut }}"
+                                                        name="lingkar_perut" />
+                                                </label>
+                                                @if ($errors->first('lingkar_perut'))
+                                                    <p class="fieldset-label text-error">
+                                                        {{ $errors->first('lingkar_perut') }}</p>
+                                                @endif
+                                            </fieldset>
+                                        </div>
+
+                                        {{-- gula_darah --}}
+                                        <div class="flex flex-col w-full gap-2 p-2">
+                                            <label for="gula_darah">Gula Darah</label>
+                                            <fieldset class="fieldset">
+                                                <label class="w-full input">
+                                                    mg/dL
+                                                    <input type="number" placeholder="Gula Darah, ex. 80"
+                                                        step="0.1"
+                                                        class="grow w-full input {{ $errors->has('gula_darah') ? 'input-error' : '' }}"
+                                                        value="{{ old('gula_darah') ?? $pemeriksaan->gula_darah }}"
+                                                        name="gula_darah" />
+                                                </label>
+                                                @if ($errors->first('gula_darah'))
+                                                    <p class="fieldset-label text-error">
+                                                        {{ $errors->first('gula_darah') }}</p>
+                                                @endif
+                                            </fieldset>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex w-full md:gap-3 md:flex-row max-sm:flex-col">
                                         {{-- analisa_imt --}}
                                         <div class="flex flex-col w-full gap-2 p-2">
                                             <label for="analisis_imt">Analisa IMT</label>
@@ -170,6 +210,73 @@
                                             </select>
                                         </div>
                                     </div>
+
+                                    <div class="flex w-full md:gap-3 md:flex-row max-sm:flex-col">
+                                        {{-- analisa_kesehatan --}}
+                                        <div class="flex flex-col w-full gap-2 p-2">
+                                            <label for="analisis_kesehatan">Kondisi Kesehatan</label>
+                                            <select class="select select-success" name="healthy_check">
+                                                <option disabled selected>Pilih Kondisi Kesehatan</option>
+                                                <option value="sehat"
+                                                    {{ old('healthy_check') == 'sehat' ? 'selected' : '' }}>Sehat
+                                                </option>
+                                                <option value="flu"
+                                                    {{ old('healthy_check') == 'flu' ? 'selected' : '' }}>Flu /
+                                                    Demam Ringan</option>
+                                                <option value="batuk_pilek"
+                                                    {{ old('healthy_check') == 'batuk_pilek' ? 'selected' : '' }}>
+                                                    Batuk / Pilek</option>
+                                                <option value="cedera_ringan"
+                                                    {{ old('healthy_check') == 'cedera_ringan' ? 'selected' : '' }}>
+                                                    Cedera Ringan</option>
+                                                <option value="kondisi_kronis"
+                                                    {{ old('healthy_check') == 'kondisi_kronis' ? 'selected' : '' }}>
+                                                    Kondisi Kronis (Asma/Diabetes)</option>
+                                                <option value="perlu_pemeriksaan"
+                                                    {{ old('healthy_check') == 'perlu_pemeriksaan' ? 'selected' : '' }}>
+                                                    Perlu Pemeriksaan Lanjut</option>
+                                            </select>
+                                        </div>
+
+
+                                        {{-- analisa_mental --}}
+                                        <div class="flex flex-col w-full gap-2 p-2">
+                                            <label for="analisis_mental">Kondisi Mental</label>
+                                            <select class="select select-success" name="mentality_check">
+                                                <option disabled selected>Pilih Kondisi Mental</option>
+                                                <option value="sehat"
+                                                    {{ old('mentality_check') == 'sehat' ? 'selected' : '' }}>Sehat
+                                                    Mental</option>
+                                                <option value="cemas_ringan"
+                                                    {{ old('mentality_check') == 'cemas_ringan' ? 'selected' : '' }}>
+                                                    Cemas Ringan</option>
+                                                <option value="cemas_berat"
+                                                    {{ old('mentality_check') == 'cemas_berat' ? 'selected' : '' }}>
+                                                    Cemas Berat</option>
+                                                <option value="depresi_ringan"
+                                                    {{ old('mentality_check') == 'depresi_ringan' ? 'selected' : '' }}>
+                                                    Depresi Ringan</option>
+                                                <option value="depresi_berat"
+                                                    {{ old('mentality_check') == 'depresi_berat' ? 'selected' : '' }}>
+                                                    Depresi Berat</option>
+                                                <option value="perlu_konsultasi"
+                                                    {{ old('mentality_check') == 'perlu_konsultasi' ? 'selected' : '' }}>
+                                                    Perlu Konsultasi Profesional</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex flex-col gap-2 p-4 bg-orange-100">
+                                        <div class="flex flex-row gap-2">
+                                            <input type="checkbox" name="hospital_referral" id="hospital_referral"
+                                                class="checkbox checkbox-primary checkbox-sm" />
+                                            <label for="hospital_referral">Perlu Rujukan</label>
+                                        </div>
+                                        <span class="text-xs text-gray-600">
+                                            Perlu rujukan ke Rumah Sakit apabila terdapat indikasi adanya kondisi
+                                            kesehatan yang tidak stabil atau memerlukan pengawasan lebih lanjut.
+                                        </span>
+                                    </div>
                                 </div>
 
 
@@ -204,7 +311,7 @@
                                         <fieldset class="fieldset">
                                             <textarea name="keterangan"
                                                 class="w-full textarea textarea-success {{ $errors->has('keterangan') ? 'textarea-error' : '' }}" id="keterangan"
-                                                cols="30" rows="5" placeholder="Keterangan...">{{ old('keterangan') }}</textarea>
+                                                cols="30" rows="15" placeholder="Keterangan...">{{ old('keterangan') }}</textarea>
                                             @if ($errors->first('keterangan'))
                                                 <p class="fieldset-label text-error">
                                                     {{ $errors->first('keterangan') }}</p>

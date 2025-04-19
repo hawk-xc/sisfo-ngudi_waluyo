@@ -156,7 +156,7 @@
     </dialog>
 
     <div class="py-12">
-        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <div class="mx-auto mb-10 max-w-7xl sm:px-6 lg:px-8">
             <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <div class="relative overflow-x-auto">
@@ -260,6 +260,11 @@
                                     <p class="text-lg font-semibold">{{ $pemeriksaan->berat_badan . ' kg' ?? '-' }}
                                     </p>
                                 </div>
+                                <div>
+                                    <p class="font-medium text-gray-600">Kader:</p>
+                                    <p class="text-lg font-semibold">{{ $pemeriksaan->kader_name ?? '-' }}
+                                    </p>
+                                </div>
                             </div>
                         </section>
                     </div>
@@ -300,7 +305,7 @@
     </div>
 </section>
                     @if ($pemeriksaan->keterangan)
-                        <div id="second-content" class="p-6 mt-5">
+                        <div id="third-content" class="p-6 mt-5">
                             <h3 class="flex items-center mb-4 text-xl font-semibold text-gray-800">
                                 <i class="mr-2 text-orange-400 ri-sticky-note-line"></i> Keterangan Detail Pemeriksaan
                                 Lansia
@@ -310,7 +315,7 @@
                             </span>
                         </div>
                     @endif
-                    <div id="third-content" class="p-6 mt-5">
+                    <div id="fourth-content" class="p-6 mt-5">
                         <span class="flex flex-row items-center justify-between">
                             <h3 class="flex items-center mb-4 text-xl font-semibold text-gray-800">
                                 <i class="mr-2 text-green-400 ri-restaurant-line"></i> Informasi Gizi Lansia

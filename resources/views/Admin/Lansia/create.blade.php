@@ -31,6 +31,14 @@
                                 @enderror
                             </div>
                             <div>
+                                <label class="block text-sm font-medium">Tanggal Lahir</label>
+                                <input type="date" name="tanggal_lahir" class="w-full input input-bordered"
+                                    value="{{ old('tanggal_lahir') }}" required>
+                                @error('tanggal_lahir')
+                                    <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            <div>
                                 <label class="block text-sm font-medium">Alamat</label>
                                 <input type="text" name="alamat" class="w-full input input-bordered"
                                     value="{{ old('alamat') }}" required>

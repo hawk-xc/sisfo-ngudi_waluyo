@@ -40,6 +40,11 @@
                     href="{{ route('pemeriksaan.index') }}"><i class="ri-stethoscope-line"></i> Pemeriksaan</a>
             </li>
 
+            <li class="{{ request()->routeIs('laporan.*') ? 'bg-slate-200' : '' }} rounded-md">
+                <a class="{{ request()->routeIs('laporan') ? 'font-semibold' : '' }}"
+                    href="{{ route('laporan.index') }}"><i class="ri-file-chart-line"></i> Laporan</a>
+            </li>
+
             <li class="pt-4 border-t"><a
                     class="{{ request()->routeIs('profile.*') ? 'font-semibold bg-slate-200 font-semibold' : '' }} rounded-md"
                     href="{{ route('profile.edit') }}"><i class="ri-user-line"></i> Profil</a>
@@ -77,6 +82,10 @@
 
                         @if (request()->routeIs('pemeriksaan.*'))
                             {{ __('Halaman Pemeriksaan') }}
+                        @endif
+
+                        @if (request()->routeIs('laporan.*'))
+                            {{ __('Halaman Pelaporan') }}
                         @endif
 
                         @if (request()->routeIs('kader.*'))
