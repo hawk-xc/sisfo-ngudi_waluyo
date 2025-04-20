@@ -133,8 +133,7 @@
                                                     <input type="number" placeholder="Lingkar Perut, ex. 40"
                                                         step="0.1"
                                                         class="grow w-full input {{ $errors->has('lingkar_perut') ? 'input-error' : '' }}"
-                                                        value="{{ old('lingkar_perut') ?? $pemeriksaan->lingkar_perut }}"
-                                                        name="lingkar_perut" />
+                                                        value="{{ old('lingkar_perut') }}" name="lingkar_perut" />
                                                 </label>
                                                 @if ($errors->first('lingkar_perut'))
                                                     <p class="fieldset-label text-error">
@@ -152,8 +151,7 @@
                                                     <input type="number" placeholder="Gula Darah, ex. 80"
                                                         step="0.1"
                                                         class="grow w-full input {{ $errors->has('gula_darah') ? 'input-error' : '' }}"
-                                                        value="{{ old('gula_darah') ?? $pemeriksaan->gula_darah }}"
-                                                        name="gula_darah" />
+                                                        value="{{ old('gula_darah') }}" name="gula_darah" />
                                                 </label>
                                                 @if ($errors->first('gula_darah'))
                                                     <p class="fieldset-label text-error">
