@@ -44,12 +44,22 @@ class LaporanController extends Controller
             'Riwayat',
         ],
         'pj' => [
-            'No',
             'Nama',
+            'NIK',
             'Email',
-            'Role',
-            'Tanggal Daftar',
-            'Status'
+            'Tanggal Lahir',
+            'Jenis Kelamin',
+            'Alamat',
+            'No Telp'
+        ],
+        'kader' => [
+            'Nama',
+            'NIK',
+            'Email',
+            'Tanggal Lahir',
+            'Jenis Kelamin',
+            'Alamat',
+            'No Telp'
         ]
     ];
 
@@ -57,14 +67,16 @@ class LaporanController extends Controller
     protected $exportViews = [
         'pemeriksaan' => 'Admin.Laporan.exports.pemeriksaan_pdf',
         'lansia' => 'Admin.Laporan.exports.lansia_pdf',
-        'pj' => 'Admin.Laporan.exports.pj_pdf'
+        'pj' => 'Admin.Laporan.exports.pj_pdf',
+        'kader' => 'Admin.Laporan.exports.kader_pdf'
     ];
 
     // Daftar nama file untuk export
     protected $exportFileNames = [
         'pemeriksaan' => 'data-pemeriksaan-lansia',
         'lansia' => 'data-lansia',
-        'pj' => 'data-penanggung-jawab'
+        'pj' => 'data-penanggung-jawab',
+        'kader' => 'data-kader'
     ];
 
     /**
@@ -103,8 +115,24 @@ class LaporanController extends Controller
 
     public function pj_data(Request $request)
     {
-        $pj = User::where('role', 'pj')->orderBy('created_at', 'desc')->get();
-        return view('Admin.Laporan.data.pj', compact('pj'));
+        $pjs = $this->getPjData($request);
+        if ($request->ajax()) {
+            return response()->json([
+                'html' => view('Admin.Laporan.data.partials.pj_table', compact('pjs'))->render()
+            ]);
+        }
+        return view('Admin.Laporan.data.pj', compact('pjs'));
+    }
+
+    public function kader_data(Request $request)
+    {
+        $kader = $this->getKaderData($request);
+        if ($request->ajax()) {
+            return response()->json([
+                'html' => view('Admin.Laporan.data.partials.kader_table', compact('kader'))->render()
+            ]);
+        }
+        return view('Admin.Laporan.data.kader', compact('kader'));
     }
 
     // Method untuk export data
@@ -137,25 +165,11 @@ class LaporanController extends Controller
             case 'pemeriksaan':
                 return $this->getPemeriksaanData($request);
             case 'lansia':
-                return Lansia::query()
-                    ->when($request->filled('date_range'), function ($query) use ($request) {
-                        $dates = $this->parseDateRange($request->date_range);
-                        if ($dates) {
-                            $query->whereBetween('created_at', [$dates['start'], $dates['end']]);
-                        }
-                    })
-                    ->orderBy('created_at', 'desc')
-                    ->get();
+                return $this->getLansiaData($request);
             case 'pj':
-                return User::where('role', 'pj')
-                    ->when($request->filled('date_range'), function ($query) use ($request) {
-                        $dates = $this->parseDateRange($request->date_range);
-                        if ($dates) {
-                            $query->whereBetween('created_at', [$dates['start'], $dates['end']]);
-                        }
-                    })
-                    ->orderBy('created_at', 'desc')
-                    ->get();
+                return $this->getPjData($request);
+            case 'kader':
+                return $this->getKaderData($request);
             default:
                 return collect();
         }
@@ -191,19 +205,18 @@ class LaporanController extends Controller
     // Method untuk mendapatkan data pemeriksaan
     protected function getPemeriksaanData(Request $request)
     {
-        $query = Pemeriksaan::with(['lansia', 'gizi']);
+        $query = Pemeriksaan::with(['lansia', 'gizi'])
+            ->join('lansias', 'pemeriksaan.lansia_id', '=', 'lansias.id');
 
         $sortDirection = $request->get('sort', 'desc') === 'asc' ? 'asc' : 'desc';
-        $query->orderBy('tanggal_pemeriksaan', $sortDirection);
+        $query->orderBy('lansias.nama', $sortDirection);
 
         $dates = $this->parseDateRange($request->date_range);
         if ($dates) {
             $query->whereBetween('tanggal_pemeriksaan', [$dates['start'], $dates['end']]);
         }
 
-        $results = $query->get();
-
-        return $results;
+        return $query->get(['pemeriksaan.*']); // Pastikan hanya kolom pemeriksaan yang diambil
     }
 
     protected function getLansiaData(Request $request)
@@ -211,13 +224,40 @@ class LaporanController extends Controller
         $query = Lansia::query();
 
         $sortDirection = $request->get('sort', 'desc') === 'asc' ? 'asc' : 'desc';
-        $query->orderBy('created_at', $sortDirection);
+        $query->orderBy('nama', $sortDirection);
 
         $results = $query->get();
 
         return $results;
     }
 
+    protected function getPjData(Request $request)
+    {
+        $query = User::query();
+
+        $query->where('role_id', 3);
+
+        $sortDirection = $request->get('sort', 'desc') === 'asc' ? 'asc' : 'desc';
+        $query->orderBy('name', $sortDirection);
+
+        $results = $query->get();
+
+        return $results;
+    }
+
+    protected function getKaderData(Request $request)
+    {
+        $query = User::query();
+
+        $query->where('role_id', 2);
+
+        $sortDirection = $request->get('sort', 'desc') === 'asc' ? 'asc' : 'desc';
+        $query->orderBy('name', $sortDirection);
+
+        $results = $query->get();
+
+        return $results;
+    }
 
     // Method untuk export Excel
     protected function exportToExcel($dataType, $data)
@@ -266,7 +306,7 @@ class LaporanController extends Controller
             'dateRange' => request()->date_range ?? null
         ])->setPaper('a4', 'landscape');
 
-        return $pdf->download($this->exportFileNames[$dataType] . '.pdf');
+        return $pdf->download($this->exportFileNames[$dataType] . '-' . now()->format('Ymd') . '.pdf');
     }
 
     // Method untuk format data sebelum di-export
@@ -294,17 +334,17 @@ class LaporanController extends Controller
                 return $data->map(function ($item, $index) {
                     return [
                         'No' => $index + 1,
-                        'Nama' => $item->nama,
-                        'NIK' => $item->nik,
-                        'Tanggal Lahir' => $item->tanggal_lahir->format('d/m/Y'),
-                        'Umur' => $item->umur,
-                        'Jenis Kelamin' => $item->jenis_kelamin,
-                        'Status Perkawinan' => $item->status_perkawinan,
-                        'Alamat' => $item->alamat,
-                        'Agama' => $item->agama,
-                        'Pendidikan' => $item->pendidikan_terakhir,
-                        'Gol Darah' => $item->golongan_darah,
-                        'Riwayat' => $item->riwayat_kesehatan
+                        'Nama' => $item->nama ?? '-',
+                        'NIK' => $item->nik ?? '-',
+                        'Tanggal Lahir' => $item->tanggal_lahir ? \Carbon\Carbon::parse($item->tanggal_lahir)->format('d/m/Y') : '-',
+                        'Umur' => $item->umur ?? '-',
+                        'Jenis Kelamin' => $item->jenis_kelamin ?? '-',
+                        'Status Perkawinan' => $item->status_perkawinan ?? '-',
+                        'Alamat' => $item->alamat ?? '-',
+                        'Agama' => $item->agama ?? '-',
+                        'Pendidikan' => $item->pendidikan_terakhir ?? '-',
+                        'Gol Darah' => $item->golongan_darah ?? '-',
+                        'Riwayat' => $item->riwayat_kesehatan ?? '-'
                     ];
                 });
             case 'pj':
@@ -312,10 +352,23 @@ class LaporanController extends Controller
                     return [
                         'No' => $index + 1,
                         'Nama' => $item->name,
+                        'NIK' => $item->nik ?? '-',
                         'Email' => $item->email,
-                        'Role' => $item->role,
-                        'Tanggal Daftar' => $item->created_at->format('d/m/Y H:i'),
-                        'Status' => $item->is_active ? 'Aktif' : 'Nonaktif'
+                        'Jenis Kelamin' => $item->gender ?? '-',
+                        'Alamat' => $item->address,
+                        'No Telp' => $item->phone,
+                    ];
+                });
+            case 'kader':
+                return $data->map(function ($item, $index) {
+                    return [
+                        'No' => $index + 1,
+                        'Nama' => $item->name,
+                        'NIK' => $item->nik ?? '-',
+                        'Email' => $item->email,
+                        'Jenis Kelamin' => $item->gender ?? '-',
+                        'Alamat' => $item->address,
+                        'No Telp' => $item->phone,
                     ];
                 });
             default:
