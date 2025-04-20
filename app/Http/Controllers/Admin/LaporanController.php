@@ -77,8 +77,15 @@ class LaporanController extends Controller
 
     public function lansia_data(Request $request)
     {
-        $lansia = Lansia::query()->orderBy('created_at', 'desc')->get();
-        return view('Admin.Laporan.data.lansia', compact('lansia'));
+        $lansias = $this->getLansiaData($request);
+
+        if ($request->ajax()) {
+            return response()->json([
+                'html' => view('Admin.Laporan.data.partials.lansia_table', compact('lansias'))->render()
+            ]);
+        }
+
+        return view('Admin.Laporan.data.lansia', compact('lansias'));
     }
 
     public function pemeriksaan_data(Request $request)
@@ -186,22 +193,27 @@ class LaporanController extends Controller
     {
         $query = Pemeriksaan::with(['lansia', 'gizi']);
 
-        // Debug request
-        Log::debug('Pemeriksaan Data Request:', $request->all());
-
-        // Handle sorting
         $sortDirection = $request->get('sort', 'desc') === 'asc' ? 'asc' : 'desc';
         $query->orderBy('tanggal_pemeriksaan', $sortDirection);
 
-        // Handle date range filter
         $dates = $this->parseDateRange($request->date_range);
         if ($dates) {
             $query->whereBetween('tanggal_pemeriksaan', [$dates['start'], $dates['end']]);
-            Log::debug('Applied date filter:', $dates);
         }
 
         $results = $query->get();
-        Log::debug('Query results count:', ['count' => $results->count()]);
+
+        return $results;
+    }
+
+    protected function getLansiaData(Request $request)
+    {
+        $query = Lansia::query();
+
+        $sortDirection = $request->get('sort', 'desc') === 'asc' ? 'asc' : 'desc';
+        $query->orderBy('created_at', $sortDirection);
+
+        $results = $query->get();
 
         return $results;
     }

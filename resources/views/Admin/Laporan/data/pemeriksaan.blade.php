@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="text-xl font-semibold leading-tight text-gray-800">
-            {{ __('Pusat Gizi') }}
+            {{ __('Data Pemeriksaan') }}
         </h2>
     </x-slot>
 
@@ -34,13 +34,13 @@
                             <ul tabindex="0"
                                 class="absolute z-50 p-2 shadow-md -right-16 top-8 dropdown-content menu bg-base-100 rounded-box w-44">
                                 <li>
-                                    <a href="{{ route('pemeriksaan.index', ['sort' => 'asc']) }}"
+                                    <a href="{{ route('lansia.index', ['sort' => 'asc']) }}"
                                         class="flex items-center gap-2">
                                         <i class="ri-sort-asc"></i> Sort Asc
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('pemeriksaan.index', ['sort' => 'desc']) }}"
+                                    <a href="{{ route('lansia.index', ['sort' => 'desc']) }}"
                                         class="flex items-center gap-2">
                                         <i class="ri-sort-desc"></i> Sort Desc
                                     </a>
