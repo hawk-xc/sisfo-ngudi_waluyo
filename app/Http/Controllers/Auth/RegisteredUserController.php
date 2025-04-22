@@ -56,7 +56,7 @@ class RegisteredUserController extends Controller
             'relationship_name' => $request->relationship_name,
         ]);
 
-        $user->assignRole('kader');
+        $user->assignRole('admin');
 
         event(new Registered($user));
 
