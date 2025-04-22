@@ -72,7 +72,7 @@ class UserSeeder extends Seeder
             'raw_password' => PasswordService::encrypt('password'),
             'password' => bcrypt('password'),
         ]);
-        $kader->assignRole('kader');
+        $kader->assignRole('admin');
 
         $wahyu = User::create([
             'name' => 'Wahyu',
@@ -88,6 +88,6 @@ class UserSeeder extends Seeder
             'raw_password' => PasswordService::encrypt('password'),
             'password' => bcrypt('password'),
         ]);
-        $wahyu->assignRole('kader');
+        $wahyu->assignRole('admin');
     }
 }
