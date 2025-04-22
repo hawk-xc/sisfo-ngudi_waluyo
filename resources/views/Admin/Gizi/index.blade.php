@@ -62,8 +62,6 @@
                             </g>
                         </svg>
                         <input id="search" type="search" class="grow" placeholder="Cari Gizi" />
-                        <kbd class="kbd kbd-sm">⌘</kbd>
-                        <kbd class="kbd kbd-sm">K</kbd>
                     </label>
                 </ul>
             </div>

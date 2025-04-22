@@ -62,8 +62,7 @@
                             </g>
                         </svg>
                         <input id="search" type="search" class="grow" placeholder="Cari Data Penanggung Jawab" />
-                        <kbd class="kbd kbd-sm">⌘</kbd>
-                        <kbd class="kbd kbd-sm">K</kbd>
+
                     </label>
                 </ul>
             </div>

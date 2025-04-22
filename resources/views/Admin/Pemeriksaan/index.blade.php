@@ -64,8 +64,7 @@
                             </g>
                         </svg>
                         <input id="search" type="search" class="grow" placeholder="Cari Data Pemeriksaan" />
-                        <kbd class="kbd kbd-sm">⌘</kbd>
-                        <kbd class="kbd kbd-sm">K</kbd>
+
                     </label>
                 </ul>
             </div>
@@ -126,12 +125,12 @@
                                             <i class="ri-eye-line"></i>
                                         </a>
 
-                                        @role('kader|admin')
-                                            <a href={{ route('pemeriksaan.edit', $item->id) }}
-                                                class="btn join-item btn-sm btn-outline btn-warning">
-                                                <i class="ri-edit-2-fill"></i>
-                                            </a>
+                                        <a href={{ route('pemeriksaan.edit', $item->id) }}
+                                            class="btn join-item btn-sm btn-outline btn-warning">
+                                            <i class="ri-edit-2-fill"></i>
+                                        </a>
 
+                                        @role('kader|admin')
                                             <form id="delete-form-{{ $item->id }}"
                                                 action="{{ route('pemeriksaan.destroy', $item->id) }}" method="POST"
                                                 class="hidden">

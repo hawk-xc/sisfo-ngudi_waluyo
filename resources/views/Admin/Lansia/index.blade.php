@@ -64,8 +64,7 @@
                             </g>
                         </svg>
                         <input id="search" type="search" class="grow" placeholder="Cari Data Lansia" />
-                        <kbd class="kbd kbd-sm">⌘</kbd>
-                        <kbd class="kbd kbd-sm">K</kbd>
+
                     </label>
                 </ul>
             </div>

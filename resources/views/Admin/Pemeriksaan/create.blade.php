@@ -265,9 +265,10 @@
                                     </div>
 
                                     <div class="flex flex-col gap-2 p-4 bg-orange-100">
-                                        <div class="flex flex-row gap-2">
+                                        <div class="flex flex-row items-center gap-2 align-middle">
                                             <input type="checkbox" name="hospital_referral" id="hospital_referral"
-                                                class="checkbox checkbox-primary checkbox-sm" />
+                                                class=""
+                                                checked={{ old('hospital_referral', $pemeriksaan->hospital_referral) }} />
                                             <label for="hospital_referral">Perlu Rujukan</label>
                                         </div>
                                         <span class="text-xs text-gray-600">

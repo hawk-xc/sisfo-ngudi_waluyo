@@ -25,13 +25,13 @@
                 <ul class="flex items-center justify-between flex-1 menu bg-base-200 lg:menu-horizontal rounded-box">
                     <div class="flex flex-row items-center gap-3">
                         @role('kader|admin')
-                        <li>
-                            <a href="{{ route('kegiatan.create') }}"
-                                class="flex items-center gap-2 btn-sm btn btn-outline btn-neutral">
-                                <i class="ri-user-add-line"></i>
-                                Tambah Kegiatan
-                            </a>
-                        </li>
+                            <li>
+                                <a href="{{ route('kegiatan.create') }}"
+                                    class="flex items-center gap-2 btn-sm btn btn-outline btn-neutral">
+                                    <i class="ri-user-add-line"></i>
+                                    Tambah Kegiatan
+                                </a>
+                            </li>
                         @endrole
                         <li class="dropdown dropdown-hover dropdown-end">
                             <label tabindex="0" class="flex items-center gap-2 btn btn-ghost">
@@ -64,8 +64,7 @@
                             </g>
                         </svg>
                         <input id="search" type="search" class="grow" placeholder="Cari Kegiatan" />
-                        <kbd class="kbd kbd-sm">⌘</kbd>
-                        <kbd class="kbd kbd-sm">K</kbd>
+
                     </label>
                 </ul>
             </div>
@@ -98,24 +97,24 @@
                                         {{ $item->formatted_date ?? '-' }}
                                     </td>
                                     @role('kader|admin')
-                                    <td class="flex col-span-1 px-2 py-4 join">
-                                        <a href={{ route('kegiatan.edit', $item->slug) }}
-                                            class="btn btn-sm btn-outline btn-warning join-item">
-                                            <i class="ri-edit-2-fill"></i>
-                                        </a>
+                                        <td class="flex col-span-1 px-2 py-4 join">
+                                            <a href={{ route('kegiatan.edit', $item->slug) }}
+                                                class="btn btn-sm btn-outline btn-warning join-item">
+                                                <i class="ri-edit-2-fill"></i>
+                                            </a>
 
-                                        <form id="delete-form-{{ $item->id }}"
-                                            action="{{ route('kegiatan.destroy', $item->slug) }}" method="POST"
-                                            class="hidden">
-                                            @csrf
-                                            @method('DELETE')
-                                        </form>
+                                            <form id="delete-form-{{ $item->id }}"
+                                                action="{{ route('kegiatan.destroy', $item->slug) }}" method="POST"
+                                                class="hidden">
+                                                @csrf
+                                                @method('DELETE')
+                                            </form>
 
-                                        <button class="btn btn-sm join-item btn-error btn-outline"
-                                            onclick="confirmDelete('{{ $item->id }}')">
-                                            <i class="ri-delete-bin-fill"></i>
-                                        </button>
-                                    </td>
+                                            <button class="btn btn-sm join-item btn-error btn-outline"
+                                                onclick="confirmDelete('{{ $item->id }}')">
+                                                <i class="ri-delete-bin-fill"></i>
+                                            </button>
+                                        </td>
                                     @endrole
                                 </tr>
                             @empty
