@@ -10,45 +10,46 @@
             </button>
         </div>
 
-        <ul class="fixed w-64 min-h-full p-4 space-y-2 menu bg-base-100 text-base-content" x-show="sidebarOpen">
-            <li class="{{ request()->routeIs('dashboard') ? 'bg-blue-200' : '' }} rounded-md"><a
+        <ul class="fixed w-64 min-h-full p-4 space-y-2 menu bg-base-100 text-base-content bg-sky-200"
+            x-show="sidebarOpen">
+            <li class="{{ request()->routeIs('dashboard') ? 'bg-slate-300' : '' }} rounded-md"><a
                     href="{{ route('dashboard') }}"
                     class="{{ request()->routeIs('dashboard') ? 'font-semibold' : '' }}"><i class="ri-home-2-line"></i>
                     Halaman
                     Utama</a></li>
-            <li class="{{ request()->routeIs('lansia.*') ? 'bg-blue-200' : '' }} rounded-md">
+            <li class="{{ request()->routeIs('lansia.*') ? 'bg-slate-300' : '' }} rounded-md">
                 <a class="{{ request()->routeIs('lansia') ? 'font-semibold' : '' }}"
                     href="{{ route('lansia.index') }}"><i class="ri-group-line"></i> Data Lansia</a>
             </li>
 
             @role('admin')
-                <li class="{{ request()->routeIs('kader.*') ? 'bg-blue-200' : '' }} rounded-md">
+                <li class="{{ request()->routeIs('kader.*') ? 'bg-slate-300' : '' }} rounded-md">
                     <a class="{{ request()->routeIs('kader') ? 'font-semibold' : '' }}" href="{{ route('kader.index') }}"><i
                             class="ri-shield-user-line"></i> Data Kader</a>
                 </li>
             @endrole
 
             @role('kader|admin')
-                <li class="{{ request()->routeIs('pj.*') ? 'bg-blue-200' : '' }} rounded-md">
+                <li class="{{ request()->routeIs('pj.*') ? 'bg-slate-300' : '' }} rounded-md">
                     <a class="{{ request()->routeIs('pj') ? 'font-semibold' : '' }}" href="{{ route('pj.index') }}"><i
                             class="ri-user-settings-line"></i> Penanggung Jawab</a>
                 </li>
             @endrole
 
-            <li class="{{ request()->routeIs('pemeriksaan.*') ? 'bg-blue-200' : '' }} rounded-md">
+            <li class="{{ request()->routeIs('pemeriksaan.*') ? 'bg-slate-300' : '' }} rounded-md">
                 <a class="{{ request()->routeIs('pemeriksaan') ? 'font-semibold' : '' }}"
                     href="{{ route('pemeriksaan.index') }}"><i class="ri-stethoscope-line"></i> Pemeriksaan</a>
             </li>
 
             @role('kader|admin')
-                <li class="{{ request()->routeIs('laporan.*') ? 'bg-blue-200' : '' }} rounded-md">
+                <li class="{{ request()->routeIs('laporan.*') ? 'bg-slate-300' : '' }} rounded-md">
                     <a class="{{ request()->routeIs('laporan') ? 'font-semibold' : '' }}"
                         href="{{ route('laporan.index') }}"><i class="ri-file-chart-line"></i> Laporan</a>
                 </li>
             @endrole
 
             <li class="pt-4 border-t"><a
-                    class="{{ request()->routeIs('profile.*') ? 'font-semibold bg-blue-200 font-semibold' : '' }} rounded-md"
+                    class="{{ request()->routeIs('profile.*') ? 'font-semibold bg-slate-300 font-semibold' : '' }} rounded-md"
                     href="{{ route('profile.edit') }}"><i class="ri-user-line"></i> Profil</a>
             </li>
             <form method="POST" action="{{ route('logout') }}">
