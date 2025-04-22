@@ -49,12 +49,12 @@
                     class="{{ request()->routeIs('profile.*') ? 'font-semibold bg-blue-200 font-semibold' : '' }} rounded-md"
                     href="{{ route('profile.edit') }}"><i class="ri-user-line"></i> Profil</a>
             </li>
-            <li>
-                <form method="POST" action="{{ route('logout') }}">
+            <form method="POST" action="{{ route('logout') }}">
+                <li>
                     @csrf
                     <button type="submit" class="w-full text-left"><i class="ri-logout-box-line"></i> Keluar</button>
-                </form>
-            </li>
+                </li>
+            </form>
         </ul>
     </div>
 
