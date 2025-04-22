@@ -268,42 +268,43 @@
                             </div>
                         </section>
                     </div>
-<section id="grafik-pemeriksaan" class="w-full mt-8">
-    <h3 class="flex items-center mb-4 text-xl font-semibold text-gray-800">
-        <i class="mr-2 text-purple-500 ri-line-chart-line"></i> Grafik Perkembangan Kesehatan
-    </h3>
-    
-    <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <!-- Grafik Line Chart -->
-        <div class="p-4 bg-white rounded-lg shadow">
-            <canvas id="perkembanganChart" height="300"></canvas>
-        </div>
-        
-        <!-- Kategori IMT -->
-        <div class="p-4 bg-white rounded-lg shadow">
-            <h4 class="mb-4 text-lg font-semibold">Kategori Indeks Massa Tubuh (IMT)</h4>
-            <div class="space-y-2">
-                @foreach($kategoriIMT as $kategori)
-                <div class="flex items-center">
-                    <span class="w-4 h-4 mr-2 {{ $kategori['warna'] }} rounded-full"></span>
-                    <span class="text-sm">
-                        {{ $kategori['kategori'] }} ({{ $kategori['min'] }} - {{ $kategori['max'] }})
-                    </span>
-                    @if($pemeriksaan->imt >= $kategori['min'] && $pemeriksaan->imt <= $kategori['max'])
-                        <span class="ml-2 badge badge-primary">Saat Ini</span>
-                    @endif
-                </div>
-                @endforeach
-            </div>
-            
-            <!-- Analisis IMT -->
-            <div class="mt-6 p-4 bg-gray-50 rounded-lg">
-                <h5 class="font-semibold">Analisis IMT Saat Ini:</h5>
-                <p class="mt-1">{{ $pemeriksaan->analisis_imt ?? 'Tidak ada analisis' }}</p>
-            </div>
-        </div>
-    </div>
-</section>
+                    <section id="grafik-pemeriksaan" class="w-full mt-8">
+                        <h3 class="flex items-center mb-4 text-xl font-semibold text-gray-800">
+                            <i class="mr-2 text-purple-500 ri-line-chart-line"></i> Grafik Perkembangan Kesehatan
+                        </h3>
+
+                        <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+                            <!-- Grafik Line Chart -->
+                            <div class="p-4 bg-white rounded-lg shadow">
+                                <canvas id="perkembanganChart" height="300"></canvas>
+                            </div>
+
+                            <!-- Kategori IMT -->
+                            <div class="p-4 bg-white rounded-lg shadow">
+                                <h4 class="mb-4 text-lg font-semibold">Kategori Indeks Massa Tubuh (IMT)</h4>
+                                <div class="space-y-2">
+                                    @foreach ($kategoriIMT as $kategori)
+                                        <div class="flex items-center">
+                                            <span class="w-4 h-4 mr-2 {{ $kategori['warna'] }} rounded-full"></span>
+                                            <span class="text-sm">
+                                                {{ $kategori['kategori'] }} ({{ $kategori['min'] }} -
+                                                {{ $kategori['max'] }})
+                                            </span>
+                                            @if ($pemeriksaan->imt >= $kategori['min'] && $pemeriksaan->imt <= $kategori['max'])
+                                                <span class="ml-2 badge badge-primary">Saat Ini</span>
+                                            @endif
+                                        </div>
+                                    @endforeach
+                                </div>
+
+                                <!-- Analisis IMT -->
+                                <div class="p-4 mt-6 rounded-lg bg-gray-50">
+                                    <h5 class="font-semibold">Analisis IMT Saat Ini:</h5>
+                                    <p class="mt-1">{{ $pemeriksaan->analisis_imt ?? 'Tidak ada analisis' }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
                     @if ($pemeriksaan->keterangan)
                         <div id="third-content" class="p-6 mt-5">
                             <h3 class="flex items-center mb-4 text-xl font-semibold text-gray-800">
@@ -320,11 +321,11 @@
                             <h3 class="flex items-center mb-4 text-xl font-semibold text-gray-800">
                                 <i class="mr-2 text-green-400 ri-restaurant-line"></i> Informasi Gizi Lansia
                             </h3>
-                            @role('kader|admin')
-                                <button onclick="my_modal_1.showModal()" class="btn btn-sm btn-outline btn-primary"><i
-                                        class="ri-add-line"></i> Tambah
-                                    Gizi</button>
-                            @endrole
+                            {{-- @role('kader|admin') --}}
+                            <button onclick="my_modal_1.showModal()" class="btn btn-sm btn-outline btn-primary"><i
+                                    class="ri-add-line"></i> Tambah
+                                Gizi</button>
+                            {{-- @endrole --}}
                         </span>
                         <div class="overflow-x-auto">
                             <table
@@ -406,129 +407,127 @@
         </script>
     @endif
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Ambil data dari PHP
-        const tanggalData = @json($historis->pluck('tanggal_pemeriksaan'));
-        const labels = tanggalData.map(date => new Date(date).toLocaleDateString('id-ID'));
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Ambil data dari PHP
+            const tanggalData = @json($historis->pluck('tanggal_pemeriksaan'));
+            const labels = tanggalData.map(date => new Date(date).toLocaleDateString('id-ID'));
 
-        const beratBadanData = @json($historis->pluck('berat_badan'));
-        const tinggiBadanData = @json($historis->pluck('tinggi_badan'));
-        const imtData = @json($historis->pluck('imt'));
+            const beratBadanData = @json($historis->pluck('berat_badan'));
+            const tinggiBadanData = @json($historis->pluck('tinggi_badan'));
+            const imtData = @json($historis->pluck('imt'));
 
-        // Data untuk scatter chart: tinggi sebagai X, berat sebagai Y
-        const scatterData = tinggiBadanData.map((tinggi, index) => {
-            return {
-                x: tinggi,
-                y: beratBadanData[index],
-                tanggal: new Date(tanggalData[index]).toLocaleDateString('id-ID')
-            };
-        });
+            // Data untuk scatter chart: tinggi sebagai X, berat sebagai Y
+            const scatterData = tinggiBadanData.map((tinggi, index) => {
+                return {
+                    x: tinggi,
+                    y: beratBadanData[index],
+                    tanggal: new Date(tanggalData[index]).toLocaleDateString('id-ID')
+                };
+            });
 
-        const ctx = document.getElementById('perkembanganChart').getContext('2d');
-        const chart = new Chart(ctx, {
-            type: 'scatter', // Chart tipe utama
-            data: {
-                labels: labels,
-                datasets: [
-                    {
-                        type: 'line',
-                        label: 'IMT',
-                        data: imtData,
-                        borderColor: 'rgba(255, 99, 132, 1)',
-                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                        yAxisID: 'y',
-                        tension: 0.3,
-                        fill: false
-                    },
-                    {
-                        type: 'scatter',
-                        label: 'Tinggi vs Berat',
-                        data: scatterData,
-                        backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
-                        yAxisID: 'y1',
-                        xAxisID: 'x1',
-                        pointRadius: 6,
-                        pointHoverRadius: 8
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    tooltip: {
-                        callbacks: {
-                            label: function (context) {
-                                const point = context.raw;
-                                if (context.dataset.type === 'scatter') {
-                                    return `Tanggal: ${point.tanggal}, Tinggi: ${point.x} cm, Berat: ${point.y} kg`;
-                                } else {
-                                    return `IMT: ${context.formattedValue}`;
+            const ctx = document.getElementById('perkembanganChart').getContext('2d');
+            const chart = new Chart(ctx, {
+                type: 'scatter', // Chart tipe utama
+                data: {
+                    labels: labels,
+                    datasets: [{
+                            type: 'line',
+                            label: 'IMT',
+                            data: imtData,
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            yAxisID: 'y',
+                            tension: 0.3,
+                            fill: false
+                        },
+                        {
+                            type: 'scatter',
+                            label: 'Tinggi vs Berat',
+                            data: scatterData,
+                            backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            yAxisID: 'y1',
+                            xAxisID: 'x1',
+                            pointRadius: 6,
+                            pointHoverRadius: 8
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const point = context.raw;
+                                    if (context.dataset.type === 'scatter') {
+                                        return `Tanggal: ${point.tanggal}, Tinggi: ${point.x} cm, Berat: ${point.y} kg`;
+                                    } else {
+                                        return `IMT: ${context.formattedValue}`;
+                                    }
                                 }
                             }
+                        },
+                        legend: {
+                            position: 'top'
+                        },
+                        title: {
+                            display: true,
+                            text: 'Perkembangan IMT dan Hubungan Tinggi vs Berat Badan'
                         }
                     },
-                    legend: {
-                        position: 'top'
-                    },
-                    title: {
-                        display: true,
-                        text: 'Perkembangan IMT dan Hubungan Tinggi vs Berat Badan'
-                    }
-                },
-                scales: {
-                    x: {
-                        type: 'category',
-                        labels: labels,
-                        title: {
-                            display: true,
-                            text: 'Tanggal Pemeriksaan'
+                    scales: {
+                        x: {
+                            type: 'category',
+                            labels: labels,
+                            title: {
+                                display: true,
+                                text: 'Tanggal Pemeriksaan'
+                            },
+                            position: 'bottom'
                         },
-                        position: 'bottom'
-                    },
-                    x1: {
-                        type: 'linear',
-                        position: 'bottom',
-                        display: true,
-                        title: {
+                        x1: {
+                            type: 'linear',
+                            position: 'bottom',
                             display: true,
-                            text: 'Tinggi Badan (cm)'
+                            title: {
+                                display: true,
+                                text: 'Tinggi Badan (cm)'
+                            },
+                            grid: {
+                                drawOnChartArea: false
+                            }
                         },
-                        grid: {
-                            drawOnChartArea: false
-                        }
-                    },
-                    y: {
-                        type: 'linear',
-                        position: 'left',
-                        title: {
-                            display: true,
-                            text: 'IMT'
-                        }
-                    },
-                    y1: {
-                        type: 'linear',
-                        position: 'right',
-                        title: {
-                            display: true,
-                            text: 'Berat Badan (kg)'
+                        y: {
+                            type: 'linear',
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: 'IMT'
+                            }
                         },
-                        grid: {
-                            drawOnChartArea: false
+                        y1: {
+                            type: 'linear',
+                            position: 'right',
+                            title: {
+                                display: true,
+                                text: 'Berat Badan (kg)'
+                            },
+                            grid: {
+                                drawOnChartArea: false
+                            }
                         }
                     }
                 }
-            }
+            });
         });
-    });
-</script>
+    </script>
 
 
 
 
     <script>
-        
         function formatRupiah(input) {
             let value = input.value.replace(/[^0-9]/g, ''); // Hanya angka
             let formatted = new Intl.NumberFormat('id-ID', {
@@ -539,7 +538,7 @@
 
             input.value = formatted.replace('Rp', '').trim(); // Menghapus simbol Rp agar mudah diolah backend
         }
-        
+
         $(document).ready(function() {
             // ==================== SELECT2 GIZI ====================
             // $('#input_filter-gizi_id').select2({
