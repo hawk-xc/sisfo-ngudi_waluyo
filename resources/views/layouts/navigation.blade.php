@@ -40,10 +40,12 @@
                     href="{{ route('pemeriksaan.index') }}"><i class="ri-stethoscope-line"></i> Pemeriksaan</a>
             </li>
 
-            <li class="{{ request()->routeIs('laporan.*') ? 'bg-blue-200' : '' }} rounded-md">
-                <a class="{{ request()->routeIs('laporan') ? 'font-semibold' : '' }}"
-                    href="{{ route('laporan.index') }}"><i class="ri-file-chart-line"></i> Laporan</a>
-            </li>
+            @role('kader|admin')
+                <li class="{{ request()->routeIs('laporan.*') ? 'bg-blue-200' : '' }} rounded-md">
+                    <a class="{{ request()->routeIs('laporan') ? 'font-semibold' : '' }}"
+                        href="{{ route('laporan.index') }}"><i class="ri-file-chart-line"></i> Laporan</a>
+                </li>
+            @endrole
 
             <li class="pt-4 border-t"><a
                     class="{{ request()->routeIs('profile.*') ? 'font-semibold bg-blue-200 font-semibold' : '' }} rounded-md"
