@@ -129,9 +129,9 @@
                     <span class="block">Profil Posyandu Lansia</span>
                     <span class="block text-primary">Ngudi Waluyo</span>
                 </h2>
-                <p class="mt-3 max-w-2xl mx-auto text-xl text-gray-500 sm:mt-4">
+                {{-- <p class="mt-3 max-w-2xl mx-auto text-xl text-gray-500 sm:mt-4">
                     Memberikan pelayanan kesehatan terbaik untuk lansia sejak 2010
-                </p>
+                </p> --}}
             </div>
 
             <div class="mt-10">
@@ -277,7 +277,7 @@
             </div>
 
             <!-- Kegiatan Cards -->
-            <div class="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {{-- <div class="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Kegiatan 1 -->
                 <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 hover:shadow-lg transition">
                     <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Senam Lansia" class="w-full h-48 object-cover">
@@ -316,12 +316,12 @@
                         <p class="text-gray-600">Edukasi tentang pola hidup sehat, nutrisi, dan pencegahan penyakit lansia.</p>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </section>
 
     <!-- Testimoni Section -->
-    <section class="py-16 bg-gray-50">
+    {{-- <section class="py-16 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
@@ -376,7 +376,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
     <!-- CTA Section -->
     <section class="py-16 bg-primary text-white">
@@ -399,7 +399,7 @@
     </section>
 
     <!-- Kontak Section -->
-    <section id="contact" class="py-16 bg-white">
+    {{-- <section id="contact" class="py-16 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="lg:grid lg:grid-cols-2 lg:gap-16">
                 <div class="mb-12 lg:mb-0">
@@ -480,7 +480,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
     <!-- Footer -->
     <footer class="bg-gray-900 text-white pt-12 pb-6">
