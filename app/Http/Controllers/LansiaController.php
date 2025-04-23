@@ -65,7 +65,6 @@ class LansiaController extends Controller
             'nik' => 'required|unique:lansias,nik',
             'nama' => 'required',
             'alamat' => 'required',
-            'umur' => 'required|integer',
             'jenis_kelamin' => 'required',
             'pj_id' => 'nullable|exists:users,id',
             'pj_nama' => 'nullable|required_without_all:pj_id,pj_email',
@@ -76,6 +75,10 @@ class LansiaController extends Controller
             'golongan_darah' => 'nullable|string|max:5',
             'rhesus' => 'nullable|string',
             'riwayat_kesehatan' => 'nullable|string',
+
+            'kewarganegaraan' => 'nullable|string|max:200',
+            'pekerjaan' => 'nullable|string|max:200',
+            'suku' => 'nullable|string|max:200',
 
             'tanggal_lahir' => 'required|date',
         ], [
@@ -106,7 +109,6 @@ class LansiaController extends Controller
             'nik' => $request->nik,
             'nama' => $request->nama,
             'alamat' => $request->alamat,
-            'umur' => $request->umur,
             'jenis_kelamin' => $request->jenis_kelamin,
             'pj_nama' => $pj->name,
             'pj_email' => $pj->email,
@@ -116,6 +118,10 @@ class LansiaController extends Controller
             'golongan_darah' => $request->golongan_darah,
             'rhesus' => $request->rhesus,
             'riwayat_kesehatan' => $request->riwayat_kesehatan,
+
+            'kewarganegaraan' => $request->kewarganegaraan,
+            'pekerjaan' => $request->pekerjaan,
+            'suku' => $request->suku,
 
             'tanggal_lahir' => $request->tanggal_lahir,
         ]);
@@ -154,19 +160,23 @@ class LansiaController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nama' => 'required|string|max:255',
-            'nik' => 'required|string|max:16',
-            'alamat' => 'required|string',
-            'umur' => 'required|integer',
-            'jenis_kelamin' => 'required|string',
-            'pj_nama' => 'required|string|max:255',
-            'pj_email' => 'required|email|max:255',
+            'nik' => 'required|unique:lansias,nik',
+            'nama' => 'required',
+            'alamat' => 'required',
+            'jenis_kelamin' => 'required',
+            'pj_id' => 'nullable|exists:users,id',
+            'pj_nama' => 'nullable|required_without_all:pj_id,pj_email',
+            'pj_email' => 'nullable|required_without_all:pj_id,pj_nama|email|unique:users,email',
             'status_perkawinan' => 'nullable|string|max:50',
             'agama' => 'nullable|string|max:50',
             'pendidikan_terakhir' => 'nullable|string|max:100',
             'golongan_darah' => 'nullable|string|max:5',
             'rhesus' => 'nullable|string',
             'riwayat_kesehatan' => 'nullable|string',
+
+            'kewarganegaraan' => 'nullable|string|max:200',
+            'pekerjaan' => 'nullable|string|max:200',
+            'suku' => 'nullable|string|max:200',
 
             'tanggal_lahir' => 'required|date',
         ]);
@@ -176,7 +186,6 @@ class LansiaController extends Controller
             'nama' => $request->nama,
             'nik' => $request->nik,
             'alamat' => $request->alamat,
-            'umur' => $request->umur,
             'jenis_kelamin' => $request->jenis_kelamin,
             'pj_nama' => $request->pj_nama,
             'pj_email' => $request->pj_email,
@@ -186,6 +195,10 @@ class LansiaController extends Controller
             'golongan_darah' => $request->golongan_darah,
             'rhesus' => $request->rhesus,
             'riwayat_kesehatan' => $request->riwayat_kesehatan,
+
+            'kewarganegaraan' => $request->kewarganegaraan,
+            'pekerjaan' => $request->pekerjaan,
+            'suku' => $request->suku,
 
             'tanggal_lahir' => $request->tanggal_lahir,
         ]);
