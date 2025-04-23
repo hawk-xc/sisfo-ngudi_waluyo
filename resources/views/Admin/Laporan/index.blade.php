@@ -59,7 +59,7 @@
                     @foreach ($posyandu_data as $data)
                         <a href="{{ route($data['uri']) }}">
                             <div id="card-data"
-                                class="p-5 duration-150 bg-white rounded-md shadow-md hover:brightness-95">
+                                class="p-5 duration-150 bg-blue-100 rounded-md shadow-md hover:brightness-95">
                                 <h4 class="text-lg font-semibold">
                                     <i class="{{ $data['name'] }}"></i>
                                     {{ $data['title'] }}
