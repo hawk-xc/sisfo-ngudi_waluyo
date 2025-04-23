@@ -11,7 +11,10 @@ class Lansia extends Model
     use HasFactory;
     protected $table = 'lansias';
     protected $guarded = ['id'];
-    protected $fillable = ['nik', 'tanggal_lahir', 'nama', 'alamat', 'umur', 'jenis_kelamin', 'pj_nama', 'pj_email', 'posyandu_id', 'user_id', 'status_perkawinan', 'agama', 'golongan_darah', 'pendidikan_terakhir',  'rhesus', 'riwayat_kesehatan'];
+    protected $fillable = [
+        'nik',
+        'tanggal_lahir', 'nama', 'alamat', 'umur', 'jenis_kelamin', 'pj_nama', 'pj_email', 'posyandu_id', 'user_id', 'status_perkawinan', 'agama', 'golongan_darah', 'pendidikan_terakhir',  'rhesus', 'riwayat_kesehatan'
+        , 'kewarganegaraan', 'pekerjaan', 'suku'];
 
     // create relations
     public function pemeriksaans()
