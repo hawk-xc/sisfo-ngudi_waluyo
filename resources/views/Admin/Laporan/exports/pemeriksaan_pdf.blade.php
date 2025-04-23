@@ -105,8 +105,8 @@
 <body>
     <div class="header">
         <h2 class="font-bold">DATA PEMERIKSAAN LANSIA</h2>
-        <p class="font-bold">POSLANSIA.................. RW.................</p>
-        <p class="font-bold">KELURAHAN.................</p>
+        <h2>POSLANSIA NGUDI WALUYO RW 15</h2>
+        <h2>KELURAHAN BANJARSARI</h2>
 
         @if ($dateRange)
             <p style="font-size: 9pt;">Rentang Tanggal: {{ $dateRange }}</p>
