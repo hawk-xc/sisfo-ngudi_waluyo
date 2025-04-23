@@ -65,8 +65,8 @@
                     <table class="pj-table" {{ $pjs->isEmpty() ? 'style="display: none;"' : '' }}>
                         <div class="w-full mb-3 font-semibold text-center">
                             <h2>DATA PENANGGUNG JAWAB</h2>
-                            <h2>POSLANSIA.................. RW.................</h2>
-                            <h2>KELURAHAN.................</h2>
+                            <p class="font-bold">POSLANSIA NGUDI WALUYO RW 15</p>
+                            <p class="font-bold">KELURAHAN BANJARSARI</p>
                         </div>
 
                         <thead>

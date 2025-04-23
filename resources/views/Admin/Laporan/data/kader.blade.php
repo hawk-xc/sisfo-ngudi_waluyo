@@ -63,8 +63,8 @@
                     <table class="kader-table" {{ $kader->isEmpty() ? 'style="display: none;"' : '' }}>
                         <div class="w-full mb-3 font-semibold text-center">
                             <h2>DATA KADER</h2>
-                            <h2>POSLANSIA.................. RW.................</h2>
-                            <h2>KELURAHAN.................</h2>
+                            <h2>POSLANSIA NGUDI WALUYO RW 15</h2>
+                            <h2>KELURAHAN BANJARSARI</h2>
                         </div>
 
                         <thead>
