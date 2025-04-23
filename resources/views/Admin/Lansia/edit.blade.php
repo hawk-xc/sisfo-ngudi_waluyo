@@ -18,7 +18,7 @@
 
                     <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                         <div>
-                            <label class="font-medium text-gray-600">Nama:</label>
+                            <label class="font-medium text-gray-600">Nama</label>
                             <input type="text" name="nama" value="{{ old('nama', $lansia->nama) }}"
                                 class="w-full input input-bordered" required>
                             @error('nama')
@@ -28,7 +28,8 @@
                         <div>
                             <label class="block text-sm font-medium">Tanggal Lahir</label>
                             <input type="date" name="tanggal_lahir" class="w-full input input-bordered"
-                                value="{{ old('tanggal_lahir', $lansia->tanggal_lahir) }}" required>
+                                value="{{ old('tanggal_lahir', $lansia->tanggal_lahir ? (is_string($lansia->tanggal_lahir) ? \Carbon\Carbon::parse($lansia->tanggal_lahir)->format('Y-m-d') : $lansia->tanggal_lahir->format('Y-m-d')) : '') }}"
+                                required>
                             @error('tanggal_lahir')
                                 <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
                             @enderror
@@ -41,6 +42,21 @@
                                 <span class="text-sm text-red-500">{{ $message }}</span>
                             @enderror
                         </div>
+                        <div>
+                            <label class="block text-sm font-medium">Kewarganegaraan</label>
+                            <select name="kewarganegaraan" class="w-full select select-bordered">
+                                <option value="">-- Pilih Kewarganegaraan --</option>
+                                <option value="Indonesia"
+                                    {{ old('kewarganegaraan', $lansia->kewarganegaraan) == 'Indonesia' ? 'selected' : '' }}>
+                                    Indonesia</option>
+                                <option value="Asing"
+                                    {{ old('kewarganegaraan', $lansia->kewarganegaraan) == 'Asing' ? 'selected' : '' }}>
+                                    Asing</option>
+                            </select>
+                            @error('kewarganegaraan')
+                                <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                            @enderror
+                        </div>
                         <div class="col-span-2">
                             <label class="font-medium text-gray-600">Alamat:</label>
                             <textarea name="alamat" class="w-full input input-bordered" rows="3" required>{{ old('alamat', $lansia->alamat) }}</textarea>
@@ -48,12 +64,45 @@
                                 <span class="text-sm text-red-500">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div>
+                        {{-- <div>
                             <label class="font-medium text-gray-600">Usia:</label>
                             <input type="number" name="umur" value="{{ old('umur', $lansia->umur) }}"
                                 class="w-full input input-bordered" required>
                             @error('umur')
                                 <span class="text-sm text-red-500">{{ $message }}</span>
+                            @enderror
+                        </div>   --}}
+                        <div>
+                            <label class="block text-sm font-medium">Pendidikan Terakhir</label>
+                            <select name="pendidikan_terakhir" class="w-full select select-bordered">
+                                <option value="">-- Pendidikan Terakhir --</option>
+                                <option value="SD"
+                                    {{ old('pendidikan_terakhir', $lansia->pendidikan_terakhir) == 'SD' ? 'selected' : '' }}>
+                                    SD</option>
+                                <option value="SLTP/sederajat"
+                                    {{ old('pendidikan_terakhir', $lansia->pendidikan_terakhir) == 'SLTP/sederajat' ? 'selected' : '' }}>
+                                    SLTP/sederajat</option>
+                                <option value="SLTA/sederajat"
+                                    {{ old('pendidikan_terakhir', $lansia->pendidikan_terakhir) == 'SLTA/sederajat' ? 'selected' : '' }}>
+                                    SLTA/sederajat</option>
+                                <option value="D1"
+                                    {{ old('pendidikan_terakhir', $lansia->pendidikan_terakhir) == 'D1' ? 'selected' : '' }}>
+                                    D1</option>
+                                <option value="D3"
+                                    {{ old('pendidikan_terakhir', $lansia->pendidikan_terakhir) == 'D3' ? 'selected' : '' }}>
+                                    D3</option>
+                                <option value="S1"
+                                    {{ old('pendidikan_terakhir', $lansia->pendidikan_terakhir) == 'S1' ? 'selected' : '' }}>
+                                    S1</option>
+                                <option value="S2"
+                                    {{ old('pendidikan_terakhir', $lansia->pendidikan_terakhir) == 'S2' ? 'selected' : '' }}>
+                                    S2</option>
+                                <option value="S3"
+                                    {{ old('pendidikan_terakhir', $lansia->pendidikan_terakhir) == 'S3' ? 'selected' : '' }}>
+                                    S3</option>
+                            </select>
+                            @error('status_perkawinan')
+                                <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
                             @enderror
                         </div>
                         <div>
@@ -147,18 +196,62 @@
                             @enderror
                         </div>
                         <div>
-                            <label class="block text-sm font-medium">Pendidikan Terakhir</label>
-                            <input type="text" name="pendidikan_terakhir" class="w-full input input-bordered"
-                                value="{{ old('pendidikan_terakhir', $lansia->pendidikan_terakhir) }}">
-                            @error('pendidikan_terakhir')
+                            <label class="block text-sm font-medium">Pekerjaan</label>
+                            <select name="pekerjaan" class="w-full select select-bordered">
+                                <option value="">-- Pilih Pekerjaan --</option>
+                                <option value="Buruh"
+                                    {{ old('pekerjaan', $lansia->pekerjaan) == 'Buruh' ? 'selected' : '' }}>
+                                    Buruh</option>
+                                <option value="Guru"
+                                    {{ old('pekerjaan', $lansia->pekerjaan) == 'Guru' ? 'selected' : '' }}>
+                                    Guru</option>
+                                <option value="Karyawan Swasta"
+                                    {{ old('pekerjaan', $lansia->pekerjaan) == 'Karyawan Swasta' ? 'selected' : '' }}>
+                                    Karyawan Swasta</option>
+                                <option value="Pensiunan"
+                                    {{ old('pekerjaan', $lansia->pekerjaan) == 'Pensiunan' ? 'selected' : '' }}>
+                                    Pensiunan</option>
+                                <option value="Petani"
+                                    {{ old('pekerjaan', $lansia->pekerjaan) == 'Petani' ? 'selected' : '' }}>
+                                    Petani</option>
+                                <option value="Pegawai Negeri Sipil"
+                                    {{ old('pekerjaan', $lansia->pekerjaan) == 'Pegawai Negeri Sipil' ? 'selected' : '' }}>
+                                    Pegawai Negeri Sipil</option>
+                                <option value="Tidak bekerja"
+                                    {{ old('pekerjaan', $lansia->pekerjaan) == 'Tidak bekerja' ? 'selected' : '' }}>
+                                    Tidak bekerja</option>
+                                <option value="Wiraswasta"
+                                    {{ old('pekerjaan', $lansia->pekerjaan) == 'Wiraswasta' ? 'selected' : '' }}>
+                                    Wiraswasta</option>
+                            </select>
+                            @error('agama')
                                 <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
                             @enderror
                         </div>
                         <div>
-                            <label class="block text-sm font-medium">Riwayat Kesehatan</label>
-                            <textarea name="riwayat_kesehatan" class="w-full textarea textarea-bordered">{{ $lansia->riwayat_kesehatan }}</textarea>
-                            @error('riwayat_kesehatan')
+                            <label class="block text-sm font-medium">Suku</label>
+                            <select name="suku" class="w-full select select-bordered">
+                                <option value="">-- Pilih Suku --</option>
+                                <option value="Batak" {{ old('suku', $lansia->suku) == 'Batak' ? 'selected' : '' }}>
+                                    Batak</option>
+                                <option value="Betawi" {{ old('suku', $lansia->suku) == 'Betawi' ? 'selected' : '' }}>
+                                    Betawi</option>
+                                <option value="Jawa" {{ old('suku', $lansia->suku) == 'Jawa' ? 'selected' : '' }}>
+                                    Jawa</option>
+                                <option value="Madura" {{ old('suku', $lansia->suku) == 'Madura' ? 'selected' : '' }}>
+                                    Madura</option>
+                                <option value="Melayu" {{ old('suku', $lansia->suku) == 'Melayu' ? 'selected' : '' }}>
+                                    Melayu</option>
+                            </select>
+                            @error('status_perkawinan')
                                 <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="col-span-2">
+                            <label class="font-medium text-gray-600">Alamat:</label>
+                            <textarea name="riwayat_kesehatan" class="w-full h-16 input input-bordered" rows="3" required>{{ old('riwayat_kesehatan', $lansia->riwayat_kesehatan) }}</textarea>
+                            @error('riwayat_kesehatan')
+                                <span class="text-sm text-red-500">{{ $message }}</span>
                             @enderror
                         </div>
                     </div>

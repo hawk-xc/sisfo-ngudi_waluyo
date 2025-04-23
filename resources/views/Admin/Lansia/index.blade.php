@@ -98,7 +98,8 @@
                                         {{ $lansia->nama }}
                                     </td>
                                     <td class="px-4 py-2">{{ $lansia->alamat }}</td>
-                                    <td class="px-4 py-2">{{ $lansia->umur }} Tahun</td>
+                                    <td class="px-4 py-2">{{ \Carbon\Carbon::parse($lansia->tanggal_lahir)->age }} Tahun
+                                    </td>
                                     <td class="px-4 py-2">{{ $lansia->jenis_kelamin }}</td>
                                     <td class="px-4 py-2">{{ $lansia->pj_nama }}</td>
                                     <td class="flex px-4 py-2 join">

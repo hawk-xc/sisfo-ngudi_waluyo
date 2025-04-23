@@ -15,47 +15,61 @@
                 <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                     <div>
                         <p class="font-medium text-gray-600">Nama:</p>
-                        <p class="text-lg font-semibold">{{ $lansia->nama }}</p>
+                        <p class="text-lg font-semibold">{{ $lansia->nama ?? '-' }}</p>
                     </div>
                     <div>
                         <p class="font-medium text-gray-600">NIK:</p>
-                        <p class="text-lg font-semibold">{{ $lansia->nik }}</p>
+                        <p class="text-lg font-semibold">{{ $lansia->nik ?? '-' }}</p>
                     </div>
                     <div>
                         <p class="font-medium text-gray-600">Alamat:</p>
-                        <p class="text-lg font-semibold">{{ $lansia->alamat }}</p>
+                        <p class="text-lg font-semibold">{{ $lansia->alamat ?? '-' }}</p>
                     </div>
                     <div>
                         <p class="font-medium text-gray-600">Usia:</p>
-                        <p class="text-lg font-semibold">{{ $lansia->umur }} Tahun</p>
+                        <p class="text-lg font-semibold">{{ \Carbon\Carbon::parse($lansia->tanggal_lahir ?? '-')->age }}
+                            Tahun
+                        </p>
                     </div>
                     <div>
                         <p class="font-medium text-gray-600">Jenis Kelamin:</p>
-                        <p class="text-lg font-semibold">{{ $lansia->jenis_kelamin }}</p>
+                        <p class="text-lg font-semibold">{{ $lansia->jenis_kelamin ?? '-' }}</p>
                     </div>
                     <div>
                         <p class="font-medium text-gray-600">Status Perkawinan:</p>
-                        <p class="text-lg font-semibold">{{ $lansia->status_perkawinan }}</p>
+                        <p class="text-lg font-semibold">{{ $lansia->status_perkawinan ?? '-' }}</p>
                     </div>
                     <div>
                         <p class="font-medium text-gray-600">Agama:</p>
-                        <p class="text-lg font-semibold">{{ $lansia->agama }}</p>
+                        <p class="text-lg font-semibold">{{ $lansia->agama ?? '-' }}</p>
                     </div>
                     <div>
                         <p class="font-medium text-gray-600">Pendidikan Terakhir:</p>
-                        <p class="text-lg font-semibold">{{ $lansia->pendidikan_terakhir }}</p>
+                        <p class="text-lg font-semibold">{{ $lansia->pendidikan_terakhir ?? '-' }}</p>
                     </div>
                     <div>
                         <p class="font-medium text-gray-600">Riwayat Kesehatan:</p>
-                        <p class="text-lg font-semibold">{{ $lansia->riwayat_kesehatan }}</p>
+                        <p class="text-lg font-semibold">{{ $lansia->riwayat_kesehatan ?? '-' }}</p>
                     </div>
                     <div>
                         <p class="font-medium text-gray-600">Golongan Darah:</p>
-                        <p class="text-lg font-semibold">{{ $lansia->golongan_darah }}</p>
+                        <p class="text-lg font-semibold">{{ $lansia->golongan_darah ?? '-' }}</p>
                     </div>
                     <div>
                         <p class="font-medium text-gray-600">Rhesus:</p>
-                        <p class="text-lg font-semibold">{{ $lansia->rhesus }}</p>
+                        <p class="text-lg font-semibold">{{ $lansia->rhesus ?? '-' }}</p>
+                    </div>
+                    <div>
+                        <p class="font-medium text-gray-600">Pekerjaan:</p>
+                        <p class="text-lg font-semibold">{{ $lansia->pekerjaan ?? '-' }}</p>
+                    </div>
+                    <div>
+                        <p class="font-medium text-gray-600">Suku:</p>
+                        <p class="text-lg font-semibold">{{ $lansia->suku ?? '-' }}</p>
+                    </div>
+                    <div>
+                        <p class="font-medium text-gray-600">Kewarganegaraan:</p>
+                        <p class="text-lg font-semibold">{{ $lansia->kewarganegaraan ?? '-' }}</p>
                     </div>
                 </div>
 
