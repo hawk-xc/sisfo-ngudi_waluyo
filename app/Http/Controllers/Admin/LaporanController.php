@@ -337,7 +337,7 @@ class LaporanController extends Controller
                         'Nama' => $item->nama ?? '-',
                         'NIK' => $item->nik ?? '-',
                         'Tanggal Lahir' => $item->tanggal_lahir ? \Carbon\Carbon::parse($item->tanggal_lahir)->format('d/m/Y') : '-',
-                        'Umur' => $item->umur ?? '-',
+                        'Umur' => $item->tanggal_lahir ? \Carbon\Carbon::parse($item->tanggal_lahir)->age . ' Tahun' : '-',
                         'Jenis Kelamin' => $item->jenis_kelamin ?? '-',
                         'Status Perkawinan' => $item->status_perkawinan ?? '-',
                         'Alamat' => $item->alamat ?? '-',
