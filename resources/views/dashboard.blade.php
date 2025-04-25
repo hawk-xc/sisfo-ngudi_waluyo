@@ -2,84 +2,115 @@
     @php
         $informations = [
             [
+                'image' =>
+                    'https://cdn.hellosehat.com/wp-content/uploads/2017/12/881bf088-perubahan-fisik-pada-lansia.jpg?w=1080&q=100',
                 'title' => 'Hal yg perlu di perhatikan oleh pra lansia/lansia',
-                'link' => ['https://hellosehat.com/lansia/perawatan-lansia/perubahan-tubuh-lansia/'],
+                'link' => 'https://hellosehat.com/lansia/perawatan-lansia/perubahan-tubuh-lansia/',
             ],
             [
+                'image' =>
+                    'https://blogs.insanmedika.co.id/wp-content/uploads/2019/12/Mencegah-dan-mengatasi-hipertensi-pada-lansia.jpg',
                 'title' => 'Masalah Kesehatan (Hipertensi) Pada Pra-Lansia/Lansia',
-                'link' => ['https://hellosehat.com/jantung/hipertensi/hipertensi-pada-lansia/'],
+                'link' => 'https://hellosehat.com/jantung/hipertensi/hipertensi-pada-lansia/',
             ],
             [
+                'image' =>
+                    'https://cdn.hellosehat.com/wp-content/uploads/2019/08/asian-doctor-talking-to-male-patient-700x467.jpg',
                 'title' => 'Masalah kesehatan (diabetes mellitus) pada lansia',
-                'link' => ['https://hellosehat.com/lansia/masalah-lansia/diabetes-pada-lansia/'],
+                'link' => 'https://hellosehat.com/lansia/masalah-lansia/diabetes-pada-lansia/',
             ],
             [
+                'image' =>
+                    'https://res.cloudinary.com/dk0z4ums3/image/upload/v1665326538/attached_image/penyakit-paru-obstruktif-kronis-0-alodokter.jpg',
                 'title' => 'Penyakit PPOK pada lansia',
-                'link' => ['https://www.alodokter.com/penyakit-paru-obstruktif-kronis'],
+                'link' => 'https://www.alodokter.com/penyakit-paru-obstruktif-kronis',
             ],
             [
+                'image' =>
+                    'https://cdn.hellosehat.com/wp-content/uploads/2021/03/b4e3320f-stroke-pada-lansia.jpg?w=1080&q=100',
                 'title' => 'Penyakit Stroke pada lansia',
-                'link' => [
+                'link' =>
                     'https://hellosehat.com/lansia/masalah-lansia/stroke-pada-lansia/#:~:text=Gejala%20stroke%20pada%20lansia%20meliputi,hidup%20untuk%20mencegah%20stroke%20berulang',
-                ],
             ],
             [
+                'image' =>
+                    'https://mysiloam-api.siloamhospitals.com/public-asset/website-cms/website-cms-16729733804213650.webp',
                 'title' => 'Asma bronkial pada lansia',
-                'link' => ['https://www.siloamhospitals.com/informasi-siloam/artikel/apa-itu-asma'],
+                'link' => 'https://www.siloamhospitals.com/informasi-siloam/artikel/apa-itu-asma',
             ],
             [
+                'image' =>
+                    'https://d1vbn70lmn1nqe.cloudfront.net/prod/wp-content/uploads/2023/06/06041418/Ini-Gejala-Jantung-Koroner-yang-Sering-Diabaikan.jpg',
                 'title' => 'PJK pada Lansia',
-                'link' => [
+                'link' =>
                     'https://www.halodoc.com/artikel/penyakit-jantung-koroner-rawan-dialami-lansia?srsltid=AfmBOooiiKIsO0Ukda0zqJ-W3TlBblNaEjoGkq2KBnydooH6EA8VczTj',
-                ],
             ],
             [
+                'image' =>
+                    'https://d3uhejzrzvtlac.cloudfront.net/compro/articleMobile/166_0_mengenal-osteoporosis-gejala-pencegahan-dan-pengobatannya.jpg',
                 'title' => 'Osteoporosis pada lansia',
-                'link' => ['https://www.mitrakeluarga.com/artikel/osteoporosis-adalah'],
+                'link' => 'https://www.mitrakeluarga.com/artikel/osteoporosis-adalah',
             ],
             [
+                'image' => 'https://d1bpj0tv6vfxyp.cloudfront.net/articles/873595_18-5-2021_10-18-37.webp',
                 'title' => 'Arthritis pada lansia',
-                'link' => ['https://www.halodoc.com/artikel/radang-sendi-pada-lansia-begini-cara-mengatasinya'],
+                'link' => 'https://www.halodoc.com/artikel/radang-sendi-pada-lansia-begini-cara-mengatasinya',
             ],
             [
+                'image' =>
+                    'https://cdn.hellosehat.com/wp-content/uploads/2021/03/141166be-gangguan-mental-pada-lansia.jpg',
                 'title' => 'Gangguan mental pada lansia',
-                'link' => ['https://hellosehat.com/lansia/mental-lansia/gangguan-kesehatan-mental-pada-lansia/'],
+                'link' => 'https://hellosehat.com/lansia/mental-lansia/gangguan-kesehatan-mental-pada-lansia/',
             ],
             [
+                'image' =>
+                    'https://res.cloudinary.com/dk0z4ums3/image/upload/v1730442708/attached_image/demensia-0-alodokter.jpg',
                 'title' => 'Penyakit Pikun pada lansia',
-                'link' => ['https://www.alodokter.com/demensia'],
+                'link' => 'https://www.alodokter.com/demensia',
             ],
             [
+                'image' =>
+                    'https://res.cloudinary.com/dk0z4ums3/image/upload/v1647234702/attached_image/menopause-0-alodokter.jpg',
                 'title' => 'Menopause',
-                'link' => ['https://www.alodokter.com/menopause'],
+                'link' => 'https://www.alodokter.com/menopause',
             ],
             [
+                'image' =>
+                    'https://mysiloam-api.siloamhospitals.com/public-asset/website-cms/website-cms-16907943989093637.webp',
                 'title' => 'Andropause',
-                'link' => ['https://www.siloamhospitals.com/informasi-siloam/artikel/apa-itu-andropause'],
+                'link' => 'https://www.siloamhospitals.com/informasi-siloam/artikel/apa-itu-andropause',
             ],
             [
                 'title' => 'Gizi seimbang untuk lansia',
-                'link' => [
-                    'https://www.nestlehealthscience.co.id/artikel/panduan-tips-gizi-lansia',
-                    'https://bblabkesmasmakassar.go.id/pola-makan-sehat-dengan-tumpeng-gizi-seimbang/',
-                    'https://ayosehat.kemkes.go.id/isi-piringku-pedoman-makan-kekinian-orang-indonesia',
-                ],
+                'image' => 'https://www.nestlehealthscience.co.id/sites/default/files/inline-images/manula_0.jpg',
+                'link' => 'https://www.nestlehealthscience.co.id/artikel/panduan-tips-gizi-lansia',
             ],
             [
+                'title' => 'Gizi seimbang untuk lansia',
+                'image' => 'https://bblabkesmasmakassar.go.id/wp-content/uploads/2023/02/PGS-600x750.jpg',
+                'link' => 'https://bblabkesmasmakassar.go.id/pola-makan-sehat-dengan-tumpeng-gizi-seimbang/',
+            ],
+            [
+                'title' => 'Gizi seimbang untuk lansia',
+                'image' => 'https://ayosehat.kemkes.go.id/imagex/content/f835d6586a87cffec56dd2618ab49231.webp',
+                'link' => 'https://ayosehat.kemkes.go.id/isi-piringku-pedoman-makan-kekinian-orang-indonesia',
+            ],
+            [
+                'image' => 'https://img.youtube.com/vi/wN9aO40VsI0/maxresdefault.jpg',
                 'title' => 'Video Senam Lansia',
-                'link' => ['https://youtu.be/wN9aO40VsI0?si=IDCfr1OoWjgJIzBk'],
+                'link' => 'https://youtu.be/wN9aO40VsI0?si=IDCfr1OoWjgJIzBk',
             ],
             [
+                'image' =>
+                    'https://media.geriatri.id/img/article/1703040426-tips-untuk-lansia-yang-bepergian-agar-aman-dan-nyaman-lansia-wisata-di-taman-G.jpg',
                 'title' => 'Tips saat melakukan perjalanan jauh untuk lansia',
-                'link' => [
-                    'https://www.geriatri.id/artikel/1815/tips-untuk-lansia-yang-bepergian-agar-aman-dan-nyaman',
-                ],
+                'link' => 'https://www.geriatri.id/artikel/1815/tips-untuk-lansia-yang-bepergian-agar-aman-dan-nyaman',
             ],
             [
+                'image' => 'https://pbs.twimg.com/media/DK5EHUuVwAAyjHz.jpg',
                 'title' => 'Peran Penting Keluarga terhadap perawatan lansia',
-                'link' => [
+                'link' =>
                     'https://golantang.bkkbn.go.id/peran-keluarga-terhadap-perawatan-lansia#:~:text=Peran%20penting%20keluarga%20bagi%20lansia,Merawat%20lansia.',
-                ],
             ],
         ];
     @endphp
@@ -126,18 +157,28 @@
                 @endrole
             </div>
             <div id="dashboard-grafik" class="max-w-full p-5 bg-white rounded-sm shadow-sm">
-                <h2 class="mb-3 text-xl font-semibold">Informasi Terbaru</h2>
-                <div id="card-lists" class="flex flex-wrap gap-2">
+                <h2 class="mb-5 text-xl font-semibold">Informasi Terbaru</h2>
+                <div id="card-lists" class="flex flex-wrap gap-1 justify-evenly">
                     @foreach ($informations as $information)
-                        <div tabindex="0" class="border collapse collapse-plus bg-base-100 border-base-300">
-                            <div class="font-semibold collapse-title">{{ $information['title'] }}</div>
-                            <div class="flex flex-col gap-1 text-sm collapse-content link-container">
-                                @foreach ($information['link'] as $link)
-                                    <span class="cursor-pointer text-sky-500 hover:underline clickable-link"
-                                        data-url="{{ $link }}">
-                                        {{ $link }}
-                                    </span>
-                                @endforeach
+                        <div class="mb-2 shadow-lg w-80 card bg-base-100">
+                            <figure>
+                                @if ($information['image'])
+                                    <img src="{{ $information['image'] }}" alt="Shoes"
+                                        class="w-full rounded-lg h-44 image-full" />
+                                @else
+                                    <iframe width="100%" height="250" src="{{ $information['youtube'] }}"
+                                        frameborder="0" allowfullscreen></iframe>
+                                @endif
+                            </figure>
+                            <div class="card-body">
+                                <a href="{{ $information['link'] }}" target="_blank">
+                                    <h2 class="cursor-pointer card-title hover:underline">
+                                        {{ $information['title'] }}
+                                    </h2>
+                                </a>
+                                <div class="justify-end card-actions">
+                                    <div class="badge badge-outline">Artikel</div>
+                                </div>
                             </div>
                         </div>
                     @endforeach
