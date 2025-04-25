@@ -11,7 +11,7 @@
         <td>{{ $item->nik ?? '-' }}</td>
         <td>{{ \Carbon\Carbon::parse($item->tanggal_lahir ?? '')->format('d/m/Y') }}
         </td>
-        <td>{{ $item->umur ?? '-' }}</td>
+        <td>{{ \Carbon\Carbon::parse($item->tanggal_lahir)->age . ' Tahun' ?? '-' }}</td>
         <td>{{ $item->jenis_kelamin ?? '-' }}</td>
         <td>{{ $item->status_perkawinan ?? '-' }}</td>
         <td>{{ $item->alamat ?? '-' }}</td>
