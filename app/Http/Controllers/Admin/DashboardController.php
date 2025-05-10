@@ -20,10 +20,12 @@ class DashboardController extends Controller
         if (auth()->user()->checkRole() === 3) {
             $lansiaQuery->where('user_id', auth()->user()->id);
         }
+        // dd($lansiaQuery->count());
 
         $lansiaQuery->whereDate('created_at', Carbon::today());
 
         $metadata['lansia_count'] = $lansiaQuery->count();
+        // dd($metadata['lansia_count']); // 4
 
         // Query untuk Pemeriksaan
         $pemeriksaanQuery = Pemeriksaan::query();
@@ -37,6 +39,8 @@ class DashboardController extends Controller
         // Query untuk User (kader)
         $userQuery = User::where('role_id', 3);
         $metadata['user_count'] = $userQuery->count();
+
+        dd($metadata);
 
         return view('dashboard', compact('metadata'));
     }
