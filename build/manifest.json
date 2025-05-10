@@ -1,0 +1,43 @@
+{
+  "node_modules/remixicon/fonts/remixicon.eot": {
+    "file": "assets/remixicon-BVJ9S1ev.eot",
+    "src": "node_modules/remixicon/fonts/remixicon.eot"
+  },
+  "node_modules/remixicon/fonts/remixicon.svg": {
+    "file": "assets/remixicon-C2wQ2gtc.svg",
+    "src": "node_modules/remixicon/fonts/remixicon.svg"
+  },
+  "node_modules/remixicon/fonts/remixicon.ttf": {
+    "file": "assets/remixicon-CfJD46dY.ttf",
+    "src": "node_modules/remixicon/fonts/remixicon.ttf"
+  },
+  "node_modules/remixicon/fonts/remixicon.woff": {
+    "file": "assets/remixicon-BBpe-Xu7.woff",
+    "src": "node_modules/remixicon/fonts/remixicon.woff"
+  },
+  "node_modules/remixicon/fonts/remixicon.woff2": {
+    "file": "assets/remixicon-BVvFtaex.woff2",
+    "src": "node_modules/remixicon/fonts/remixicon.woff2"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-D1IyK7_M.css",
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-D9RBzgjo.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "css": [
+      "assets/app-Dy54gasd.css"
+    ],
+    "assets": [
+      "assets/remixicon-BVJ9S1ev.eot",
+      "assets/remixicon-BVvFtaex.woff2",
+      "assets/remixicon-BBpe-Xu7.woff",
+      "assets/remixicon-CfJD46dY.ttf",
+      "assets/remixicon-C2wQ2gtc.svg"
+    ]
+  }
+}
