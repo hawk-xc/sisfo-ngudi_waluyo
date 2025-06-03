@@ -106,7 +106,7 @@
                             @enderror
                         </div>
                         <div>
-                            <label class="font-medium text-gray-600">Jenis Kelamin:</label>
+                            <label class="font-medium text-gray-600">Jenis Kelamin</label>
                             <select name="jenis_kelamin" class="w-full input input-bordered" required>
                                 <option value="Laki-laki"
                                     {{ old('jenis_kelamin', $lansia->jenis_kelamin) == 'Laki-laki' ? 'selected' : '' }}>
@@ -248,7 +248,7 @@
                             @enderror
                         </div>
                         <div class="col-span-2">
-                            <label class="font-medium text-gray-600">Alamat:</label>
+                            <label class="font-medium text-gray-600">Riwayat Kesehatan</label>
                             <textarea name="riwayat_kesehatan" class="w-full h-16 input input-bordered" rows="3" required>{{ old('riwayat_kesehatan', $lansia->riwayat_kesehatan) }}</textarea>
                             @error('riwayat_kesehatan')
                                 <span class="text-sm text-red-500">{{ $message }}</span>
@@ -264,7 +264,7 @@
 
                     <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                         <div>
-                            <label class="font-medium text-gray-600">Nama PJ:</label>
+                            <label class="font-medium text-gray-600">Nama PJ</label>
                             <input type="text" name="pj_nama" value="{{ old('pj_nama', $lansia->pj_nama) }}"
                                 class="w-full input input-bordered" required>
                             @error('pj_nama')
@@ -272,7 +272,7 @@
                             @enderror
                         </div>
                         <div>
-                            <label class="font-medium text-gray-600">Email PJ:</label>
+                            <label class="font-medium text-gray-600">Email PJ</label>
                             <input type="email" name="pj_email" value="{{ old('pj_email', $lansia->pj_email) }}"
                                 class="w-full input input-bordered" required>
                             @error('pj_email')

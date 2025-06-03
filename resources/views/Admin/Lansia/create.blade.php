@@ -231,7 +231,7 @@
                                 @enderror
                             </div>
                             <div class="col-span-2">
-                                <label class="font-medium text-gray-600">Alamat:</label>
+                                <label class="font-medium text-gray-600">Riwayat Kesehatan</label>
                                 <textarea name="riwayat_kesehatan" class="w-full h-16 input input-bordered" rows="3" required>{{ old('riwayat_kesehatan') }}</textarea>
                                 @error('riwayat_kesehatan')
                                     <span class="text-sm text-red-500">{{ $message }}</span>

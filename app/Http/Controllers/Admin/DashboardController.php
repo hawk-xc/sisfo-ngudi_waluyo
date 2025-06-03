@@ -40,8 +40,6 @@ class DashboardController extends Controller
         $userQuery = User::where('role_id', 3);
         $metadata['user_count'] = $userQuery->count();
 
-        dd($metadata);
-
         return view('dashboard', compact('metadata'));
     }
 }
